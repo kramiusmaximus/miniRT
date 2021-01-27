@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../includes/miniRT.h
+math.h
+-
+mlx.h
+-
+
+../includes/mlx.h
+
+/Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/main.c
+miniRT.h
+/Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/miniRT.h
+
