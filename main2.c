@@ -65,8 +65,8 @@ int create_trgb(int t, int r, int g, int b)
 
 int	render_next_frame(t_vars *vars)
 {
-	//vars->image.img = mlx_new_image(vars->mlx, 1280, 720);
-	//vars->image.addr = mlx_get_data_addr(vars->image.img, &vars->image.bits_per_pixel, &vars->image.line_length, &vars->image.endian);
+	// vars->image.img = mlx_new_image(vars->mlx, 1280, 720);
+	// vars->image.addr = mlx_get_data_addr(vars->image.img, &vars->image.bits_per_pixel, &vars->image.line_length, &vars->image.endian);
 	for (int y = 0; y < 720; y++)
 	{
 		for (int x = 0; x < 1280; x++)
