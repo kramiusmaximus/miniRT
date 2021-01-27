@@ -12,9 +12,10 @@ file(GLOB SOURCES
         srcs/*.c
         mlx/libmlx.a
         includes/*.h
+        main2.c
         )
 add_executable(miniRT ${SOURCES})
 target_link_libraries(miniRT ${LIBRARIES})
-target_link_libraries(miniRT /Users/markartyukh/Desktop/code/pfelipa/miniRT)
+target_link_libraries(miniRT /Users/pfelipa/Desktop/pfelipa/miniRT)
 target_link_libraries(miniRT "-framework OpenGL" "-framework AppKit")
 

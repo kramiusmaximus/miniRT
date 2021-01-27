@@ -68,10 +68,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/markartyukh/Desktop/code/pfelipa/miniRT
+CMAKE_SOURCE_DIR = /Users/pfelipa/Desktop/pfelipa/miniRT
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/markartyukh/Desktop/code/pfelipa/miniRT/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -100,9 +100,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/markartyukh/Desktop/code/pfelipa/miniRT/cmake-build-debug/CMakeFiles /Users/markartyukh/Desktop/code/pfelipa/miniRT/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles /Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/markartyukh/Desktop/code/pfelipa/miniRT/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -143,32 +143,32 @@ miniRT/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/build
 .PHONY : miniRT/fast
 
-srcs/main.o: srcs/main.c.o
+main2.o: main2.c.o
 
-.PHONY : srcs/main.o
+.PHONY : main2.o
 
 # target to build an object file
-srcs/main.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/main.c.o
-.PHONY : srcs/main.c.o
+main2.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/main2.c.o
+.PHONY : main2.c.o
 
-srcs/main.i: srcs/main.c.i
+main2.i: main2.c.i
 
-.PHONY : srcs/main.i
+.PHONY : main2.i
 
 # target to preprocess a source file
-srcs/main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/main.c.i
-.PHONY : srcs/main.c.i
+main2.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/main2.c.i
+.PHONY : main2.c.i
 
-srcs/main.s: srcs/main.c.s
+main2.s: main2.c.s
 
-.PHONY : srcs/main.s
+.PHONY : main2.s
 
 # target to generate assembly for a file
-srcs/main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/main.c.s
-.PHONY : srcs/main.c.s
+main2.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/main2.c.s
+.PHONY : main2.c.s
 
 # Help Target
 help:
@@ -179,9 +179,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... miniRT"
-	@echo "... srcs/main.o"
-	@echo "... srcs/main.i"
-	@echo "... srcs/main.s"
+	@echo "... main2.o"
+	@echo "... main2.i"
+	@echo "... main2.s"
 .PHONY : help
 
 

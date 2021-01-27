@@ -14,7 +14,9 @@ mlx.h
 
 ../includes/mlx.h
 
-/Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/main.c
+/Users/pfelipa/Desktop/pfelipa/miniRT/main2.c
 miniRT.h
-/Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/miniRT.h
+/Users/pfelipa/Desktop/pfelipa/miniRT/miniRT.h
+stdio.h
+-
 
