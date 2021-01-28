@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-void put_pixel(t_data *data, int x, int y, int color)
+int put_pixel(t_image *data, int x, int y, int color)
 {
 	char	*dst;
 

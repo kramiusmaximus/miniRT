@@ -143,32 +143,86 @@ miniRT/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/build
 .PHONY : miniRT/fast
 
-main2.o: main2.c.o
+main.o: main.c.o
 
-.PHONY : main2.o
+.PHONY : main.o
 
 # target to build an object file
-main2.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/main2.c.o
-.PHONY : main2.c.o
+main.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/main.c.o
+.PHONY : main.c.o
 
-main2.i: main2.c.i
+main.i: main.c.i
 
-.PHONY : main2.i
+.PHONY : main.i
 
 # target to preprocess a source file
-main2.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/main2.c.i
-.PHONY : main2.c.i
+main.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/main.c.i
+.PHONY : main.c.i
 
-main2.s: main2.c.s
+main.s: main.c.s
 
-.PHONY : main2.s
+.PHONY : main.s
 
 # target to generate assembly for a file
-main2.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/main2.c.s
-.PHONY : main2.c.s
+main.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/main.c.s
+.PHONY : main.c.s
+
+srcs/color.o: srcs/color.c.o
+
+.PHONY : srcs/color.o
+
+# target to build an object file
+srcs/color.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/color.c.o
+.PHONY : srcs/color.c.o
+
+srcs/color.i: srcs/color.c.i
+
+.PHONY : srcs/color.i
+
+# target to preprocess a source file
+srcs/color.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/color.c.i
+.PHONY : srcs/color.c.i
+
+srcs/color.s: srcs/color.c.s
+
+.PHONY : srcs/color.s
+
+# target to generate assembly for a file
+srcs/color.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/color.c.s
+.PHONY : srcs/color.c.s
+
+srcs/utils.o: srcs/utils.c.o
+
+.PHONY : srcs/utils.o
+
+# target to build an object file
+srcs/utils.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/utils.c.o
+.PHONY : srcs/utils.c.o
+
+srcs/utils.i: srcs/utils.c.i
+
+.PHONY : srcs/utils.i
+
+# target to preprocess a source file
+srcs/utils.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/utils.c.i
+.PHONY : srcs/utils.c.i
+
+srcs/utils.s: srcs/utils.c.s
+
+.PHONY : srcs/utils.s
+
+# target to generate assembly for a file
+srcs/utils.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/utils.c.s
+.PHONY : srcs/utils.c.s
 
 # Help Target
 help:
@@ -179,9 +233,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... miniRT"
-	@echo "... main2.o"
-	@echo "... main2.i"
-	@echo "... main2.s"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
+	@echo "... srcs/color.o"
+	@echo "... srcs/color.i"
+	@echo "... srcs/color.s"
+	@echo "... srcs/utils.o"
+	@echo "... srcs/utils.i"
+	@echo "... srcs/utils.s"
 .PHONY : help
 
 

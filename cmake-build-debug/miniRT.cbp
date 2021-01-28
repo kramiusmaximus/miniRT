@@ -88,10 +88,16 @@
 		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/includes/mlx.h">
 			<Option target="miniRT"/>
 		</Unit>
-		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/main2.c">
+		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/main.c">
 			<Option target="miniRT"/>
 		</Unit>
 		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/mlx/libmlx.a">
+			<Option target="miniRT"/>
+		</Unit>
+		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/color.c">
+			<Option target="miniRT"/>
+		</Unit>
+		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/utils.c">
 			<Option target="miniRT"/>
 		</Unit>
 		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/CMakeLists.txt">

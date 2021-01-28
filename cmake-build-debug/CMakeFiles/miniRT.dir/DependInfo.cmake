@@ -4,7 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/Users/pfelipa/Desktop/pfelipa/miniRT/main2.c" "/Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles/miniRT.dir/main2.c.o"
+  "/Users/pfelipa/Desktop/pfelipa/miniRT/main.c" "/Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles/miniRT.dir/main.c.o"
+  "/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/color.c" "/Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles/miniRT.dir/srcs/color.c.o"
+  "/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/utils.c" "/Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles/miniRT.dir/srcs/utils.c.o"
   )
 set(CMAKE_C_COMPILER_ID "AppleClang")
 

@@ -1,5 +1,7 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/miniRT.dir/main2.c.o"
+  "CMakeFiles/miniRT.dir/main.c.o"
+  "CMakeFiles/miniRT.dir/srcs/color.c.o"
+  "CMakeFiles/miniRT.dir/srcs/utils.c.o"
   "miniRT"
   "miniRT.pdb"
 )
