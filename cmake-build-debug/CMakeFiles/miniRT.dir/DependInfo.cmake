@@ -6,6 +6,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_C
   "/Users/pfelipa/Desktop/pfelipa/miniRT/main.c" "/Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles/miniRT.dir/main.c.o"
   "/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/color.c" "/Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles/miniRT.dir/srcs/color.c.o"
+  "/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/math.c" "/Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles/miniRT.dir/srcs/math.c.o"
+  "/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/trace.c" "/Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles/miniRT.dir/srcs/trace.c.o"
   "/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/utils.c" "/Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles/miniRT.dir/srcs/utils.c.o"
   )
 set(CMAKE_C_COMPILER_ID "AppleClang")

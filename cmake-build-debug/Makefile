@@ -197,6 +197,60 @@ srcs/color.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/color.c.s
 .PHONY : srcs/color.c.s
 
+srcs/math.o: srcs/math.c.o
+
+.PHONY : srcs/math.o
+
+# target to build an object file
+srcs/math.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/math.c.o
+.PHONY : srcs/math.c.o
+
+srcs/math.i: srcs/math.c.i
+
+.PHONY : srcs/math.i
+
+# target to preprocess a source file
+srcs/math.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/math.c.i
+.PHONY : srcs/math.c.i
+
+srcs/math.s: srcs/math.c.s
+
+.PHONY : srcs/math.s
+
+# target to generate assembly for a file
+srcs/math.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/math.c.s
+.PHONY : srcs/math.c.s
+
+srcs/trace.o: srcs/trace.c.o
+
+.PHONY : srcs/trace.o
+
+# target to build an object file
+srcs/trace.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/trace.c.o
+.PHONY : srcs/trace.c.o
+
+srcs/trace.i: srcs/trace.c.i
+
+.PHONY : srcs/trace.i
+
+# target to preprocess a source file
+srcs/trace.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/trace.c.i
+.PHONY : srcs/trace.c.i
+
+srcs/trace.s: srcs/trace.c.s
+
+.PHONY : srcs/trace.s
+
+# target to generate assembly for a file
+srcs/trace.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/trace.c.s
+.PHONY : srcs/trace.c.s
+
 srcs/utils.o: srcs/utils.c.o
 
 .PHONY : srcs/utils.o
@@ -239,6 +293,12 @@ help:
 	@echo "... srcs/color.o"
 	@echo "... srcs/color.i"
 	@echo "... srcs/color.s"
+	@echo "... srcs/math.o"
+	@echo "... srcs/math.i"
+	@echo "... srcs/math.s"
+	@echo "... srcs/trace.o"
+	@echo "... srcs/trace.i"
+	@echo "... srcs/trace.s"
 	@echo "... srcs/utils.o"
 	@echo "... srcs/utils.i"
 	@echo "... srcs/utils.s"

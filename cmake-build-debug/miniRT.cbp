@@ -97,6 +97,12 @@
 		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/color.c">
 			<Option target="miniRT"/>
 		</Unit>
+		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/math.c">
+			<Option target="miniRT"/>
+		</Unit>
+		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/trace.c">
+			<Option target="miniRT"/>
+		</Unit>
 		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/utils.c">
 			<Option target="miniRT"/>
 		</Unit>
