@@ -6,19 +6,19 @@
 int main()
 {
 	// stuff that would come from the parser. Parser would return a 'scene' file I reckon;
-	int z = 50;
+	int z = 65;
 	t_scene		scene;
 	t_ambient	ambient = {0.1, 0x00FFFFFF};
 	t_light		l1 = {1, {0,60, z}, 0x00FFFFFF};
 	t_lights	lights = {1, {l1}};
-	t_camera	camera = {0, {3,0,0, 0}, {0,0, 0}, 100, 1};
+	t_camera	camera = {0, {3,0,0, 0}, {0,0, 0}, 60, 1};
 	t_sphere	sp1 = {0, 10, {3, 0, 0, z}, 0x00FF0000};
 	t_sphere	sp2 = {0, 10, {3, 15, 0, z}, 0x0000FF00};
 	t_sphere	sp4 = {0, 10, {3, -15, 0, z}, 0x0000FF00};
 	t_sphere	sp3 = {0, 10, {3, 30, 0, z}, 0x000000FF};
 	t_sphere	sp5 = {0, 10, {3, -30, 0, z}, 0x000000FF};
 	t_spheres	spheres = {5, {sp1, sp2, sp3, sp4, sp5}};
-	t_res		res = {1080, 1920};
+	t_res		res = {600, 600};
 	t_vars		vars;
 	t_image 	image;
 
