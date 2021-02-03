@@ -24,13 +24,15 @@ void ray_intersect_sphere(t_vector cam_coords, t_vector c_coords, t_sphere spher
 	}
 }
 
-int trace_ray(t_vector cam_coords, t_vector c_coords, t_spheres spheres)
+int cast_ray(t_vector cam_coords, t_vector c_coords, t_spheres spheres)
 {
 	double t[] = {MAX_DIST, MAX_DIST};
 	int closest_t = MAX_DIST;
 	t_sphere *closest_sp = NULL;
 	int d = 1; // should this be constant?
 	int color = 0;
+
+	if (trace())
 
 	for (int i = 0; i < spheres.count; i++)		// can optimize by sorting list of objects by distance from camera
 	{
@@ -56,16 +58,25 @@ int trace_ray(t_vector cam_coords, t_vector c_coords, t_spheres spheres)
 int render_image(t_vars *vars, t_scene *scene)
 {
 	int color;
+	double x_mult;
+	double y_mult;
 	t_vector c_coords;
 
-	for (int y = 0; y < scene->res.height; y++)
+	y_mult = ((double)scene->window_dims.height / (double)scene->res.height);
+	x_mult = ((double)scene->window_dims.width / (double)scene->res.width);
+	for (int y_box = 0; y_box < scene->res.height; y_box++)
 	{
-		for (int x = 0; x < scene->res.width; x++)
+		for (int x_box = 0; x_box < scene->res.width; x_box++)
 		{
-			// need to process camera rotation as well
-			c_coords = canvas_to_coords(x, y, scene);
-			color = trace_ray(scene->camera.coordinates, c_coords, scene->spheres);
-			put_pixel(&vars->image, x, y, color);
+			for (int y = (int)(y_box * y_mult); y < (y_box + 1) * y_mult; y++)
+			{
+				for (int x = (int)(x_box * x_mult); x < (x_box + 1) * x_mult; x++)
+				{
+					c_coords = canvas_to_coords(x_box + 0.5, y_box + 0.5, scene);
+					color = cast_ray(scene->camera.coordinates, c_coords, scene->spheres);
+					put_pixel(&vars->image, x, y, color);
+				}
+			}
 		}
 	}
 	return (0);

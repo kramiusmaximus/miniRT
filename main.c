@@ -18,12 +18,14 @@ int main()
 	t_sphere	sp3 = {0, 10, {3, 30, 0, z}, 0x000000FF};
 	t_sphere	sp5 = {0, 10, {3, -30, 0, z}, 0x000000FF};
 	t_spheres	spheres = {5, {sp1, sp2, sp3, sp4, sp5}};
-	t_res		res = {1080, 1920};
+	t_dims		window_dims = {600, 1000};
+	t_dims		image_res = {1200, 2000};
 	t_vars		vars;
 	t_image 	image;
 
 	// initializing scene;
-	scene.res = res;
+	scene.window_dims = window_dims;
+	scene.res = image_res;
 	scene.camera = camera;
 	scene.ambient = ambient;
 	scene.lights = lights;
@@ -31,8 +33,8 @@ int main()
 
 	// lets get the party started;
 	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, res.width, res.height, "Is this god?");
-	image.img = mlx_new_image(vars.mlx, res.width, res.height);
+	vars.win = mlx_new_window(vars.mlx, window_dims.width, window_dims.height, "Is this god?");
+	image.img = mlx_new_image(vars.mlx, window_dims.width, window_dims.width);
 	image.addr = mlx_get_data_addr(image.img, &image.bits_per_pixel, &image.line_length, &image.endian);
 	vars.image = image;
 	render_image(&vars, &scene);

@@ -29,11 +29,11 @@ typedef struct	s_vector
 	double		arr[10];
 }				t_vector;
 
-typedef struct 	s_res
+typedef struct 	s_dims
 {
 	int 		height;
 	int			width;
-}				t_res;
+}				t_dims;
 
 typedef	struct	s_canvas
 {
@@ -99,7 +99,8 @@ typedef struct	s_objects
 
 typedef struct	s_scene
 {
-	t_res		res;
+	t_dims		window_dims;
+	t_dims		res;
 	t_camera	camera;
 	t_lights	lights;
 	t_ambient	ambient;
@@ -124,7 +125,7 @@ t_vector canvas_to_coords(int cx, int cy, t_scene *scene);
 
 // ray tracing funciotons
 int render_image(t_vars *vars, t_scene *scene);
-int trace_ray(t_vector cam_coords, t_vector c_coords, t_spheres spheres);
+int cast_ray(t_vector cam_coords, t_vector c_coords, t_spheres spheres);
 void ray_intersect_sphere(t_vector cam_coords, t_vector c_coords, t_sphere sphere, double t[2]);
 
 
