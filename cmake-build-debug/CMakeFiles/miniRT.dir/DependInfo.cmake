@@ -4,11 +4,11 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/Users/markartyukh/Desktop/code/pfelipa/miniRT/main.c" "/Users/markartyukh/Desktop/code/pfelipa/miniRT/cmake-build-debug/CMakeFiles/miniRT.dir/main.c.o"
-  "/Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/color.c" "/Users/markartyukh/Desktop/code/pfelipa/miniRT/cmake-build-debug/CMakeFiles/miniRT.dir/srcs/color.c.o"
-  "/Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/math.c" "/Users/markartyukh/Desktop/code/pfelipa/miniRT/cmake-build-debug/CMakeFiles/miniRT.dir/srcs/math.c.o"
-  "/Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/trace.c" "/Users/markartyukh/Desktop/code/pfelipa/miniRT/cmake-build-debug/CMakeFiles/miniRT.dir/srcs/trace.c.o"
-  "/Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/utils.c" "/Users/markartyukh/Desktop/code/pfelipa/miniRT/cmake-build-debug/CMakeFiles/miniRT.dir/srcs/utils.c.o"
+  "/Users/pfelipa/Desktop/pfelipa/miniRT/main.c" "/Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles/miniRT.dir/main.c.o"
+  "/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/color.c" "/Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles/miniRT.dir/srcs/color.c.o"
+  "/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/math.c" "/Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles/miniRT.dir/srcs/math.c.o"
+  "/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/trace.c" "/Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles/miniRT.dir/srcs/trace.c.o"
+  "/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/utils.c" "/Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles/miniRT.dir/srcs/utils.c.o"
   )
 set(CMAKE_C_COMPILER_ID "AppleClang")
 
