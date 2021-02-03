@@ -64,17 +64,59 @@ t_object *trace_result(t_3dvec cam_coords, t_3dvec c_coords, double *closest_t, 
 	return (object_hit_closest);
 }
 
+t_3dvec surface_vector(t_object *obj, t_3dvec contact_p)
+{
+	t_3dvec n = {0,0,0};
+
+	if (obj->type & SP)
+	{
+		n = vector_normalize(vector_subtract(obj->shape.sp.coordinates, contact_p));
+	}
+	else if (obj->type & PL)
+	{}
+	else if (obj->type & SQ)
+	{}
+	else if (obj->type & CY)
+	{}
+	else if (obj->type & TR)
+	{}
+	return (n);
+}
+
+int process_light(t_object *obj, t_3dvec contact_p, t_scene *scene)
+{
+	int light_effects;
+	t_3dvec l;
+	t_3dvec n;
+	t_light *p;
+
+	light_effects = rgb_multiply_scalar(scene->ambient.color, scene->ambient.intensity);
+	p = scene->light;
+	while (p)
+	{
+		l = vector_normalize(vector_subtract(contact_p, p->coordinates));
+		n = surface_vector(obj, contact_p);
+		light_effects = rgb_add(light_effects, rgb_multiply_scalar(p->color, vector_dot(l, n) * p->intensity));
+		p = p->next;
+	}
+	return (light_effects);
+}
+
 int trace_ray(t_3dvec cam_coords, t_3dvec c_coords, t_scene	*scene)
 {
 	double		closest_t;
 	t_object	*closest_obj;
 	int			color;
+	int 		light_effects;
 
 	closest_t = MAX_DIST;
 	color = 0;
+
 	if ((closest_obj = trace_result(cam_coords, c_coords, &closest_t, scene)))
 	{
 		color = closest_obj->color;
+		light_effects = process_light(closest_obj, vector_scalar_mult(vector_subtract(cam_coords, c_coords),closest_t),scene);
+		color = rgb_multiply(color, light_effects);
 	}
 	return (color);
 }

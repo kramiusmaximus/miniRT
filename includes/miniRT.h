@@ -152,8 +152,11 @@ int			get_t(int trgb);
 int			get_r(int trgb);
 int			get_g(int trgb);
 int			get_b(int trgb);
-int			create_trgb(int t, int r, int g, int b);
+int			rgb_create(int t, int r, int g, int b);
 int			put_pixel(t_image *image, int x, int y, int color);
+int			rgb_multiply(int c1, int c2);
+int			rgb_multiply_scalar(int c1, double s);
+int			rgb_add(int c1, int c2);
 
 // vector functions
 t_3dvec		vector_add(t_3dvec v1, t_3dvec v2);
@@ -161,6 +164,7 @@ t_3dvec		vector_subtract(t_3dvec v1, t_3dvec v2);
 double		vector_dot(t_3dvec v1, t_3dvec v2);
 double 		vector_norm(t_3dvec v);
 t_3dvec 	vector_scalar_mult(t_3dvec v, double s);
+t_3dvec 	vector_normalize(t_3dvec v);
 
 t_3dvec canvas_to_coords(int cx, int cy, t_scene *scene);
 

@@ -18,13 +18,7 @@ stdio.h
 
 ../includes/mlx.h
 
-/Users/pfelipa/Desktop/pfelipa/miniRT/main.c
-tcl.h
--
-tclDecls.h
--
-tclTomMath.h
--
+/Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/trace.c
 miniRT.h
-/Users/pfelipa/Desktop/pfelipa/miniRT/miniRT.h
+/Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/miniRT.h
 
