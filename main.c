@@ -6,30 +6,29 @@
 int main()
 {
 	// stuff that would come from the parser. Parser would return a 'scene' file I reckon;
-	int z = 50;
+	int z = 90;
 	t_scene		scene;
 	t_ambient	ambient = {0.1, 0x00FFFFFF};
-	t_light		l1 = {1, {0,60, z}, 0x00FFFFFF};
-	t_lights	lights = {1, {l1}};
-	t_camera	camera = {0, {3,0,0, 0}, {0,0, 0}, 100, 1};
-	t_sphere	sp1 = {0, 10, {3, 0, 0, z}, 0x00FF0000};
-	t_sphere	sp2 = {0, 10, {3, 15, 0, z}, 0x0000FF00};
-	t_sphere	sp4 = {0, 10, {3, -15, 0, z}, 0x0000FF00};
-	t_sphere	sp3 = {0, 10, {3, 30, 0, z}, 0x000000FF};
-	t_sphere	sp5 = {0, 10, {3, -30, 0, z}, 0x000000FF};
-	t_spheres	spheres = {5, {sp1, sp2, sp3, sp4, sp5}};
-	t_dims		window_dims = {600, 1000};
-	t_dims		image_res = {1200, 2000};
+	t_light		l1 = {1, {0,60, z}, 0x00FFFFFF, NULL};
+	t_camera	camera = {{0,0,0}, {0,0, 0}, 70, 1, NULL};
+	t_sp		sp1 = {{0, 0, z}, 20};
+	t_sp		sp2 = {{20, 20, z}, 20};
+	t_sp		sp3 = {{-20, -20, z}, 20};
+	t_object	object0 = {SP, sp1,0,0,0x00FF0000, NULL};
+	t_object	object1 = {SP, sp2,0,0,0x0000FF00, &object0};
+	t_object	object2 = {SP, sp3,0,0,0x000000FF, &object1};
+	t_dims		window_dims = {720, 1280};
+	t_dims		image_res = {720, 1200};
 	t_vars		vars;
 	t_image 	image;
 
 	// initializing scene;
 	scene.window_dims = window_dims;
 	scene.res = image_res;
-	scene.camera = camera;
+	scene.camera = &camera;
 	scene.ambient = ambient;
-	scene.lights = lights;
-	scene.spheres = spheres;
+	scene.light = &l1;
+	scene.object = &object2;
 
 	// lets get the party started;
 	vars.mlx = mlx_init();

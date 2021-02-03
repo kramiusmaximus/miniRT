@@ -4,111 +4,150 @@
 # include <mlx.h>
 # include <stdlib.h>
 # include <stdio.h>
-# define SPHERE		0b1
 # define MAX_DIST	10000000000
+# define SP			0b00000001
+# define PL			0b00000010
+# define SQ			0b00000100
+# define CY			0b00001000
+# define TR			0b00010000
 
-typedef struct  s_image
+typedef struct  	s_image
 {
-	void        *img;
-	char        *addr;
-	int         bits_per_pixel;
-	int         line_length;
-	int         endian;
-}               t_image;
+	void        	*img;
+	char        	*addr;
+	int         	bits_per_pixel;
+	int         	line_length;
+	int         	endian;
+}               	t_image;
 
-typedef struct  s_vars
+typedef struct  	s_vars
 {
-	void        *mlx;
-	void        *win;
-	t_image 	image;
-}               t_vars;
+	void        	*mlx;
+	void        	*win;
+	t_image 		image;
+}               	t_vars;
 
-typedef struct	s_vector
+typedef struct		s_3dvec
 {
-	int			count;
-	double		arr[10];
-}				t_vector;
+	double 			x;
+	double 			y;
+	double 			z;
+}					t_3dvec;
 
-typedef struct 	s_dims
+typedef struct 		s_dims
 {
-	int 		height;
-	int			width;
-}				t_dims;
+	int 			height;
+	int				width;
+}					t_dims;
 
-typedef	struct	s_canvas
+typedef struct 		s_rot
 {
-	int 	pixel_width;
-	int 	pixel_height;
-}				t_canvas;
+	double 			x_rot;
+	double 			y_rot;
+	double 			z_rot;
+}					t_rot;
 
-typedef struct 	s_rot
+typedef struct		s_camera
 {
-	double 		x_rot;
-	double 		y_rot;
-	double 		z_rot;
-}				t_rot;
+	t_3dvec			coordinates;
+	t_rot			rotation;
+	double 			fov;
+	int 			d;
+	struct s_camera	*next;
+}					t_camera;
 
-typedef struct	s_camera
+typedef struct		s_ambient
 {
-	int 		id;
-	t_vector	coordinates;
-	t_rot		rotation;
-	double 		fov;
-	int 		d;
-}				t_camera;
+	double 			intensity;
+	int 			color;
+}					t_ambient;
 
-typedef struct	s_abmient
+typedef struct		s_light
 {
-	double 		intensity;
-	int 		color;
-}				t_ambient;
+	double			intensity;
+	t_3dvec			coordinates;
+	int 			color;
+	struct s_light	*next;
+}					t_light;
 
-typedef struct	s_light
+
+
+// shapes
+
+typedef struct		s_sp
 {
-	double		intensity;
-	t_vector	coordinates;
-	int 		color;
+	t_3dvec			coordinates;
+	double 			diameter;
+}					t_sp;
 
-}				t_light;
-
-typedef struct	s_lights
+typedef struct		s_pl
 {
-		int 	count;
-		t_light	arr[10];
-}				t_lights;
+	t_3dvec			coordinates;
+	t_rot			rotation;
+}					t_pl;
 
-typedef struct	s_sphere
+typedef struct		s_sq
 {
-	int 		id;
-	double 		diameter;
-	t_vector	coordinates;
-	int 		color;
-}				t_sphere;
+	t_3dvec			coordinates;
+	t_rot			rotation;
+	double 			side_len;
+}					t_sq;
 
-typedef struct	s_spheres
+typedef	struct		s_cy
 {
-	int			count;
-	t_sphere	arr[10];	// change to pointer later
-}				t_spheres;
+	t_3dvec			coordinates;
+	t_rot			rotation;
+	double 			diameter;
+	double 			height;
+}					t_cy;
 
-typedef struct	s_objects
+typedef struct 		s_tr
 {
-	int 		count;
-	void 		*arr[20];
-}				t_objects;
+	t_3dvec			p1;
+	t_3dvec			p2;
+	t_3dvec			p3;
+}					t_tr;
+
+typedef union		u_shape
+{
+	t_sp			sp;
+	t_pl			pl;
+	t_sq			sq;
+	t_cy			cy;
+	t_tr			tr;
+}					t_shape;
+
+typedef struct		s_object
+{
+	int 			type;
+	t_shape			shape;
+	double 			refraction;
+	double 			reflectivity;
+	int 			color;
+	struct s_object	*next;
+}				t_object;
+
+
+
+
+// main structure which stores most of data after parsing
 
 typedef struct	s_scene
 {
 	t_dims		window_dims;
 	t_dims		res;
-	t_camera	camera;
-	t_lights	lights;
+	t_camera	*camera;
+	t_light		*light;
 	t_ambient	ambient;
-	t_spheres	spheres; // will remove later because objects are superior!!!
-	t_objects	objects;
+	t_object	*object;
 }				t_scene;
 
+
+
+
+
 // color functions
+
 int			get_t(int trgb);
 int			get_r(int trgb);
 int			get_g(int trgb);
@@ -117,16 +156,18 @@ int			create_trgb(int t, int r, int g, int b);
 int			put_pixel(t_image *image, int x, int y, int color);
 
 // vector functions
-t_vector	vector_add(t_vector v1, t_vector v2);
-t_vector	vector_subtract(t_vector v1, t_vector v2);
-double		vector_dot(t_vector v1, t_vector v2);
+t_3dvec		vector_add(t_3dvec v1, t_3dvec v2);
+t_3dvec		vector_subtract(t_3dvec v1, t_3dvec v2);
+double		vector_dot(t_3dvec v1, t_3dvec v2);
+double 		vector_norm(t_3dvec v);
+t_3dvec 	vector_scalar_mult(t_3dvec v, double s);
 
-t_vector canvas_to_coords(int cx, int cy, t_scene *scene);
+t_3dvec canvas_to_coords(int cx, int cy, t_scene *scene);
 
 // ray tracing funciotons
 int render_image(t_vars *vars, t_scene *scene);
-int cast_ray(t_vector cam_coords, t_vector c_coords, t_spheres spheres);
-void ray_intersect_sphere(t_vector cam_coords, t_vector c_coords, t_sphere sphere, double t[2]);
+// int cast_ray(t_3dvec cam_coords, t_3dvec c_coords, t_spheres spheres);
+t_object	*ray_intersect_sphere(t_3dvec cam_coords, t_3dvec c_coords, t_object *sphere_obj, double *t);
 
 
 
