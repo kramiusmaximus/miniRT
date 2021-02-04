@@ -24,6 +24,7 @@ int process_light(t_object *obj, t_3dvec contact_p, t_scene *scene)
 	int light_effects;
 	t_3dvec l;
 	t_3dvec n;
+	double t;
 	t_light *p;
 	double dot;
 
@@ -31,11 +32,15 @@ int process_light(t_object *obj, t_3dvec contact_p, t_scene *scene)
 	p = scene->light;
 	while (p)
 	{
+		t = MAX_DIST;
 		l = vector_normalize(vector_subtract(p->coordinates, contact_p));
 		n = surface_vector(obj, contact_p);
-		dot = vector_dot(n, l);
-		dot = dot < 0 ? 0 : dot;
-		light_effects = rgb_add(light_effects,rgb_multiply_scalar(p->color, dot * p->intensity));
+		if (!trace_result(contact_p, l, &t, scene, 1))
+		{
+			dot = vector_dot(n, l);
+			dot = dot < 0 ? 0 : dot;
+			light_effects = rgb_add(light_effects,rgb_multiply_scalar(p->color, dot * p->intensity));
+		}
 		p = p->next;
 	}
 	return (light_effects);
@@ -67,7 +72,7 @@ t_object	*ray_intersect_sphere(t_3dvec cam_coords, t_3dvec v, t_object *sphere_o
 	return (sphere_obj);
 }
 
-t_object *trace_result(t_3dvec cam_coords, t_3dvec v, double *closest_t, t_scene *scene)
+t_object *trace_result(t_3dvec cam_coords, t_3dvec v, double *closest_t, t_scene *scene, double d)
 {
 	t_object	*object_hit_closest;
 	t_object	*object_hit;
@@ -90,12 +95,12 @@ t_object *trace_result(t_3dvec cam_coords, t_3dvec v, double *closest_t, t_scene
 		{}
 		else if (p->type & TR)
 		{}
-		if (t[0] > 1 && t[0] < *closest_t)
+		if (t[0] > d && t[0] < *closest_t)
 		{
 			*closest_t = t[0];
 			object_hit_closest = object_hit;
 		}
-		if (t[1] > 1 && t[1] < *closest_t)
+		if (t[1] > d && t[1] < *closest_t)
 		{
 			*closest_t = t[1];
 			object_hit_closest = object_hit;
@@ -115,10 +120,10 @@ int trace_ray(t_3dvec cam_coords, t_3dvec v, t_scene	*scene)
 	closest_t = MAX_DIST;
 	color = 0;
 
-	if ((closest_obj = trace_result(cam_coords, v, &closest_t, scene)))
+	if ((closest_obj = trace_result(cam_coords, v, &closest_t, scene, 1)))
 	{
 		color = closest_obj->color;
-		light_effects = process_light(closest_obj, vector_scalar_mult(v,closest_t),scene);
+		light_effects = process_light(closest_obj, vector_add(cam_coords, vector_scalar_mult(v,closest_t)),scene);
 		color = rgb_multiply(color, light_effects);
 	}
 	return (color);

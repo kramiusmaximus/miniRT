@@ -20,7 +20,13 @@ pthread.h
 
 ../includes/mlx.h
 
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/trace.c
+/Users/markartyukh/Desktop/code/pfelipa/miniRT/main.c
+tcl.h
+-
+tclDecls.h
+-
+tclTomMath.h
+-
 miniRT.h
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/miniRT.h
+/Users/markartyukh/Desktop/code/pfelipa/miniRT/miniRT.h
 

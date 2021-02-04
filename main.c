@@ -44,7 +44,7 @@ int main()
 	t_camera	camera = {{0,0,0}, {0,0, 0}, 70, 1, NULL};
 	t_sp		sp1 = {{-20, 0, z }, 30};
 	t_sp		sp2 = {{20, 0, z}, 30};
-	t_sp		sp3 = {{0, 0, z}, 30};
+	t_sp		sp3 = {{0, 40, z}, 30};
 	t_object	object0 = {SP, sp1,0,0,0x00FF0000, NULL};
 	t_object	object1 = {SP, sp2,0,0,0x0000FF00, &object0};
 	t_object	object2 = {SP, sp3,0,0,0x000000FF, &object1};

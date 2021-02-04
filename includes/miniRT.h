@@ -181,7 +181,7 @@ int			render_image(t_vars *vars);
 t_object	*ray_intersect_sphere(t_3dvec cam_coords, t_3dvec v, t_object *sphere_obj, double *t);
 t_3dvec 	surface_vector(t_object *obj, t_3dvec contact_p);
 int 		process_light(t_object *obj, t_3dvec contact_p, t_scene *scene);
-t_object 	*trace_result(t_3dvec cam_coords, t_3dvec v, double *closest_t, t_scene *scene);
+t_object *trace_result(t_3dvec cam_coords, t_3dvec v, double *closest_t, t_scene *scene, double d);
 int			trace_ray(t_3dvec cam_coords, t_3dvec v, t_scene *scene);
 
 // movement
