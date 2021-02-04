@@ -2,12 +2,14 @@
 
 t_3dvec canvas_to_coords(int cx, int cy, t_scene *scene)
 {
-	t_3dvec coords;
+	t_3dvec		coords;
+	t_camera	*cam = scene->camera;
+
 	double pixel_width = scene->camera->d * 2 * tan(scene->camera->fov / 2 * M_PI / 180) / scene->res.width;
 
-	coords.x = (cx - (scene->res.width / 2)) * pixel_width;
-	coords.y = (cy - (scene->res.height / 2)) * pixel_width;
-	coords.z = pixel_width * scene->res.width / (2 * tan(scene->camera->fov / 2 * M_PI / 180));
+	coords.x = (cx - (scene->res.width / 2)) * pixel_width + cam->coordinates.x;
+	coords.y = -(cy - (scene->res.height / 2)) * pixel_width + cam->coordinates.y;
+	coords.z = pixel_width * scene->res.width / (2 * tan(scene->camera->fov / 2 * M_PI / 180)) + cam->coordinates.z;
 	return (coords);
 }
 

@@ -36,5 +36,5 @@ t_3dvec 	vector_scalar_mult(t_3dvec v, double s)
 
 t_3dvec 	vector_normalize(t_3dvec v)
 {
-	return (vector_scalar_mult(v, vector_norm(v)));
+	return (vector_scalar_mult(v, 1/vector_norm(v)));
 }

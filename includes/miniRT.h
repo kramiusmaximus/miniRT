@@ -4,28 +4,14 @@
 # include <mlx.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <pthread.h>
 # define MAX_DIST	10000000000
 # define SP			0b00000001
 # define PL			0b00000010
 # define SQ			0b00000100
 # define CY			0b00001000
 # define TR			0b00010000
-
-typedef struct  	s_image
-{
-	void        	*img;
-	char        	*addr;
-	int         	bits_per_pixel;
-	int         	line_length;
-	int         	endian;
-}               	t_image;
-
-typedef struct  	s_vars
-{
-	void        	*mlx;
-	void        	*win;
-	t_image 		image;
-}               	t_vars;
+# define NUM_THREADS 4
 
 typedef struct		s_3dvec
 {
@@ -143,7 +129,29 @@ typedef struct	s_scene
 }				t_scene;
 
 
+// MLX
 
+typedef struct  	s_image
+{
+	void        	*img;
+	char        	*addr;
+	int         	bits_per_pixel;
+	int         	line_length;
+	int         	endian;
+}               	t_image;
+
+typedef struct  	s_mlx
+{
+	void        	*mlx;
+	void        	*win;
+	t_image 		image;
+}               	t_mlx;
+
+typedef struct 		s_vars
+{
+	t_mlx			*mlx;
+	t_scene			*scene;
+}					t_vars;
 
 
 // color functions
@@ -168,11 +176,15 @@ t_3dvec 	vector_normalize(t_3dvec v);
 
 t_3dvec canvas_to_coords(int cx, int cy, t_scene *scene);
 
-// ray tracing funciotons
-int render_image(t_vars *vars, t_scene *scene);
-// int cast_ray(t_3dvec cam_coords, t_3dvec c_coords, t_spheres spheres);
-t_object	*ray_intersect_sphere(t_3dvec cam_coords, t_3dvec c_coords, t_object *sphere_obj, double *t);
+// ray tracing funcitions
+int			render_image(t_vars *vars);
+t_object	*ray_intersect_sphere(t_3dvec cam_coords, t_3dvec v, t_object *sphere_obj, double *t);
+t_3dvec 	surface_vector(t_object *obj, t_3dvec contact_p);
+int 		process_light(t_object *obj, t_3dvec contact_p, t_scene *scene);
+t_object 	*trace_result(t_3dvec cam_coords, t_3dvec v, double *closest_t, t_scene *scene);
+int			trace_ray(t_3dvec cam_coords, t_3dvec v, t_scene *scene);
 
-
+// movement
+int move_camera(int key, t_vars *vars);
 
 #endif

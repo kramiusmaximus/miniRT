@@ -2,22 +2,22 @@
 
 int		get_t(int trgb)
 {
-	return (trgb & (0xFF << 24));
+	return ((trgb & (0xFF000000)) >> 24);
 }
 
 int		get_r(int trgb)
 {
-	return (trgb & (0xFF << 16));
+	return ((trgb & (0x00FF0000)) >> 16);
 }
 
 int		get_g(int trgb)
 {
-	return (trgb & (0xFF << 8));
+	return ((trgb & (0x0000FF00)) >> 8);
 }
 
 int		get_b(int trgb)
 {
-	return (trgb & 0xFF);
+	return ((trgb & (0x000000FF)));
 }
 
 int rgb_create(int t, int r, int g, int b)
@@ -38,15 +38,30 @@ int rgb_create(int t, int r, int g, int b)
 
 int rgb_multiply(int c1, int c2)
 {
-	return (rgb_create(get_t(c1) * get_t(c2), get_r(c1) * get_r(c2), get_g(c1) * get_g(c2), get_b(c1) * get_b(c2)));
+	int t = get_t(c1);
+	int r = get_r(c1) * get_r(c2) / 255;
+	int g = get_g(c1) * get_g(c2) / 255;
+	int b= get_b(c1) * get_b(c2) / 255;
+
+	return (rgb_create(t, r, g, b));
 }
 
 int rgb_multiply_scalar(int c1, double s)
 {
-	return (rgb_create(get_t(c1), get_r(c1) * s, get_g(c1) * s, get_b(c1) * s));
+	int t = get_t(c1);
+	int r = get_r(c1) * s;
+	int g = get_g(c1) * s;
+	int b= get_b(c1) * s;
+
+	return (rgb_create(t, r, g, b));
 }
 
 int rgb_add(int c1, int c2)
 {
-	return (rgb_create(get_t(c1) + get_t(c2), get_r(c1) + get_r(c2), get_g(c1) + get_g(c2), get_b(c1) + get_b(c2)));
+	int t = get_t(c1);
+	int r = get_r(c1) + get_r(c2);
+	int g = get_g(c1) + get_g(c2);
+	int b= get_b(c1) + get_b(c2);
+
+	return (rgb_create(t, r, g, b));
 }
