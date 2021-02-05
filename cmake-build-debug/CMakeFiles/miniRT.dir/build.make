@@ -63,10 +63,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/markartyukh/Desktop/code/pfelipa/miniRT
+CMAKE_SOURCE_DIR = /Users/pfelipa/Desktop/pfelipa/miniRT
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/markartyukh/Desktop/code/pfelipa/miniRT/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/miniRT.dir/depend.make
@@ -79,73 +79,101 @@ include CMakeFiles/miniRT.dir/flags.make
 
 CMakeFiles/miniRT.dir/srcs/color.c.o: CMakeFiles/miniRT.dir/flags.make
 CMakeFiles/miniRT.dir/srcs/color.c.o: ../srcs/color.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/markartyukh/Desktop/code/pfelipa/miniRT/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/miniRT.dir/srcs/color.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/miniRT.dir/srcs/color.c.o   -c /Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/color.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/miniRT.dir/srcs/color.c.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/miniRT.dir/srcs/color.c.o   -c /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/color.c
 
 CMakeFiles/miniRT.dir/srcs/color.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/miniRT.dir/srcs/color.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/color.c > CMakeFiles/miniRT.dir/srcs/color.c.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/color.c > CMakeFiles/miniRT.dir/srcs/color.c.i
 
 CMakeFiles/miniRT.dir/srcs/color.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/miniRT.dir/srcs/color.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/color.c -o CMakeFiles/miniRT.dir/srcs/color.c.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/color.c -o CMakeFiles/miniRT.dir/srcs/color.c.s
 
 CMakeFiles/miniRT.dir/srcs/math.c.o: CMakeFiles/miniRT.dir/flags.make
 CMakeFiles/miniRT.dir/srcs/math.c.o: ../srcs/math.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/markartyukh/Desktop/code/pfelipa/miniRT/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/miniRT.dir/srcs/math.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/miniRT.dir/srcs/math.c.o   -c /Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/math.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/miniRT.dir/srcs/math.c.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/miniRT.dir/srcs/math.c.o   -c /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/math.c
 
 CMakeFiles/miniRT.dir/srcs/math.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/miniRT.dir/srcs/math.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/math.c > CMakeFiles/miniRT.dir/srcs/math.c.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/math.c > CMakeFiles/miniRT.dir/srcs/math.c.i
 
 CMakeFiles/miniRT.dir/srcs/math.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/miniRT.dir/srcs/math.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/math.c -o CMakeFiles/miniRT.dir/srcs/math.c.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/math.c -o CMakeFiles/miniRT.dir/srcs/math.c.s
+
+CMakeFiles/miniRT.dir/srcs/mlx.c.o: CMakeFiles/miniRT.dir/flags.make
+CMakeFiles/miniRT.dir/srcs/mlx.c.o: ../srcs/mlx.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/miniRT.dir/srcs/mlx.c.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/miniRT.dir/srcs/mlx.c.o   -c /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/mlx.c
+
+CMakeFiles/miniRT.dir/srcs/mlx.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/miniRT.dir/srcs/mlx.c.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/mlx.c > CMakeFiles/miniRT.dir/srcs/mlx.c.i
+
+CMakeFiles/miniRT.dir/srcs/mlx.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/miniRT.dir/srcs/mlx.c.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/mlx.c -o CMakeFiles/miniRT.dir/srcs/mlx.c.s
+
+CMakeFiles/miniRT.dir/srcs/navigation.c.o: CMakeFiles/miniRT.dir/flags.make
+CMakeFiles/miniRT.dir/srcs/navigation.c.o: ../srcs/navigation.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/miniRT.dir/srcs/navigation.c.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/miniRT.dir/srcs/navigation.c.o   -c /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/navigation.c
+
+CMakeFiles/miniRT.dir/srcs/navigation.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/miniRT.dir/srcs/navigation.c.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/navigation.c > CMakeFiles/miniRT.dir/srcs/navigation.c.i
+
+CMakeFiles/miniRT.dir/srcs/navigation.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/miniRT.dir/srcs/navigation.c.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/navigation.c -o CMakeFiles/miniRT.dir/srcs/navigation.c.s
 
 CMakeFiles/miniRT.dir/srcs/trace.c.o: CMakeFiles/miniRT.dir/flags.make
 CMakeFiles/miniRT.dir/srcs/trace.c.o: ../srcs/trace.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/markartyukh/Desktop/code/pfelipa/miniRT/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/miniRT.dir/srcs/trace.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/miniRT.dir/srcs/trace.c.o   -c /Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/trace.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/miniRT.dir/srcs/trace.c.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/miniRT.dir/srcs/trace.c.o   -c /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/trace.c
 
 CMakeFiles/miniRT.dir/srcs/trace.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/miniRT.dir/srcs/trace.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/trace.c > CMakeFiles/miniRT.dir/srcs/trace.c.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/trace.c > CMakeFiles/miniRT.dir/srcs/trace.c.i
 
 CMakeFiles/miniRT.dir/srcs/trace.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/miniRT.dir/srcs/trace.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/trace.c -o CMakeFiles/miniRT.dir/srcs/trace.c.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/trace.c -o CMakeFiles/miniRT.dir/srcs/trace.c.s
 
 CMakeFiles/miniRT.dir/srcs/utils.c.o: CMakeFiles/miniRT.dir/flags.make
 CMakeFiles/miniRT.dir/srcs/utils.c.o: ../srcs/utils.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/markartyukh/Desktop/code/pfelipa/miniRT/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/miniRT.dir/srcs/utils.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/miniRT.dir/srcs/utils.c.o   -c /Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/utils.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/miniRT.dir/srcs/utils.c.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/miniRT.dir/srcs/utils.c.o   -c /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/utils.c
 
 CMakeFiles/miniRT.dir/srcs/utils.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/miniRT.dir/srcs/utils.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/utils.c > CMakeFiles/miniRT.dir/srcs/utils.c.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/utils.c > CMakeFiles/miniRT.dir/srcs/utils.c.i
 
 CMakeFiles/miniRT.dir/srcs/utils.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/miniRT.dir/srcs/utils.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/utils.c -o CMakeFiles/miniRT.dir/srcs/utils.c.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/utils.c -o CMakeFiles/miniRT.dir/srcs/utils.c.s
 
 CMakeFiles/miniRT.dir/main.c.o: CMakeFiles/miniRT.dir/flags.make
 CMakeFiles/miniRT.dir/main.c.o: ../main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/markartyukh/Desktop/code/pfelipa/miniRT/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/miniRT.dir/main.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/miniRT.dir/main.c.o   -c /Users/markartyukh/Desktop/code/pfelipa/miniRT/main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/miniRT.dir/main.c.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/miniRT.dir/main.c.o   -c /Users/pfelipa/Desktop/pfelipa/miniRT/main.c
 
 CMakeFiles/miniRT.dir/main.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/miniRT.dir/main.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/markartyukh/Desktop/code/pfelipa/miniRT/main.c > CMakeFiles/miniRT.dir/main.c.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/pfelipa/Desktop/pfelipa/miniRT/main.c > CMakeFiles/miniRT.dir/main.c.i
 
 CMakeFiles/miniRT.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/miniRT.dir/main.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/markartyukh/Desktop/code/pfelipa/miniRT/main.c -o CMakeFiles/miniRT.dir/main.c.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/pfelipa/Desktop/pfelipa/miniRT/main.c -o CMakeFiles/miniRT.dir/main.c.s
 
 # Object files for target miniRT
 miniRT_OBJECTS = \
 "CMakeFiles/miniRT.dir/srcs/color.c.o" \
 "CMakeFiles/miniRT.dir/srcs/math.c.o" \
+"CMakeFiles/miniRT.dir/srcs/mlx.c.o" \
+"CMakeFiles/miniRT.dir/srcs/navigation.c.o" \
 "CMakeFiles/miniRT.dir/srcs/trace.c.o" \
 "CMakeFiles/miniRT.dir/srcs/utils.c.o" \
 "CMakeFiles/miniRT.dir/main.c.o"
@@ -155,13 +183,15 @@ miniRT_EXTERNAL_OBJECTS =
 
 miniRT: CMakeFiles/miniRT.dir/srcs/color.c.o
 miniRT: CMakeFiles/miniRT.dir/srcs/math.c.o
+miniRT: CMakeFiles/miniRT.dir/srcs/mlx.c.o
+miniRT: CMakeFiles/miniRT.dir/srcs/navigation.c.o
 miniRT: CMakeFiles/miniRT.dir/srcs/trace.c.o
 miniRT: CMakeFiles/miniRT.dir/srcs/utils.c.o
 miniRT: CMakeFiles/miniRT.dir/main.c.o
 miniRT: CMakeFiles/miniRT.dir/build.make
 miniRT: ../mlx/libmlx.a
 miniRT: CMakeFiles/miniRT.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/markartyukh/Desktop/code/pfelipa/miniRT/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking C executable miniRT"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking C executable miniRT"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/miniRT.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -174,6 +204,6 @@ CMakeFiles/miniRT.dir/clean:
 .PHONY : CMakeFiles/miniRT.dir/clean
 
 CMakeFiles/miniRT.dir/depend:
-	cd /Users/markartyukh/Desktop/code/pfelipa/miniRT/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/markartyukh/Desktop/code/pfelipa/miniRT /Users/markartyukh/Desktop/code/pfelipa/miniRT /Users/markartyukh/Desktop/code/pfelipa/miniRT/cmake-build-debug /Users/markartyukh/Desktop/code/pfelipa/miniRT/cmake-build-debug /Users/markartyukh/Desktop/code/pfelipa/miniRT/cmake-build-debug/CMakeFiles/miniRT.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/pfelipa/Desktop/pfelipa/miniRT /Users/pfelipa/Desktop/pfelipa/miniRT /Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug /Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug /Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles/miniRT.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/miniRT.dir/depend
 

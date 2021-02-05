@@ -68,10 +68,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/markartyukh/Desktop/code/pfelipa/miniRT
+CMAKE_SOURCE_DIR = /Users/pfelipa/Desktop/pfelipa/miniRT
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/markartyukh/Desktop/code/pfelipa/miniRT/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -100,9 +100,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/markartyukh/Desktop/code/pfelipa/miniRT/cmake-build-debug/CMakeFiles /Users/markartyukh/Desktop/code/pfelipa/miniRT/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles /Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/markartyukh/Desktop/code/pfelipa/miniRT/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -224,6 +224,60 @@ srcs/math.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/math.c.s
 .PHONY : srcs/math.c.s
 
+srcs/mlx.o: srcs/mlx.c.o
+
+.PHONY : srcs/mlx.o
+
+# target to build an object file
+srcs/mlx.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/mlx.c.o
+.PHONY : srcs/mlx.c.o
+
+srcs/mlx.i: srcs/mlx.c.i
+
+.PHONY : srcs/mlx.i
+
+# target to preprocess a source file
+srcs/mlx.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/mlx.c.i
+.PHONY : srcs/mlx.c.i
+
+srcs/mlx.s: srcs/mlx.c.s
+
+.PHONY : srcs/mlx.s
+
+# target to generate assembly for a file
+srcs/mlx.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/mlx.c.s
+.PHONY : srcs/mlx.c.s
+
+srcs/navigation.o: srcs/navigation.c.o
+
+.PHONY : srcs/navigation.o
+
+# target to build an object file
+srcs/navigation.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/navigation.c.o
+.PHONY : srcs/navigation.c.o
+
+srcs/navigation.i: srcs/navigation.c.i
+
+.PHONY : srcs/navigation.i
+
+# target to preprocess a source file
+srcs/navigation.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/navigation.c.i
+.PHONY : srcs/navigation.c.i
+
+srcs/navigation.s: srcs/navigation.c.s
+
+.PHONY : srcs/navigation.s
+
+# target to generate assembly for a file
+srcs/navigation.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/navigation.c.s
+.PHONY : srcs/navigation.c.s
+
 srcs/trace.o: srcs/trace.c.o
 
 .PHONY : srcs/trace.o
@@ -296,6 +350,12 @@ help:
 	@echo "... srcs/math.o"
 	@echo "... srcs/math.i"
 	@echo "... srcs/math.s"
+	@echo "... srcs/mlx.o"
+	@echo "... srcs/mlx.i"
+	@echo "... srcs/mlx.s"
+	@echo "... srcs/navigation.o"
+	@echo "... srcs/navigation.i"
+	@echo "... srcs/navigation.s"
 	@echo "... srcs/trace.o"
 	@echo "... srcs/trace.i"
 	@echo "... srcs/trace.s"

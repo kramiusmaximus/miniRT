@@ -20,7 +20,7 @@ pthread.h
 
 ../includes/mlx.h
 
-/Users/markartyukh/Desktop/code/pfelipa/miniRT/main.c
+/Users/pfelipa/Desktop/pfelipa/miniRT/main.c
 tcl.h
 -
 tclDecls.h
@@ -28,5 +28,5 @@ tclDecls.h
 tclTomMath.h
 -
 miniRT.h
-/Users/markartyukh/Desktop/code/pfelipa/miniRT/miniRT.h
+/Users/pfelipa/Desktop/pfelipa/miniRT/miniRT.h
 

@@ -13,6 +13,14 @@ CMakeFiles/miniRT.dir/srcs/math.c.o: ../includes/miniRT.h
 CMakeFiles/miniRT.dir/srcs/math.c.o: ../includes/mlx.h
 CMakeFiles/miniRT.dir/srcs/math.c.o: ../srcs/math.c
 
+CMakeFiles/miniRT.dir/srcs/mlx.c.o: ../includes/miniRT.h
+CMakeFiles/miniRT.dir/srcs/mlx.c.o: ../includes/mlx.h
+CMakeFiles/miniRT.dir/srcs/mlx.c.o: ../srcs/mlx.c
+
+CMakeFiles/miniRT.dir/srcs/navigation.c.o: ../includes/miniRT.h
+CMakeFiles/miniRT.dir/srcs/navigation.c.o: ../includes/mlx.h
+CMakeFiles/miniRT.dir/srcs/navigation.c.o: ../srcs/navigation.c
+
 CMakeFiles/miniRT.dir/srcs/trace.c.o: ../includes/miniRT.h
 CMakeFiles/miniRT.dir/srcs/trace.c.o: ../includes/mlx.h
 CMakeFiles/miniRT.dir/srcs/trace.c.o: ../srcs/trace.c

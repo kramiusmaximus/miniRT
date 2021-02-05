@@ -2,6 +2,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/miniRT.dir/main.c.o"
   "CMakeFiles/miniRT.dir/srcs/color.c.o"
   "CMakeFiles/miniRT.dir/srcs/math.c.o"
+  "CMakeFiles/miniRT.dir/srcs/mlx.c.o"
+  "CMakeFiles/miniRT.dir/srcs/navigation.c.o"
   "CMakeFiles/miniRT.dir/srcs/trace.c.o"
   "CMakeFiles/miniRT.dir/srcs/utils.c.o"
   "miniRT"

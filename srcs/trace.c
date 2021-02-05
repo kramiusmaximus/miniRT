@@ -1,12 +1,27 @@
 #include "miniRT.h"
 
-t_3dvec surface_vector(t_object *obj, t_3dvec contact_p)
+t_object	*ray_intersect_sphere(t_3dvec p_origin, t_3dvec v_dir, t_object *sphere_obj, double *t)
+{
+	double a;
+	double b;
+	double c;
+	int solution_n;
+
+	a = vector_dot(v_dir, v_dir);
+	b = 2 * vector_dot(vector_subtract(p_origin, sphere_obj->shape.sp.coordinates), v_dir);
+	c = vector_dot(vector_subtract(p_origin, sphere_obj->shape.sp.coordinates),vector_subtract(p_origin, sphere_obj->shape.sp.coordinates)) - pow(sphere_obj->shape.sp.diameter / 2, 2);
+	solution_n = solve_quadratic(a, b, c, t);
+	if (solution_n)
+		return (sphere_obj);
+	return (NULL);
+}
+t_3dvec surface_vector(t_object *obj, t_3dvec p_contact)
 {
 	t_3dvec n = {0,0,0};
 
 	if (obj->type & SP)
 	{
-		n = vector_normalize(vector_subtract(contact_p, obj->shape.sp.coordinates));
+		n = vector_normalize(vector_subtract(p_contact, obj->shape.sp.coordinates));
 	}
 	else if (obj->type & PL)
 	{}
@@ -19,64 +34,11 @@ t_3dvec surface_vector(t_object *obj, t_3dvec contact_p)
 	return (n);
 }
 
-int process_light(t_object *obj, t_3dvec contact_p, t_scene *scene)
-{
-	int light_effects;
-	t_3dvec l;
-	t_3dvec n;
-	double t;
-	t_light *p;
-	double dot;
-
-	light_effects = rgb_multiply_scalar(scene->ambient.color, scene->ambient.intensity);
-	p = scene->light;
-	while (p)
-	{
-		t = MAX_DIST;
-		l = vector_normalize(vector_subtract(p->coordinates, contact_p));
-		n = surface_vector(obj, contact_p);
-		if (!trace_result(contact_p, l, &t, scene, 1))
-		{
-			dot = vector_dot(n, l);
-			dot = dot < 0 ? 0 : dot;
-			light_effects = rgb_add(light_effects,rgb_multiply_scalar(p->color, dot * p->intensity));
-		}
-		p = p->next;
-	}
-	return (light_effects);
-}
-
-t_object	*ray_intersect_sphere(t_3dvec cam_coords, t_3dvec v, t_object *sphere_obj, double *t)
-{
-	double k1 = vector_dot(v,v);
-	double k2 = 2 * vector_dot(vector_subtract(cam_coords, sphere_obj->shape.sp.coordinates), v);
-	double k3 = vector_dot(vector_subtract(cam_coords, sphere_obj->shape.sp.coordinates), vector_subtract(cam_coords, sphere_obj->shape.sp.coordinates)) - pow(sphere_obj->shape.sp.diameter / 2, 2);
-	double discriminant = pow(k2, 2) - 4 * k1 * k3;
-
-	if (pow(discriminant, 3) < 1 && pow(discriminant, 3) > -1) // 1 solution
-	{
-		t[0] = -k2 / (2 * k1);
-		t[1] = MAX_DIST;
-	}
-	else if (discriminant > 0)				// 2 solutions
-	{
-		t[0] = -k2 / (2 * k1) + sqrt(discriminant);
-		t[1] = -k2 / (2 * k1) - sqrt(discriminant);
-	}
-	else
-	{
-		t[0] = MAX_DIST;
-		t[1] = MAX_DIST;
-		return (NULL);
-	}
-	return (sphere_obj);
-}
-
-t_object *trace_result(t_3dvec cam_coords, t_3dvec v, double *closest_t, t_scene *scene, double d)
+t_object *trace_result(t_3dvec p_origin, t_3dvec v_dir, double *closest_t, t_scene *scene, double d)
 {
 	t_object	*object_hit_closest;
 	t_object	*object_hit;
-	double 		t[] = {MAX_DIST, MAX_DIST};
+	double 		t[] = {*closest_t, *closest_t};
 	t_object	*p;
 
 	object_hit_closest = NULL;
@@ -86,7 +48,7 @@ t_object *trace_result(t_3dvec cam_coords, t_3dvec v, double *closest_t, t_scene
 	while (p)
 	{
 		if (p->type & SP)
-			object_hit = ray_intersect_sphere(cam_coords, v, p, &t);
+			object_hit = ray_intersect_sphere(p_origin, v_dir, p, &t);
 		else if (p->type & PL)
 		{}
 		else if (p->type & SQ)
@@ -110,6 +72,33 @@ t_object *trace_result(t_3dvec cam_coords, t_3dvec v, double *closest_t, t_scene
 	return (object_hit_closest);
 }
 
+int process_light(t_object *obj, t_3dvec contact_p, t_scene *scene)
+{
+	int light_effects;
+	t_3dvec l;
+	t_3dvec n;
+	double t;
+	t_light *p;
+	double dot;
+
+	light_effects = rgb_multiply_scalar(scene->ambient.color, scene->ambient.intensity);
+	p = scene->light;
+	n = surface_vector(obj, contact_p);
+	while (p)
+	{
+		t = 1;
+		l = vector_normalize(vector_subtract(p->coordinates, contact_p));
+		if (!trace_result(contact_p, vector_subtract(p->coordinates, contact_p), &t, scene, 0.000000000001))
+		{
+			dot = vector_dot(n, l);
+			dot = dot < 0 ? 0 : dot;
+			light_effects = rgb_add(light_effects,rgb_multiply_scalar(p->color, dot * p->intensity));
+		}
+		p = p->next;
+	}
+	return (light_effects);
+}
+
 int trace_ray(t_3dvec cam_coords, t_3dvec v, t_scene	*scene)
 {
 	double		closest_t;
@@ -120,12 +109,16 @@ int trace_ray(t_3dvec cam_coords, t_3dvec v, t_scene	*scene)
 	closest_t = MAX_DIST;
 	color = 0;
 
-	if ((closest_obj = trace_result(cam_coords, v, &closest_t, scene, 1)))
+	for (int i = 0; i < 2; i++)
 	{
-		color = closest_obj->color;
-		light_effects = process_light(closest_obj, vector_add(cam_coords, vector_scalar_mult(v,closest_t)),scene);
-		color = rgb_multiply(color, light_effects);
+		if ((closest_obj = trace_result(cam_coords, v, &closest_t, scene, 1)))
+		{
+			color = closest_obj->color;
+			light_effects = process_light(closest_obj, vector_add(cam_coords, vector_scalar_mult(v,closest_t)),scene);
+			color = rgb_multiply(color, light_effects);
+		}
 	}
+
 	return (color);
 }
 

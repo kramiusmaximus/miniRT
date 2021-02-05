@@ -15,6 +15,11 @@ file(GLOB SOURCES
         )
 add_executable(miniRT ${SOURCES} main.c)
 target_link_libraries(miniRT ${LIBRARIES})
-target_link_libraries(miniRT /Users/markartyukh/Desktop/code/pfelipa/miniRT)
+
+#shkola : /Users/pfelipa/Desktop/pfelipa/miniRT
+#home : /Users/markartyukh/Desktop/code/pfelipa/miniRT
+target_link_libraries(miniRT /Users/pfelipa/Desktop/pfelipa/miniRT)
 target_link_libraries(miniRT "-framework OpenGL" "-framework AppKit")
 
+#shkola : /Users/pfelipa/Desktop/pfelipa/miniRT
+#home : /Users/markartyukh/Desktop/code/pfelipa/miniRT
