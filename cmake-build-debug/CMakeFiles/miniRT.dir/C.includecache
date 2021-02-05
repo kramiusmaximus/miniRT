@@ -21,12 +21,8 @@ pthread.h
 ../includes/mlx.h
 
 /Users/pfelipa/Desktop/pfelipa/miniRT/main.c
-tcl.h
--
-tclDecls.h
--
-tclTomMath.h
--
 miniRT.h
 /Users/pfelipa/Desktop/pfelipa/miniRT/miniRT.h
+pthread.h
+-
 

@@ -1,11 +1,13 @@
 #include "miniRT.h"
 
+extern 		t_vars vars;
+
 t_object	*ray_intersect_sphere(t_3dvec p_origin, t_3dvec v_dir, t_object *sphere_obj, double *t)
 {
-	double a;
-	double b;
-	double c;
-	int solution_n;
+	double 	a;
+	double 	b;
+	double 	c;
+	int 	solution_n;
 
 	a = vector_dot(v_dir, v_dir);
 	b = 2 * vector_dot(vector_subtract(p_origin, sphere_obj->shape.sp.coordinates), v_dir);
@@ -15,14 +17,12 @@ t_object	*ray_intersect_sphere(t_3dvec p_origin, t_3dvec v_dir, t_object *sphere
 		return (sphere_obj);
 	return (NULL);
 }
-t_3dvec surface_vector(t_object *obj, t_3dvec p_contact)
+t_3dvec 	surface_vector(t_object *obj, t_3dvec p_contact)
 {
 	t_3dvec n = {0,0,0};
 
 	if (obj->type & SP)
-	{
 		n = vector_normalize(vector_subtract(p_contact, obj->shape.sp.coordinates));
-	}
 	else if (obj->type & PL)
 	{}
 	else if (obj->type & SQ)
@@ -34,7 +34,7 @@ t_3dvec surface_vector(t_object *obj, t_3dvec p_contact)
 	return (n);
 }
 
-t_object *trace_result(t_3dvec p_origin, t_3dvec v_dir, double *closest_t, t_scene *scene, double d)
+t_object 	*trace_result(t_3dvec p_origin, t_3dvec v_dir, double *closest_t, t_scene *scene, double d)
 {
 	t_object	*object_hit_closest;
 	t_object	*object_hit;
@@ -72,14 +72,14 @@ t_object *trace_result(t_3dvec p_origin, t_3dvec v_dir, double *closest_t, t_sce
 	return (object_hit_closest);
 }
 
-int process_light(t_object *obj, t_3dvec contact_p, t_scene *scene)
+int 		process_light(t_object *obj, t_3dvec contact_p, t_scene *scene)
 {
-	int light_effects;
+	int 	light_effects;
 	t_3dvec l;
 	t_3dvec n;
-	double t;
+	double 	t;
 	t_light *p;
-	double dot;
+	double 	dot;
 
 	light_effects = rgb_multiply_scalar(scene->ambient.color, scene->ambient.intensity);
 	p = scene->light;
@@ -99,42 +99,41 @@ int process_light(t_object *obj, t_3dvec contact_p, t_scene *scene)
 	return (light_effects);
 }
 
-int trace_ray(t_3dvec cam_coords, t_3dvec v, t_scene	*scene)
+int 		trace_ray(t_3dvec cam_coords, t_3dvec v, t_scene	*scene)
 {
 	double		closest_t;
 	t_object	*closest_obj;
 	int			color;
 	int 		light_effects;
+	int 		counter;
 
 	closest_t = MAX_DIST;
 	color = 0;
 
-	for (int i = 0; i < 2; i++)
+	if ((closest_obj = trace_result(cam_coords, v, &closest_t, scene, 1)))
 	{
-		if ((closest_obj = trace_result(cam_coords, v, &closest_t, scene, 1)))
-		{
-			color = closest_obj->color;
-			light_effects = process_light(closest_obj, vector_add(cam_coords, vector_scalar_mult(v,closest_t)),scene);
-			color = rgb_multiply(color, light_effects);
-		}
+		color = closest_obj->color;
+		light_effects = process_light(closest_obj, vector_add(cam_coords, vector_scalar_mult(v,closest_t)),scene);
+		color = rgb_multiply(color, light_effects);
+		closest_t = MAX_DIST;
 	}
 
 	return (color);
 }
 
-int render_image(t_vars *vars)
+void 		*render_section(void *arg)
 {
-	t_scene	*scene = vars->scene;
-	t_mlx	*mlx = vars->mlx;
-	t_camera	*cam = scene->camera;
+	int 		id = (int)arg;
+	t_scene 	*scene = vars.scene;
+	t_mlx 		*mlx = vars.mlx;
+	t_3dvec 	c_coords;
+	t_camera 	*cam = scene->camera;
+	int 		color;
+	double 		y_mult = ((double)scene->window_dims.height / (double)scene->res.height);
+	double 		x_mult = ((double)scene->window_dims.width / (double)scene->res.width);
+	int			section_h = scene->res.height / NUM_THREADS;
 
-	int color;
-	double x_mult;
-	double y_mult;
-	t_3dvec c_coords;
-	y_mult = ((double)scene->window_dims.height / (double)scene->res.height);
-	x_mult = ((double)scene->window_dims.width / (double)scene->res.width);
-	for (int y_box = 0; y_box < scene->res.height; y_box++)
+	for (int y_box = section_h * id; y_box < section_h * (id + 1); y_box++)
 	{
 		for (int x_box = 0; x_box < scene->res.width; x_box++)
 		{
@@ -149,6 +148,19 @@ int render_image(t_vars *vars)
 			}
 		}
 	}
+	pthread_exit(NULL);
+}
+
+int 		render_image(t_vars *vars)
+{
+	pthread_t	threads[NUM_THREADS];
+	t_scene		*scene = vars->scene;
+	t_mlx		*mlx = vars->mlx;
+
+	for (int tid = 0; tid < NUM_THREADS; tid++)
+		pthread_create(&threads[tid], NULL, render_section, (void *)tid);
+	for (int tid = 0; tid < NUM_THREADS; tid++)
+		pthread_join(threads[tid], NULL);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->image.img, 0, 0);
 	return (0);
 }

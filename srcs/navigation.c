@@ -26,6 +26,6 @@ int move_camera(int key, t_vars *vars)
 	{
 		vars->scene->camera->coordinates.y -= 2;
 	}
-	printf("%d\n", key);
+	//printf("%d\n", key);
 	return (0);
 }

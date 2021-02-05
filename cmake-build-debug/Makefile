@@ -224,33 +224,6 @@ srcs/math.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/math.c.s
 .PHONY : srcs/math.c.s
 
-srcs/mlx.o: srcs/mlx.c.o
-
-.PHONY : srcs/mlx.o
-
-# target to build an object file
-srcs/mlx.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/mlx.c.o
-.PHONY : srcs/mlx.c.o
-
-srcs/mlx.i: srcs/mlx.c.i
-
-.PHONY : srcs/mlx.i
-
-# target to preprocess a source file
-srcs/mlx.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/mlx.c.i
-.PHONY : srcs/mlx.c.i
-
-srcs/mlx.s: srcs/mlx.c.s
-
-.PHONY : srcs/mlx.s
-
-# target to generate assembly for a file
-srcs/mlx.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/mlx.c.s
-.PHONY : srcs/mlx.c.s
-
 srcs/navigation.o: srcs/navigation.c.o
 
 .PHONY : srcs/navigation.o
@@ -350,9 +323,6 @@ help:
 	@echo "... srcs/math.o"
 	@echo "... srcs/math.i"
 	@echo "... srcs/math.s"
-	@echo "... srcs/mlx.o"
-	@echo "... srcs/mlx.i"
-	@echo "... srcs/mlx.s"
 	@echo "... srcs/navigation.o"
 	@echo "... srcs/navigation.i"
 	@echo "... srcs/navigation.s"

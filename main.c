@@ -1,22 +1,21 @@
-#include <tcl.h>
-#include <tclDecls.h>
-#include <tclTomMath.h>
 #include "miniRT.h"
+#include <pthread.h>
 
+t_vars	vars;
 
-int main()
+int	initiate_jesus_resurrection()
 {
 	// stuff that would come from the parser. Parser would return a 'scene' file I reckon;
-	int z = 300;
+	int z = 	300;
 	t_scene		scene;
-	t_ambient	ambient = {0.15, 0x00FFFFFF};
+	t_ambient	ambient = {0.2 , 0x00FFFFFF};
 	t_light		l1 = {1, {600,300, z - 150}, 0x00FFFFFF, NULL};
 	//t_light		l2 = {0, {0,0, 0}, 0x00FFFFFF, &l1};
 	t_camera	camera = {{0,0,0}, {0,0, 0}, 70, 1, NULL};
 	t_sp		sp1 = {{-70, 0, z }, 30};
 	t_sp		sp2 = {{0, 0, z}, 100};
 	t_sp		sp3 = {{70, 0, z}, 30};
-	t_sp		sp4 = {{55, 30, z-35}, 20};
+	t_sp		sp4 = {{20, 20, z-55}, 20};
 	t_object	object0 = {SP, sp1,0,0,0x00FF0000, NULL};
 	t_object	object1 = {SP, sp2,0,0.5,0x0000FF00, &object0};
 	t_object	object2 = {SP, sp3,0,0,0x000000FF, &object1};
@@ -26,7 +25,9 @@ int main()
 	t_dims		image_res = {720, 1280};
 	t_mlx		mlx;
 	t_image 	image;
-	t_vars		vars = {&mlx, &scene};
+	vars.mlx = &mlx;
+	vars.scene = &scene;
+
 
 	// initializing scene;  use parser for this
 	scene.window_dims = window_dims;
@@ -43,8 +44,13 @@ int main()
 	image.addr = mlx_get_data_addr(image.img, &image.bits_per_pixel, &image.line_length, &image.endian);
 	mlx.image = image;
 	mlx_loop_hook(vars.mlx->mlx, render_image, &vars);
-	//mlx_hook(image.img, 2, 1L<<0, move_camera, &vars);
 	mlx_key_hook(vars.mlx->win, move_camera, &vars);
 	mlx_loop(vars.mlx->mlx);
+}
+
+int main()
+{
+	initiate_jesus_resurrection();
+	return (0);
 }
 

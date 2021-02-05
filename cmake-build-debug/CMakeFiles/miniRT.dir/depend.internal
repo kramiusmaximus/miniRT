@@ -13,10 +13,6 @@ CMakeFiles/miniRT.dir/srcs/math.c.o
  ../includes/miniRT.h
  ../includes/mlx.h
  /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/math.c
-CMakeFiles/miniRT.dir/srcs/mlx.c.o
- ../includes/miniRT.h
- ../includes/mlx.h
- /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/mlx.c
 CMakeFiles/miniRT.dir/srcs/navigation.c.o
  ../includes/miniRT.h
  ../includes/mlx.h

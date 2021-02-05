@@ -153,6 +153,12 @@ typedef struct 		s_vars
 	t_scene			*scene;
 }					t_vars;
 
+typedef struct		s_targs
+{
+	t_vars			*vars;
+	int 			id;
+}					t_targs;
+
 
 // color functions
 
@@ -179,7 +185,7 @@ int				solve_quadratic(double a, double b, double c, double t[2]);
 t_3dvec 		canvas_to_coords(int cx, int cy, t_scene *scene);
 
 // ray tracing funcitions
-int				render_image(t_vars *vars);
+int render_image(t_vars *vars);
 t_object		*ray_intersect_sphere(t_3dvec p_origin, t_3dvec v_dir, t_object *sphere_obj, double *t);
 t_3dvec 		surface_vector(t_object *obj, t_3dvec p_contact);
 int 			process_light(t_object *obj, t_3dvec contact_p, t_scene *scene);

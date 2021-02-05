@@ -100,9 +100,6 @@
 		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/math.c">
 			<Option target="miniRT"/>
 		</Unit>
-		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/mlx.c">
-			<Option target="miniRT"/>
-		</Unit>
 		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/navigation.c">
 			<Option target="miniRT"/>
 		</Unit>
