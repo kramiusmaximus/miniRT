@@ -58,3 +58,18 @@ int			solve_quadratic(double a, double b, double c, double t[2])
 		return (2);
 	}
 }
+
+int max(int a, int b)
+{
+	return (a > b ? a : b);
+}
+
+int min(int a, int b)
+{
+	return (a < b ? a : b);
+}
+
+int abs(int a)
+{
+	return (a < 0 ? -a : a);
+}

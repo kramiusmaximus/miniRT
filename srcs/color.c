@@ -65,3 +65,13 @@ int rgb_add(int c1, int c2)
 
 	return (rgb_create(t, r, g, b));
 }
+
+int rgb_subtract(int c1, int c2)
+{
+	int t = get_t(c1);
+	int r = get_r(c1) - get_r(c2);
+	int g = get_g(c1) - get_g(c2);
+	int b= get_b(c1) - get_b(c2);
+
+	return (rgb_create(t, r, g, b));
+}

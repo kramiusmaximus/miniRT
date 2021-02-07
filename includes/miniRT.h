@@ -12,6 +12,7 @@
 # define CY			0b00001000
 # define TR			0b00010000
 # define NUM_THREADS 4
+# define N_PASSES	1
 
 typedef struct		s_3dvec
 {
@@ -171,6 +172,8 @@ int				put_pixel(t_image *image, int x, int y, int color);
 int				rgb_multiply(int c1, int c2);
 int				rgb_multiply_scalar(int c1, double s);
 int				rgb_add(int c1, int c2);
+int 			rgb_subtract(int c1, int c2);
+
 
 // vector functions
 t_3dvec			vector_add(t_3dvec v1, t_3dvec v2);
@@ -183,6 +186,9 @@ t_3dvec 		vector_normalize(t_3dvec v);
 // maths
 int				solve_quadratic(double a, double b, double c, double t[2]);
 t_3dvec 		canvas_to_coords(int cx, int cy, t_scene *scene);
+int 			min(int a, int b);
+int 			max(int a, int b);
+int 			abs(int a);
 
 // ray tracing funcitions
 int render_image(t_vars *vars);
@@ -190,7 +196,7 @@ t_object		*ray_intersect_sphere(t_3dvec p_origin, t_3dvec v_dir, t_object *spher
 t_3dvec 		surface_vector(t_object *obj, t_3dvec p_contact);
 int 			process_light(t_object *obj, t_3dvec contact_p, t_scene *scene);
 t_object 		*trace_result(t_3dvec p_origin, t_3dvec v_dir, double *closest_t, t_scene *scene, double d);
-int				trace_ray(t_3dvec cam_coords, t_3dvec v, t_scene *scene);
+int				trace_ray(t_3dvec origin, t_3dvec dir, t_scene *scene);
 
 // movement
 int 			move_camera(int key, t_vars *vars);
