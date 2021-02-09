@@ -11,7 +11,7 @@
 # define SQ			0b00000100
 # define CY			0b00001000
 # define TR			0b00010000
-# define NUM_THREADS 3
+# define NUM_THREADS 4
 # define N_PASSES	1
 
 typedef struct		s_3dvec
@@ -27,17 +27,10 @@ typedef struct 		s_dims
 	int				width;
 }					t_dims;
 
-typedef struct 		s_rot
-{
-	double 			x_rot;
-	double 			y_rot;
-	double 			z_rot;
-}					t_rot;
-
 typedef struct		s_camera
 {
 	t_3dvec			coordinates;
-	t_rot			rotation;
+	t_3dvec 		dir;
 	double 			fov;
 	int 			d;
 	struct s_camera	*next;
@@ -70,20 +63,22 @@ typedef struct		s_sp
 typedef struct		s_pl
 {
 	t_3dvec			coordinates;
-	t_rot			rotation;
+	t_3dvec 		normal;
 }					t_pl;
 
 typedef struct		s_sq
 {
 	t_3dvec			coordinates;
-	t_rot			rotation;
+	t_3dvec 		top;
+	t_3dvec			front;
+	t_3dvec 		side;
 	double 			side_len;
 }					t_sq;
 
 typedef	struct		s_cy
 {
 	t_3dvec			coordinates;
-	t_rot			rotation;
+	t_3dvec 		normal;
 	double 			diameter;
 	double 			height;
 }					t_cy;
@@ -196,7 +191,7 @@ int 			abs(int a);
 int render_image();
 t_object		*ray_intersect_sphere(t_3dvec p_origin, t_3dvec v_dir, t_object *sphere_obj, double *t);
 t_3dvec 		surface_vector(t_object *obj, t_3dvec p_contact);
-int 			process_light(t_object *obj, t_3dvec contact_p, t_scene *scene);
+int process_light(t_object *obj, t_3dvec contact_p, t_scene *scene, t_3dvec pixel_ray);
 t_object 		*trace_result(t_3dvec p_origin, t_3dvec v_dir, double *closest_t, t_scene *scene, double d);
 int				trace_ray(t_3dvec origin, t_3dvec dir, t_scene *scene);
 

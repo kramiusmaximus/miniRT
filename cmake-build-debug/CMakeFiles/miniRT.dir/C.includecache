@@ -20,7 +20,9 @@ pthread.h
 
 ../includes/mlx.h
 
-/Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/utils.c
+/Users/pfelipa/Desktop/pfelipa/miniRT/main.c
 miniRT.h
-/Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/miniRT.h
+/Users/pfelipa/Desktop/pfelipa/miniRT/miniRT.h
+pthread.h
+-
 

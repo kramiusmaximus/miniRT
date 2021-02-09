@@ -10,19 +10,30 @@ int	initiate_jesus_resurrection()
 	// stuff that would come from the parser. Parser would return a 'scene' file I reckon;
 	int z = 	300;
 	t_scene		scene;
-	t_ambient	ambient = {0.2 , 0x00FFFFFF};
+	t_ambient	ambient = {0.3 , 0xE9DC65};
 	t_light		l1 = {1, {600,300, z - 150}, 0x00FFFFFF, NULL};
 	//t_light		l2 = {0, {0,0, 0}, 0x00FFFFFF, &l1};
+
+	// shapes
 	t_camera	camera = {{0,0,0}, {0,0, 0}, 70, 1, NULL};
-	t_sp		sp1 = {{-70, 0, z }, 30};
+	t_sp		sp1 = {{-70, 0, z - 20 }, 30};
 	t_sp		sp2 = {{0, 0, z}, 100};
 	t_sp		sp3 = {{70, 0, z}, 30};
 	t_sp		sp4 = {{20, 20, z-55}, 20};
-	t_object	object0 = {SP, sp1,0,0,0x00FF0000, NULL};
-	t_object	object1 = {SP, sp2,0,0.5,0x0000FF00, &object0};
-	t_object	object2 = {SP, sp3,0,0,0x000000FF, &object1};
-	t_object	object3 = {SP, sp4,0,0,0x00FF00FF, &object2};
+	t_pl		pl1 = {{0, -60, 0}, {0,1,0}};
+	t_sq		sq1 = {{0, -50, z}, {0,1,0}, {0,0,1}, {1,0,0}, 120};
+	t_cy		cy1 = {{0,0,60}, {0, 1, 0}, 20, 40};
+	// ^ need to figure out how to find front and side vectors, and rotation of shapes in general...
 
+
+	// objects
+	t_object	object0 = {SP, (t_shape)sp1,0,0,0x006FFF7E, NULL};
+	t_object	object1 = {SP, (t_shape)sp2,0,0.5,0x00FFA267 , &object0};
+	t_object	object2 = {SP, (t_shape)sp3,0,0,0x006FFFFD, &object1};
+	t_object	object3 = {SP, (t_shape)sp4,0,0,0x007E6FFF, &object2};
+	t_object	object4 = {PL, (t_shape)pl1,0,0,0x00A9FFD5, &object3};
+	t_object	object5 = {SQ, (t_shape)sq1,0,0,0x00FF8EE1, &object4};
+	t_object	object6 = {CY, (t_shape)cy1,0,0,0x007A9FFF, &object5};
 	t_dims		window_dims = {720, 1280};
 	t_dims		image_res = {720, 1280};
 	t_mlx		mlx;
@@ -42,7 +53,7 @@ int	initiate_jesus_resurrection()
 	scene.camera = &camera;
 	scene.ambient = ambient;
 	scene.light = &l1;
-	scene.object = &object3;
+	scene.object = &object6;
 
 	prev_frame = malloc(sizeof(int) * scene.window_dims.width * scene.window_dims.height);
 	// lets get the party started;

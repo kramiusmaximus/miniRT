@@ -11,8 +11,12 @@ int button_press(int key, t_vars *vars)
 		vars->nav.lft_rght = -1;
 	if (key == 2)
 		vars->nav.lft_rght = 1;
+	if (key == 3)
+		vars->nav.up_dwn = 1;
+	if (key == 5)
+		vars->nav.up_dwn = -1;
 
-	//printf("%d\n", key);
+	printf("%d\n", key);
 }
 
 int button_release(int key, t_vars *vars)
@@ -26,6 +30,10 @@ int button_release(int key, t_vars *vars)
 		vars->nav.lft_rght = 0;
 	if (key == 2 && vars->nav.lft_rght == 1)
 		vars->nav.lft_rght = 0;
+	if (key == 3 && vars->nav.up_dwn == 1)
+		vars->nav.up_dwn = 0;
+	if (key == 5 && vars->nav.up_dwn == -1)
+		vars->nav.up_dwn = 0;
 }
 
 int move_camera(t_vars *vars)
@@ -44,12 +52,14 @@ int move_camera(t_vars *vars)
 		camera->coordinates.x += d * nav.lft_rght;
 	else if (nav.fwd_back)
 		camera->coordinates.z += d * nav.fwd_back;
+	if (nav.up_dwn)
+		camera->coordinates.y += d * nav.up_dwn;
 	return (0);
 }
 
 int is_moving(t_nav *nav)
 {
-	if (nav->fwd_back || nav->lft_rght)
+	if (nav->fwd_back || nav->lft_rght || nav->up_dwn)
 		return (1);
 	return (0);
 }

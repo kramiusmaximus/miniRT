@@ -4,24 +4,24 @@
 CMakeFiles/miniRT.dir/main.c.o
  ../includes/miniRT.h
  ../includes/mlx.h
- /Users/markartyukh/Desktop/code/pfelipa/miniRT/main.c
+ /Users/pfelipa/Desktop/pfelipa/miniRT/main.c
 CMakeFiles/miniRT.dir/srcs/color.c.o
  ../includes/miniRT.h
  ../includes/mlx.h
- /Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/color.c
+ /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/color.c
 CMakeFiles/miniRT.dir/srcs/math.c.o
  ../includes/miniRT.h
  ../includes/mlx.h
- /Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/math.c
+ /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/math.c
 CMakeFiles/miniRT.dir/srcs/navigation.c.o
  ../includes/miniRT.h
  ../includes/mlx.h
- /Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/navigation.c
+ /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/navigation.c
 CMakeFiles/miniRT.dir/srcs/trace.c.o
  ../includes/miniRT.h
  ../includes/mlx.h
- /Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/trace.c
+ /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/trace.c
 CMakeFiles/miniRT.dir/srcs/utils.c.o
  ../includes/miniRT.h
  ../includes/mlx.h
- /Users/markartyukh/Desktop/code/pfelipa/miniRT/srcs/utils.c
+ /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/utils.c

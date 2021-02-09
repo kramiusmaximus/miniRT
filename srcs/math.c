@@ -39,6 +39,7 @@ t_3dvec 	vector_normalize(t_3dvec v)
 	return (vector_scalar_mult(v, 1/vector_norm(v)));
 }
 
+
 int			solve_quadratic(double a, double b, double c, double t[2])
 {
 	double discriminant;
