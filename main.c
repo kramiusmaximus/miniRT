@@ -28,12 +28,17 @@ int	initiate_jesus_resurrection()
 	t_mlx		mlx;
 	t_image 	image;
 
+	t_nav		nav = {0,0,0};
+
 	vars.mlx = &mlx;
 	vars.scene = &scene;
+	vars.nav = nav;
 
 	// initializing scene;  use parser for this
 	scene.window_dims = window_dims;
 	scene.res = image_res;
+	scene.adjustment_factor = 1;
+	scene.parked = 0;
 	scene.camera = &camera;
 	scene.ambient = ambient;
 	scene.light = &l1;
@@ -47,7 +52,9 @@ int	initiate_jesus_resurrection()
 	image.addr = mlx_get_data_addr(image.img, &image.bits_per_pixel, &image.line_length, &image.endian);
 	mlx.image = image;
 	mlx_loop_hook(vars.mlx->mlx, render_image, &vars);
-	mlx_key_hook(vars.mlx->win, move_camera, &vars);
+	mlx_hook(vars.mlx->win, 2, 1L << 2, button_press, &vars);
+	mlx_hook(vars.mlx->win, 3, 1L << 3, button_release, &vars);
+	//mlx_key_hook(vars.mlx->win, move_camera, &vars);
 	mlx_loop(vars.mlx->mlx);
 }
 

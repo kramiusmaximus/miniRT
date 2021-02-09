@@ -1,15 +1,19 @@
 #include "miniRT.h"
 
-t_3dvec canvas_to_coords(int cx, int cy, t_scene *scene)
+t_3dvec canvas_to_coords(int x_pixel, int y_pixel, t_scene *scene)
 {
 	t_3dvec		coords;
 	t_camera	*cam = scene->camera;
+	double 		af = scene->adjustment_factor;
+	double 		pixel_width = scene->camera->d * 2 * tan(scene->camera->fov / 2 * M_PI / 180) / scene->res.width;
 
-	double pixel_width = scene->camera->d * 2 * tan(scene->camera->fov / 2 * M_PI / 180) / scene->res.width;
 
-	coords.x = (cx - (scene->res.width / 2)) * pixel_width + cam->coordinates.x;
-	coords.y = -(cy - (scene->res.height / 2)) * pixel_width + cam->coordinates.y;
-	coords.z = pixel_width * scene->res.width / (2 * tan(scene->camera->fov / 2 * M_PI / 180)) + cam->coordinates.z;
+
+	coords.x = (x_pixel - (scene->res.width * af / 2)) * pixel_width + cam->coordinates.x;
+	coords.y = -(y_pixel - (scene->res.height * af / 2)) * pixel_width + cam->coordinates.y;
+	coords.z = pixel_width * scene->res.width * af / (2 * tan(scene->camera->fov / 2 * M_PI / 180)) +
+			cam->coordinates.z;
+
 	return (coords);
 }
 

@@ -59,6 +59,16 @@ int			solve_quadratic(double a, double b, double c, double t[2])
 	}
 }
 
+t_3dvec vector_cross(t_3dvec v1, t_3dvec v2)
+{
+	t_3dvec	res;
+
+	res.x = v1.y * v2.z - v1.z * v2.y;
+	res.y = v1.z * v2.x - v1.x * v2.z;
+	res.z = v1.x * v2.y - v1.y * v2.x;
+	return (res);
+}
+
 int max(int a, int b)
 {
 	return (a > b ? a : b);

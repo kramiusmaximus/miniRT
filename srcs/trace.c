@@ -3,7 +3,6 @@
 extern 		t_vars vars;
 extern 		int **prev_frame;
 double 		avg_render_t;
-int 		d = 0;
 
 
 t_object	*ray_intersect_sphere(t_3dvec p_origin, t_3dvec v_dir, t_object *sphere_obj, double *t)
@@ -135,52 +134,57 @@ void 		*render_section(void *arg)
 	t_3dvec 	c_coords;
 	t_camera 	*cam = scene->camera;
 	int 		color;
-	double 		y_mult = 1 / ((double)scene->window_dims.height / (double)scene->res.height);
-	double 		x_mult = 1 / ((double)scene->window_dims.width / (double)scene->res.width);
-	int			section_h = scene->window_dims.height / NUM_THREADS;
-	int 		n_diff_pixels = 0;
+	double 		y_mult = ((double)scene->window_dims.height / (double)scene->res.height) / scene->adjustment_factor;
+	double 		x_mult = ((double)scene->window_dims.width / (double)scene->res.width) / scene->adjustment_factor;
+	int			section_h = scene->res.height * scene->adjustment_factor / NUM_THREADS ;
 
-	for (int y_box = section_h * id; y_box < section_h * (id + 1); y_box++) //
+	for (int y_pixel = section_h * id; y_pixel < scene->res.height * scene->adjustment_factor; y_pixel++) //
 	{
-		for (int x_box = 0; x_box < scene->res.width; x_box++)
+		for (int x_pixel = 0; x_pixel < scene->res.width * scene->adjustment_factor; x_pixel++)
 		{
-			c_coords = canvas_to_coords(x_box + 0.5, y_box + 0.5, scene);
+			c_coords = canvas_to_coords(x_pixel, y_pixel, scene);
 			color = trace_ray(cam->coordinates, vector_subtract(c_coords, cam->coordinates), scene);
-			for (int y = (int) (y_box * y_mult); y < (y_box + 1) * y_mult; y++)
+			for (int y = (int)(y_pixel * y_mult); y < (y_pixel + 1) * y_mult; y++)
 			{
-				for (int x = (int) (x_box * x_mult + d); x < (x_box + 1) * x_mult; x++)
+				for (int x = (int)(x_pixel * x_mult); x < (x_pixel + 1) * x_mult; x++)
 				{
 					put_pixel(&mlx->image, x, y, color);
 				}
 			}
 		}
 	}
-	//printf("%d\n", n_diff_pixels);
 	pthread_exit(NULL);
 }
 
-int 		render_image(t_vars *vars)
+int render_image()
 {
 	clock_t		start_t = clock();
 	pthread_t	threads[NUM_THREADS];
-	t_scene		*scene = vars->scene;
-	t_mlx		*mlx = vars->mlx;
+	t_scene		*scene = vars.scene;
+	t_mlx		*mlx = vars.mlx;
 	double 		adjust_factor;
 	double 		current_render_time;
 
-	for (int tid = 0; tid < NUM_THREADS; tid++)
-		pthread_create(&threads[tid], NULL, render_section, (void *)tid);
-	for (int tid = 0; tid < NUM_THREADS; tid++)
-		pthread_join(threads[tid], NULL);
-	current_render_time = (double)(clock() - start_t);
-	avg_render_t = (avg_render_t / 2 + current_render_time / 2) / 1000;
-	adjust_factor =  1000 / (double)avg_render_t;
-	adjust_factor = adjust_factor < 0.2 ? 0.2 : adjust_factor;
-	adjust_factor = adjust_factor > 1 ? 1 : adjust_factor;
-	printf("%f, ", avg_render_t);
-	printf("%f\n", adjust_factor);
-	scene->res.width = (int)((double)scene->res.width * adjust_factor);
-	scene->res.height = (int)((double)scene->res.height * adjust_factor);
-	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->image.img, 0, 0);
+	vars.scene->adjustment_factor = 1;
+	move_camera(&vars);
+	if (is_moving(&vars.nav))
+	{
+		vars.scene->parked = 0;
+		vars.scene->adjustment_factor = 0.2;
+		for (int tid = 0; tid < NUM_THREADS; tid++)
+			pthread_create(&threads[tid], NULL, render_section, (void *)tid);
+		for (int tid = 0; tid < NUM_THREADS; tid++)
+			pthread_join(threads[tid], NULL);
+		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->image.img, 0, 0);
+	}
+	else if (!vars.scene->parked)
+	{
+		vars.scene->parked = 1;
+		for (int tid = 0; tid < NUM_THREADS; tid++)
+			pthread_create(&threads[tid], NULL, render_section, (void *)tid);
+		for (int tid = 0; tid < NUM_THREADS; tid++)
+			pthread_join(threads[tid], NULL);
+		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->image.img, 0, 0);
+	}
 	return (0);
 }

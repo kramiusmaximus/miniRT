@@ -11,7 +11,7 @@
 # define SQ			0b00000100
 # define CY			0b00001000
 # define TR			0b00010000
-# define NUM_THREADS 4
+# define NUM_THREADS 3
 # define N_PASSES	1
 
 typedef struct		s_3dvec
@@ -116,13 +116,14 @@ typedef struct		s_object
 
 
 
-
 // main structure which stores most of data after parsing
 
 typedef struct	s_scene
 {
 	t_dims		window_dims;
 	t_dims		res;
+	double 		adjustment_factor;
+	int 		parked;
 	t_camera	*camera;
 	t_light		*light;
 	t_ambient	ambient;
@@ -148,18 +149,19 @@ typedef struct  	s_mlx
 	t_image 		image;
 }               	t_mlx;
 
+typedef struct 		s_nav
+{
+	int 			fwd_back;
+	int 			lft_rght;
+	int 			up_dwn;
+}					t_nav;
+
 typedef struct 		s_vars
 {
 	t_mlx			*mlx;
 	t_scene			*scene;
+	t_nav			nav;
 }					t_vars;
-
-typedef struct		s_targs
-{
-	t_vars			*vars;
-	int 			id;
-}					t_targs;
-
 
 // color functions
 
@@ -185,13 +187,13 @@ t_3dvec 		vector_normalize(t_3dvec v);
 
 // maths
 int				solve_quadratic(double a, double b, double c, double t[2]);
-t_3dvec 		canvas_to_coords(int cx, int cy, t_scene *scene);
+t_3dvec 		canvas_to_coords(int x_pixel, int y_pixel, t_scene *scene);
 int 			min(int a, int b);
 int 			max(int a, int b);
 int 			abs(int a);
 
 // ray tracing funcitions
-int render_image(t_vars *vars);
+int render_image();
 t_object		*ray_intersect_sphere(t_3dvec p_origin, t_3dvec v_dir, t_object *sphere_obj, double *t);
 t_3dvec 		surface_vector(t_object *obj, t_3dvec p_contact);
 int 			process_light(t_object *obj, t_3dvec contact_p, t_scene *scene);
@@ -199,7 +201,11 @@ t_object 		*trace_result(t_3dvec p_origin, t_3dvec v_dir, double *closest_t, t_s
 int				trace_ray(t_3dvec origin, t_3dvec dir, t_scene *scene);
 
 // movement
-int 			move_camera(int key, t_vars *vars);
+int 			move_camera(t_vars *vars);
+int 			button_press(int key, t_vars *vars);
+int				button_release(int key, t_vars *vars);
+int				is_moving(t_nav *nav);
+
 
 
 #endif
