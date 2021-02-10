@@ -62,25 +62,90 @@ t_object	*ray_intersect_sq(t_3dvec p_origin, t_3dvec v_dir, t_object *sq_object,
 	return (sq_object);
 }
 
-t_object	*ray_intersect_cy(t_3dvec p_origin, t_3dvec v_dir, t_object *cy_object, double *t)
+int 		ray_intersect_sausage(t_3dvec p_origin, t_3dvec v_dir, t_object *cy_object, double *t)
 {
-	t_3dvec n;
-	double	k;
+	t_cy 	cy = cy_object->shape.cy;
 	double 	a;
+	double	b1;
+	double	b2;
 	double 	b;
+	double	c1;
+	double	c2;
+	double 	c3;
 	double 	c;
+	double 	theta;
 	int 	solution_n;
+	t_3dvec p_contact;
+	t_3dvec op;
+	int 	i;
 
-	n = cy_object->shape.cy.normal;
-	k = vector_dot(n, vector_subtract())
-	a = vector_dot(v_dir, v_dir);
-	b = 2 * vector_dot(v_dir, p_origin - cy_object->shape.cy.coordinates - vector_scalar_mult());
-	c = 0;
+
+	a = vector_dot(vector_cross(v_dir, cy.normal), vector_cross(v_dir, cy.normal));
+	b1 = 2 * vector_dot(vector_cross(v_dir, cy.normal),vector_cross(p_origin, cy.normal));
+	b2 = -2 * vector_dot(vector_cross(v_dir, cy.normal),vector_cross(cy.coordinates, cy.normal));
+	b = b1 + b2;
+	c1 = vector_dot(vector_cross(cy.coordinates, cy.normal), vector_cross(cy.coordinates, cy.normal));
+	c2 = vector_dot(vector_cross(p_origin, cy.normal), vector_cross(p_origin, cy.normal));
+	c3 = -2 * vector_dot(vector_cross(p_origin, cy.normal), vector_cross(cy.coordinates, cy.normal)) - pow(cy.diameter / 2, 2);
+	c = c1 + c2 + c3;
 	solution_n = solve_quadratic(a, b, c, t);
 	if (solution_n)
-		return (sphere_obj);
+	{
+		i = solution_n;
+		while (i > 0)
+		{
+			p_contact = vector_add(p_origin, vector_scalar_mult(v_dir, t[i - 1]));
+			op = vector_subtract(p_contact, cy.coordinates);
+			if (vector_dot(op, cy.normal) > cy.height || vector_dot(op, cy.normal) < 0)
+			{
+				t[i - 1] = MAX_DIST;
+				solution_n--;
+			}
+			i--;
+		}
+	}
+	return (solution_n);
+}
+
+int 		ray_intersect_caps(t_3dvec p_origin, t_3dvec v_dir, t_object *cy_object, double *t)
+{
+	t_cy	cy;
+	double nominator;
+	double denominator;
+	double res;
+	t_3dvec p_contact;
+	t_3dvec v_contact;
+	double a1;
+	double a2;
+	double len;
+
+	// repeat this process for the top cap cause this is just the bottom cap rn
+	cy = cy_object->shape.cy;
+	nominator = vector_dot(cy.normal, vector_subtract(cy.coordinates, p_origin));
+	denominator = vector_dot(cy.normal, v_dir);
+	if (isinf(res = nominator / denominator))
+		return (NULL);
+	p_contact = vector_add(p_origin, vector_scalar_mult(v_dir, res));
+	v_contact = vector_subtract(p_contact, cy.coordinates);
+	*t = res;
+
+	return (cy_object);
+}
+
+t_object	*ray_intersect_cy(t_3dvec p_origin, t_3dvec v_dir, t_object *cy_object, double *t)
+{
+	t_cy 	cy = cy_object->shape.cy;
+	int 	sausage_hit;
+	int 	caps_hit;
+	double	t1[2];
+	double 	t2[2];
+
+	sausage_hit = ray_intersect_sausage(p_origin, v_dir, cy_object, &t1);
+	caps_hit = ray_intersect_caps(p_origin, v_dir, cy_object, &t2);
+
 	return (NULL);
 }
+
 
 t_3dvec 	surface_vector(t_object *obj, t_3dvec p_contact)
 {
@@ -98,6 +163,7 @@ t_3dvec 	surface_vector(t_object *obj, t_3dvec p_contact)
 	{}
 	return (n);
 }
+
 
 t_object 	*trace_result(t_3dvec p_origin, t_3dvec v_dir, double *closest_t, t_scene *scene, double d)
 {
@@ -120,6 +186,7 @@ t_object 	*trace_result(t_3dvec p_origin, t_3dvec v_dir, double *closest_t, t_sc
 			object_hit = ray_intersect_sq(p_origin, v_dir, p, &t);
 		else if (p->type & CY)
 			object_hit = ray_intersect_cy(p_origin, v_dir, p, &t);
+
 		else if (p->type & TR)
 		{}
 		if (t[0] > d && t[0] < *closest_t)
@@ -140,6 +207,7 @@ t_object 	*trace_result(t_3dvec p_origin, t_3dvec v_dir, double *closest_t, t_sc
 int process_light(t_object *obj, t_3dvec contact_p, t_scene *scene, t_3dvec pixel_ray)
 {
 	int 	light_effects;
+	int 	p_effect;
 	t_3dvec l;
 	t_3dvec n;
 	double 	t;
@@ -157,12 +225,11 @@ int process_light(t_object *obj, t_3dvec contact_p, t_scene *scene, t_3dvec pixe
 		{
 			dot = vector_dot(n, l);
 			dot = dot < 0 ? 0 : dot;
-			light_effects = rgb_add(light_effects,rgb_multiply_scalar(p->color, dot * p->intensity));
+			p_effect = rgb_multiply_scalar(rgb_multiply_scalar(p->color, dot * p->intensity),100000 / pow(vector_norm(vector_subtract(p->coordinates, contact_p)), 2));
+			light_effects = rgb_add(light_effects, p_effect);
 		}
 		p = p->next;
 	}
-	if (light_effects == 0)
-	{}
 	return (light_effects);
 }
 
@@ -196,11 +263,13 @@ void 		*render_section(void *arg)
 	t_scene 	*scene = vars.scene;
 	t_mlx 		*mlx = vars.mlx;
 	t_3dvec 	c_coords;
+	t_3dvec 	r_dir;
 	t_camera 	*cam = scene->camera;
 	int 		color;
 	double 		y_mult = ((double)scene->window_dims.height / (double)scene->res.height) / scene->adjustment_factor;
 	double 		x_mult = ((double)scene->window_dims.width / (double)scene->res.width) / scene->adjustment_factor;
 	int			section_h = scene->res.height * scene->adjustment_factor / NUM_THREADS ;
+	double		r_rays = 1;
 
 	//printf("id: %d\n", id);
 	for (int y_pixel = section_h * id; y_pixel < section_h * (id + 1); y_pixel++) //
@@ -208,8 +277,13 @@ void 		*render_section(void *arg)
 		for (int x_pixel = 0; x_pixel < scene->res.width * scene->adjustment_factor; x_pixel++)
 		{
 			c_coords = canvas_to_coords(x_pixel, y_pixel, scene);
-			color = trace_ray(cam->coordinates, vector_subtract(c_coords, cam->coordinates), scene);
-			for (int y = (int)(y_pixel * y_mult); y < (y_pixel + 1) * y_mult; y++)
+			r_dir = vector_subtract(c_coords, cam->coordinates);
+			color = trace_ray(cam->coordinates, r_dir, scene);
+			/* anti aliasing not working properly at the moment
+			for (int i = 0; i < r_rays; i++)
+				color = rgb_add(color, rgb_multiply_scalar(trace_ray(cam->coordinates, vector_random(r_dir, 32000000000000), scene), 1 / r_rays));
+			*/
+			 for (int y = (int)(y_pixel * y_mult); y < (y_pixel + 1) * y_mult; y++)
 			{
 				for (int x = (int)(x_pixel * x_mult); x < (x_pixel + 1) * x_mult; x++)
 				{
@@ -235,7 +309,7 @@ int render_image()
 	if (is_moving(&vars.nav))
 	{
 		vars.scene->parked = 0;
-		vars.scene->adjustment_factor = 0.3;
+		vars.scene->adjustment_factor = 0.2;
 		for (int tid = 0; tid < NUM_THREADS; tid++)
 			pthread_create(&threads[tid], NULL, render_section, (void *)tid);
 		for (int tid = 0; tid < NUM_THREADS; tid++)

@@ -11,7 +11,7 @@
 # define SQ			0b00000100
 # define CY			0b00001000
 # define TR			0b00010000
-# define NUM_THREADS 4
+# define NUM_THREADS 1
 # define N_PASSES	1
 
 typedef struct		s_3dvec
@@ -179,6 +179,8 @@ double			vector_dot(t_3dvec v1, t_3dvec v2);
 double 			vector_norm(t_3dvec v);
 t_3dvec 		vector_scalar_mult(t_3dvec v, double s);
 t_3dvec 		vector_normalize(t_3dvec v);
+t_3dvec 		vector_random(t_3dvec v, double amount);
+t_3dvec 		vector_cross(t_3dvec v1, t_3dvec v2);
 
 // maths
 int				solve_quadratic(double a, double b, double c, double t[2]);
@@ -187,9 +189,15 @@ int 			min(int a, int b);
 int 			max(int a, int b);
 int 			abs(int a);
 
+
 // ray tracing funcitions
 int render_image();
 t_object		*ray_intersect_sphere(t_3dvec p_origin, t_3dvec v_dir, t_object *sphere_obj, double *t);
+t_object	*ray_intersect_plane(t_3dvec p_origin, t_3dvec v_dir, t_object *pl_obj, double *t);
+t_object	*ray_intersect_sq(t_3dvec p_origin, t_3dvec v_dir, t_object *sq_object, double *t);
+int 		ray_intersect_sausage(t_3dvec p_origin, t_3dvec v_dir, t_object *cy_object, double *t);
+int 		ray_intersect_caps(t_3dvec p_origin, t_3dvec v_dir, t_object *cy_object, double *t);
+
 t_3dvec 		surface_vector(t_object *obj, t_3dvec p_contact);
 int process_light(t_object *obj, t_3dvec contact_p, t_scene *scene, t_3dvec pixel_ray);
 t_object 		*trace_result(t_3dvec p_origin, t_3dvec v_dir, double *closest_t, t_scene *scene, double d);

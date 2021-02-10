@@ -70,6 +70,18 @@ t_3dvec vector_cross(t_3dvec v1, t_3dvec v2)
 	return (res);
 }
 
+t_3dvec vector_random(t_3dvec v, double amount)
+{
+	double sign = rand() / 10000000;
+
+	sign = sign > 100 ? 1 : -1;
+	v.x += sign*random() / amount;
+	v.y += sign*random() / amount;
+	v.z += sign*random() / amount;
+
+	return (v);
+}
+
 int max(int a, int b)
 {
 	return (a > b ? a : b);
