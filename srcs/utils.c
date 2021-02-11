@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-t_v canvas_to_coords(int x_pixel, int y_pixel, t_scene *scene)
+t_v 		canvas_to_coords(int x_pixel, int y_pixel, t_scene *scene)
 {
 	t_v		coords;
 	t_camera	*cam = scene->camera;
@@ -17,7 +17,7 @@ t_v canvas_to_coords(int x_pixel, int y_pixel, t_scene *scene)
 	return (coords);
 }
 
-int put_pixel(t_image *image, int x, int y, int color)
+int 		put_pixel(t_image *image, int x, int y, int color)
 {
 	char	*p;
 
@@ -28,32 +28,25 @@ int put_pixel(t_image *image, int x, int y, int color)
 	return (0);
 }
 
-t_intersect *process_t(t_ray *ray, t_object *obj, t_t *t)
+t_intersect	*process_t(t_ray *ray, t_object *obj, t_t *t)
 {
-	t_intersect *head;
-	t_intersect *p;
-	int 		i;
+	t_intersect *inter;
 
-	i = 0;
-	head = NULL;
-	if (!obj || !t || !t->size)
-		return (head);
-	if (!(head = malloc(sizeof(t_intersect))))
-	{} /// crash function
-	p = head;
-	while (i < t->size)
-	{
-		p->t = t[i];
-		p->obj = obj;
-		p->contact = v_add(ray->origin, v_scalar_mult(ray->dir, t[i++]));
-		p->surface_v = surface_vector_new(ray, obj, p);
-		///head->inside;
-		if (i < solutions_n)
-		{
-			if ((p->next = malloc(sizeof(t_intersect))))
-			{} /// crash function
-			p = p->next;
-		}
-	}
-	return (head);
+	if (!ray || !obj || !t || !t->size || !(inter = malloc(sizeof(t_intersect))))
+		return (NULL);
+	inter->t = t->closest;
+	inter->contact = v_add(ray->origin, v_scalar_mult(ray->dir, inter->t));
+	inter->obj = obj;
+	inter->surface_v = surface_vector_new(ray, obj, inter);
+	inter->next;
+	/// inter->inside = is_indside(inter);  inside function needs to be created
+	return (inter);
+}
+
+t_ray		make_ray(t_v origin, t_v dir)
+{
+	t_ray ray;
+	ray.origin = origin;
+	ray.dir = dir;
+	return (ray);
 }

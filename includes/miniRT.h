@@ -170,9 +170,11 @@ typedef struct			s_intersect
 
 typedef struct 			s_ray
 {
-	t_v 			origin;
-	t_v				dir;
+	t_v 				origin;
+	t_v					dir;
 	t_intersect			*intersect;
+	t_v 				dir_ref;
+	struct s_ray		*next;
 }						t_ray;
 
 typedef struct			s_t
@@ -238,6 +240,7 @@ int				is_moving(t_nav *nav);
 
 t_v 			surface_vector_new(t_ray *ray, t_object *obj, t_intersect *inter);
 t_intersect		*process_t(t_ray *ray, t_object *obj, t_t *t);
+t_ray			make_ray(t_v origin, t_v dir);
 
 
 #endif

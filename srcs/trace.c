@@ -5,7 +5,7 @@ extern 		t_vars vars;
 extern 		int **prev_frame;
 double 		avg_render_t;
 
-
+/*
 t_object	*ray_intersect_sphere(t_v p_origin, t_v v_dir, t_object *sphere_obj, double *t)
 {
 	double 	a;
@@ -22,6 +22,7 @@ t_object	*ray_intersect_sphere(t_v p_origin, t_v v_dir, t_object *sphere_obj, do
 		return (sphere_obj);
 	return (NULL);
 }
+ */
 
 int			solve_quadratic_new(double a, double b, double c, t_t *t)
 {
@@ -204,7 +205,7 @@ t_object	*ray_intersect_cy(t_v p_origin, t_v v_dir, t_object *cy_object, double 
 
 
 
-
+/*
 t_v 	surface_vector(t_object *obj, t_v p_contact)
 {
 	t_v n = {0, 0, 0};
@@ -230,6 +231,7 @@ t_v 	surface_vector(t_object *obj, t_v p_contact)
 	{}
 	return (n);
 }
+ */
 
 t_v surface_vector_new(t_ray *ray, t_object *obj, t_intersect *inter)
 {
@@ -262,7 +264,7 @@ t_v surface_vector_new(t_ray *ray, t_object *obj, t_intersect *inter)
 
 
 
-
+/*
 t_object 	*trace_result(t_v p_origin, t_v v_dir, double *closest_t, t_scene *scene, double d)
 {
 	t_object	*object_hit_closest;
@@ -300,8 +302,9 @@ t_object 	*trace_result(t_v p_origin, t_v v_dir, double *closest_t, t_scene *sce
 	}
 	return (object_hit_closest);
 }
+ */
 
-t_intersect 	*trace_result_new(t_ray	*ray, t_scene *scene)
+t_intersect *trace_result_new(t_ray *ray, t_scene *scene, double d)
 {
 	t_object	*obj;
 	t_object	*obj_closest;
@@ -314,6 +317,7 @@ t_intersect 	*trace_result_new(t_ray	*ray, t_scene *scene)
 	obj = scene->object;
 	while (obj)
 	{
+		t.size = 0;
 		if (obj->type & SP)
 			ray_intersect_sphere_new(ray, obj, &t);
 		else if (obj->type & PL)
@@ -327,7 +331,7 @@ t_intersect 	*trace_result_new(t_ray	*ray, t_scene *scene)
 		i = 0;
 		while (i < t.size)
 		{
-			if (t.arr[i] > 1 && t.arr[i] < t.closest)
+			if (t.arr[i] > d && t.arr[i] < t.closest)
 			{
 				t.closest = t.arr[i];
 				obj_closest = obj;
@@ -337,10 +341,10 @@ t_intersect 	*trace_result_new(t_ray	*ray, t_scene *scene)
 		obj = obj->next;
 	}
 	ray->intersect = process_t(ray, obj_closest, &t);
-	return (NULL);
+	return (ray->intersect);
 }
 
-
+/*
 int process_light(t_object *obj, t_v contact_p, t_scene *scene, t_v pixel_ray)
 {
 	int 	light_effects;
@@ -371,8 +375,9 @@ int process_light(t_object *obj, t_v contact_p, t_scene *scene, t_v pixel_ray)
 	}
 	return (light_effects);
 }
+*/
 
-int process_light_new(t_ray *ray, t_intersect *inter, t_scene *scene)
+int process_light_new(t_ray *ray, t_scene *scene)
 {
 	int 	light_effects;
 	int 	p_effect;
@@ -380,8 +385,11 @@ int process_light_new(t_ray *ray, t_intersect *inter, t_scene *scene)
 	t_v n;
 	double 	t;
 	t_light *p;
+	t_intersect	*inter;
+	t_ray 	ray_l;
 	double 	dot;
 
+	inter = ray->intersect;
 	light_effects = rgb_multiply_scalar(scene->ambient.color, scene->ambient.intensity);
 	p = scene->light;
 	n = inter->surface_v;
@@ -389,7 +397,8 @@ int process_light_new(t_ray *ray, t_intersect *inter, t_scene *scene)
 	{
 		t = 1;
 		l = v_normalize(v_subtract(p->coordinates, inter->contact));
-		if (!trace_result(inter->contact, v_subtract(p->coordinates, inter->contact), &t, scene, 0.000000000001) &&
+		ray_l = make_ray(inter->contact, p->coordinates);
+		if (!trace_result_new(&ray_l, scene, 0.000000001) &&
 			v_dot(n, ray->dir) < 0)  /// actually incorrect but works for now
 		{
 			dot = v_dot(n, l);
@@ -408,7 +417,7 @@ int process_light_new(t_ray *ray, t_intersect *inter, t_scene *scene)
 
 
 
-
+/*
 
 int 		trace_ray(t_v origin, t_v dir, t_scene	*scene)
 {
@@ -433,20 +442,20 @@ int 		trace_ray(t_v origin, t_v dir, t_scene	*scene)
 	}
 	return (0xE9DC65);
 }
-
+*/
 
 int 		trace_ray_new(t_ray	*ray, t_scene *scene)
 {
 	t_intersect int_p;
-	double closest_t;
+	double 		closest_t;
 	t_intersect *inter;
-	int color;
-	int light_effects;
+	int 		color;
+	int 		light_effects;
 
-	if ((inter = trace_result_new(ray, scene)))
+	if ((inter = trace_result_new(ray, scene, 1)))
 	{
 		color = inter->obj->color;
-		light_effects = process_light_new(ray, inter, scene);
+		light_effects = process_light_new(ray, scene);
 		//origin = v_add(origin, v_scalar_mult(dir, closest_t));
 		//dir = surface_vector(inter, origin);
 		return (rgb_multiply(color, light_effects));
@@ -485,8 +494,8 @@ void 		*render_section(void *arg)
 			r_dir = v_subtract(c_coords, cam->coordinates);
 			ray.dir = r_dir;
 			ray.origin = c_coords;
-			/// color = trace_ray_new(&ray, scene);
-			color = trace_ray(cam->coordinates, r_dir, scene);
+			color = trace_ray_new(&ray, scene);
+			///color = trace_ray(cam->coordinates, r_dir, scene);
 			 for (int y = (int)(y_pixel * y_mult); y < (y_pixel + 1) * y_mult; y++)
 			{
 				for (int x = (int)(x_pixel * x_mult); x < (x_pixel + 1) * x_mult; x++)
