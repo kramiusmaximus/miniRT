@@ -16,12 +16,12 @@
 
 
 
-typedef struct		s_3dvec
+typedef struct		s_v
 {
 	double 			x;
 	double 			y;
 	double 			z;
-}					t_3dvec;
+}					t_v;
 
 typedef struct 		s_dims
 {
@@ -31,8 +31,8 @@ typedef struct 		s_dims
 
 typedef struct		s_camera
 {
-	t_3dvec			coordinates;
-	t_3dvec 		dir;
+	t_v			coordinates;
+	t_v 		dir;
 	double 			fov;
 	int 			d;
 	struct s_camera	*next;
@@ -47,65 +47,47 @@ typedef struct		s_ambient
 typedef struct		s_light
 {
 	double			intensity;
-	t_3dvec			coordinates;
+	t_v			coordinates;
 	int 			color;
 	struct s_light	*next;
 }					t_light;
-
-typedef struct			s_intersect
-{
-	double 				t;
-	t_3dvec 			p;
-	t_3dvec				surface_v;
-	int 				inside;
-	struct s_intersect	*next;
-}						t_intersect;
-
-typedef struct 			s_ray
-{
-	t_3dvec 			origin;
-	t_3dvec				dir;
-	t_intersect			*intersect;
-}						t_ray;
-
-
 
 // shapes
 
 typedef struct		s_sp
 {
-	t_3dvec			coordinates;
+	t_v			coordinates;
 	double 			diameter;
 }					t_sp;
 
 typedef struct		s_pl
 {
-	t_3dvec			coordinates;
-	t_3dvec 		normal;
+	t_v			coordinates;
+	t_v 		normal;
 }					t_pl;
 
 typedef struct		s_sq
 {
-	t_3dvec			coordinates;
-	t_3dvec 		top;
-	t_3dvec			front;
-	t_3dvec 		side;
+	t_v			coordinates;
+	t_v 		top;
+	t_v			front;
+	t_v 		side;
 	double 			side_len;
 }					t_sq;
 
 typedef	struct		s_cy
 {
-	t_3dvec			coordinates;
-	t_3dvec 		normal;
+	t_v			coordinates;
+	t_v 		normal;
 	double 			diameter;
 	double 			height;
 }					t_cy;
 
 typedef struct 		s_tr
 {
-	t_3dvec			p1;
-	t_3dvec			p2;
-	t_3dvec			p3;
+	t_v			p1;
+	t_v			p2;
+	t_v			p3;
 }					t_tr;
 
 typedef union		u_shape
@@ -120,7 +102,7 @@ typedef union		u_shape
 typedef struct		s_object
 {
 	int 			type;
-	t_shape			shape;
+	t_shape			data;
 	double 			refraction;
 	double 			reflectivity;
 	int 			color;
@@ -176,6 +158,30 @@ typedef struct 		s_vars
 	t_nav			nav;
 }					t_vars;
 
+typedef struct			s_intersect
+{
+	double 				t;
+	t_object			*obj;
+	t_v 				contact;
+	t_v					surface_v;
+	int 				inside;
+	struct s_intersect	*next;       // later can implement sorted list
+}						t_intersect;
+
+typedef struct 			s_ray
+{
+	t_v 			origin;
+	t_v				dir;
+	t_intersect			*intersect;
+}						t_ray;
+
+typedef struct			s_t
+{
+	int 				size;
+	double 				closest;
+	double 				arr[10];
+}						t_t;
+
 // color functions
 
 int				get_t(int trgb);
@@ -191,36 +197,36 @@ int 			rgb_subtract(int c1, int c2);
 
 
 // vector functions
-t_3dvec			vector_add(t_3dvec v1, t_3dvec v2);
-t_3dvec			vector_subtract(t_3dvec v1, t_3dvec v2);
-double			vector_dot(t_3dvec v1, t_3dvec v2);
-double 			vector_norm(t_3dvec v);
-t_3dvec 		vector_scalar_mult(t_3dvec v, double s);
-t_3dvec 		vector_normalize(t_3dvec v);
-t_3dvec 		vector_random(t_3dvec v, double amount);
-t_3dvec 		vector_cross(t_3dvec v1, t_3dvec v2);
-double			point_line_dist(t_3dvec x0, t_3dvec x1, t_3dvec p);
+t_v				v_add(t_v v1, t_v v2);
+t_v				v_subtract(t_v v1, t_v v2);
+double			v_dot(t_v v1, t_v v2);
+double 			v_norm(t_v v);
+t_v 			v_scalar_mult(t_v v, double s);
+t_v 			v_normalize(t_v v);
+t_v 			v_random(t_v v, double amount);
+t_v 			v_cross(t_v v1, t_v v2);
+double			point_line_dist(t_v x0, t_v x1, t_v p);
 
 // maths
 int				solve_quadratic(double a, double b, double c, double t[2]);
-t_3dvec 		canvas_to_coords(int x_pixel, int y_pixel, t_scene *scene);
+t_v 			canvas_to_coords(int x_pixel, int y_pixel, t_scene *scene);
 int 			min(int a, int b);
 int 			max(int a, int b);
 int 			abs(int a);
 
 
 // ray tracing funcitions
-int render_image();
-t_object		*ray_intersect_sphere(t_3dvec p_origin, t_3dvec v_dir, t_object *sphere_obj, double *t);
-t_object	*ray_intersect_plane(t_3dvec p_origin, t_3dvec v_dir, t_object *pl_obj, double *t);
-t_object	*ray_intersect_sq(t_3dvec p_origin, t_3dvec v_dir, t_object *sq_object, double *t);
-int 		ray_intersect_sausage(t_3dvec p_origin, t_3dvec v_dir, t_object *cy_object, double *t);
-int ray_intersect_caps(t_3dvec p_origin, t_3dvec v_dir, t_object *cy_object, double *t, int solution_n);
+int 			render_image();
+t_object		*ray_intersect_sphere(t_v p_origin, t_v v_dir, t_object *sphere_obj, double *t);
+t_object		*ray_intersect_plane(t_v p_origin, t_v v_dir, t_object *pl_obj, double *t);
+t_object		*ray_intersect_sq(t_v p_origin, t_v v_dir, t_object *sq_object, double *t);
+int 			ray_intersect_sausage(t_v p_origin, t_v v_dir, t_object *cy_object, double *t);
+int 			ray_intersect_caps(t_v p_origin, t_v v_dir, t_object *cy_object, double *t, int solution_n);
 
-t_3dvec 		surface_vector(t_object *obj, t_3dvec p_contact);
-int process_light(t_object *obj, t_3dvec contact_p, t_scene *scene, t_3dvec pixel_ray);
-t_object 		*trace_result(t_3dvec p_origin, t_3dvec v_dir, double *closest_t, t_scene *scene, double d);
-int				trace_ray(t_3dvec origin, t_3dvec dir, t_scene *scene);
+t_v 			surface_vector(t_object *obj, t_v p_contact);
+int 			process_light(t_object *obj, t_v contact_p, t_scene *scene, t_v pixel_ray);
+t_object 		*trace_result(t_v p_origin, t_v v_dir, double *closest_t, t_scene *scene, double d);
+int				trace_ray(t_v origin, t_v dir, t_scene *scene);
 
 // movement
 int 			move_camera(t_vars *vars);
@@ -228,6 +234,10 @@ int 			button_press(int key, t_vars *vars);
 int				button_release(int key, t_vars *vars);
 int				is_moving(t_nav *nav);
 
+// new functions
+
+t_v 			surface_vector_new(t_ray *ray, t_object *obj, t_intersect *inter);
+t_intersect		*process_t(t_ray *ray, t_object *obj, t_t *t);
 
 
 #endif

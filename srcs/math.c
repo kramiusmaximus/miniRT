@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-t_3dvec	vector_add(t_3dvec v1, t_3dvec v2)
+t_v	v_add(t_v v1, t_v v2)
 {
 	v1.x += v2.x;
 	v1.y += v2.y;
@@ -8,7 +8,7 @@ t_3dvec	vector_add(t_3dvec v1, t_3dvec v2)
 	return (v1);
 }
 
-t_3dvec	vector_subtract(t_3dvec v1, t_3dvec v2)
+t_v	v_subtract(t_v v1, t_v v2)
 {
 	v1.x -= v2.x;
 	v1.y -= v2.y;
@@ -16,17 +16,17 @@ t_3dvec	vector_subtract(t_3dvec v1, t_3dvec v2)
 	return (v1);
 }
 
-double		vector_dot(t_3dvec v1, t_3dvec v2)
+double		v_dot(t_v v1, t_v v2)
 {
 	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }
 
-double		vector_norm(t_3dvec v)
+double		v_norm(t_v v)
 {
 	return (sqrt(pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2)));
 }
 
-t_3dvec 	vector_scalar_mult(t_3dvec v, double s)
+t_v 	v_scalar_mult(t_v v, double s)
 {
 	v.x *= s;
 	v.y *= s;
@@ -34,9 +34,9 @@ t_3dvec 	vector_scalar_mult(t_3dvec v, double s)
 	return (v);
 }
 
-t_3dvec 	vector_normalize(t_3dvec v)
+t_v 	v_normalize(t_v v)
 {
-	return (vector_scalar_mult(v, 1/vector_norm(v)));
+	return (v_scalar_mult(v, 1 / v_norm(v)));
 }
 
 
@@ -60,9 +60,9 @@ int			solve_quadratic(double a, double b, double c, double t[2])
 	}
 }
 
-t_3dvec vector_cross(t_3dvec v1, t_3dvec v2)
+t_v v_cross(t_v v1, t_v v2)
 {
-	t_3dvec	res;
+	t_v	res;
 
 	res.x = v1.y * v2.z - v1.z * v2.y;
 	res.y = v1.z * v2.x - v1.x * v2.z;
@@ -70,7 +70,7 @@ t_3dvec vector_cross(t_3dvec v1, t_3dvec v2)
 	return (res);
 }
 
-t_3dvec vector_random(t_3dvec v, double amount)
+t_v v_random(t_v v, double amount)
 {
 	double sign = rand() / 10000000;
 
@@ -82,13 +82,13 @@ t_3dvec vector_random(t_3dvec v, double amount)
 	return (v);
 }
 
-double point_line_dist(t_3dvec x0, t_3dvec x1, t_3dvec p)
+double point_line_dist(t_v x0, t_v x1, t_v p)
 {
 	double nom;
 	double denom;
 
-	nom = vector_norm(vector_cross(vector_subtract(p, x0), vector_subtract(p, x1)));
-	denom = vector_norm(vector_subtract(x1, x0));
+	nom = v_norm(v_cross(v_subtract(p, x0), v_subtract(p, x1)));
+	denom = v_norm(v_subtract(x1, x0));
 
 	return (nom / denom);
 }
