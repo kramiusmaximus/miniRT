@@ -11,7 +11,7 @@
 # define SQ			0b00000100
 # define CY			0b00001000
 # define TR			0b00010000
-# define NUM_THREADS 4
+# define NUM_THREADS 8
 # define N_PASSES	1
 
 
@@ -52,13 +52,21 @@ typedef struct		s_light
 	struct s_light	*next;
 }					t_light;
 
-typedef struct		s_intersect
+typedef struct			s_intersect
 {
-	double 			t;
-	t_3dvec 		p;
-	t_3dvec			surface_v;
-	int 			inside;
-}					t_intersect;
+	double 				t;
+	t_3dvec 			p;
+	t_3dvec				surface_v;
+	int 				inside;
+	struct s_intersect	*next;
+}						t_intersect;
+
+typedef struct 			s_ray
+{
+	t_3dvec 			origin;
+	t_3dvec				dir;
+	t_intersect			*intersect;
+}						t_ray;
 
 
 

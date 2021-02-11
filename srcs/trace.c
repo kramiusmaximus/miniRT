@@ -219,6 +219,52 @@ t_object 	*trace_result(t_3dvec p_origin, t_3dvec v_dir, double *closest_t, t_sc
 	return (object_hit_closest);
 }
 
+t_object 	*trace_result_new(t_3dvec p_origin, t_3dvec v_dir, double *closest_t, t_scene *scene, double d)
+{
+	t_object	*object_hit_closest;
+	t_object	*object_hit;
+	double 		t[] = {*closest_t, *closest_t};
+	t_object	*p;
+
+	object_hit_closest = NULL;
+	if (!closest_t || !scene) // why is this condition always false?
+		return (NULL);
+	p = scene->object;
+	while (p)
+	{
+		if (p->type & SP)
+			object_hit = ray_intersect_sphere(p_origin, v_dir, p, &t);
+		else if (p->type & PL)
+			object_hit = ray_intersect_plane(p_origin, v_dir, p, &t);
+		else if (p->type & SQ)
+			object_hit = ray_intersect_sq(p_origin, v_dir, p, &t);
+		else if (p->type & CY)
+			object_hit = ray_intersect_cy(p_origin, v_dir, p, &t);
+		else if (p->type & TR)
+		{}
+		if (t[0] > d && t[0] < *closest_t)
+		{
+			*closest_t = t[0];
+			object_hit_closest = object_hit;
+		}
+		if (t[1] > d && t[1] < *closest_t)
+		{
+			*closest_t = t[1];
+			object_hit_closest = object_hit;
+		}
+		p = p->next;
+	}
+	return (object_hit_closest);
+}
+
+
+
+
+
+
+
+
+
 int process_light(t_object *obj, t_3dvec contact_p, t_scene *scene, t_3dvec pixel_ray)
 {
 	int 	light_effects;
@@ -248,6 +294,13 @@ int process_light(t_object *obj, t_3dvec contact_p, t_scene *scene, t_3dvec pixe
 	return (light_effects);
 }
 
+
+
+
+
+
+
+
 int 		trace_ray(t_3dvec origin, t_3dvec dir, t_scene	*scene)
 {
 	double		closest_t;
@@ -272,6 +325,33 @@ int 		trace_ray(t_3dvec origin, t_3dvec dir, t_scene	*scene)
 	return (0xE9DC65);
 }
 
+/*
+int 		trace_ray_new(t_ray	*ray, t_scene *scene)
+{
+	t_intersect int_p;
+	double closest_t;
+	t_object *object_hit;
+	int color;
+	int light_effects;
+
+	if ((object_hit = trace_result_new(ray, scene)))
+	{
+		color = object_hit->color;
+		light_effects = process_light(object_hit, vector_add(origin, vector_scalar_mult(dir, closest_t)), scene, dir);
+		//origin = vector_add(origin, vector_scalar_mult(dir, closest_t));
+		//dir = surface_vector(object_hit, origin);
+		return (rgb_multiply(color, light_effects));
+		//return (rgb_add(rgb_multiply_scalar(color, (1 - object_hit->reflectivity)),rgb_multiply_scalar(, )));
+	}
+	return (0xE9DC65);
+}
+ */
+
+
+
+
+
+
 void 		*render_section(void *arg)
 {
 	int 		id = (int)arg;
@@ -285,6 +365,7 @@ void 		*render_section(void *arg)
 	double 		x_mult = ((double)scene->window_dims.width / (double)scene->res.width) / scene->adjustment_factor;
 	int			section_h = scene->res.height * scene->adjustment_factor / NUM_THREADS ;
 	double		r_rays = 1;
+	t_ray 		ray;
 
 	//printf("id: %d\n", id);
 	for (int y_pixel = section_h * id; y_pixel < section_h * (id + 1); y_pixel++) //
@@ -293,11 +374,10 @@ void 		*render_section(void *arg)
 		{
 			c_coords = canvas_to_coords(x_pixel, y_pixel, scene);
 			r_dir = vector_subtract(c_coords, cam->coordinates);
+			ray.dir = r_dir;
+			ray.origin = c_coords;
+			// color = trace_ray_new(&ray, scene);
 			color = trace_ray(cam->coordinates, r_dir, scene);
-			/* anti aliasing not working properly at the moment
-			for (int i = 0; i < r_rays; i++)
-				color = rgb_add(color, rgb_multiply_scalar(trace_ray(cam->coordinates, vector_random(r_dir, 32000000000000), scene), 1 / r_rays));
-			*/
 			 for (int y = (int)(y_pixel * y_mult); y < (y_pixel + 1) * y_mult; y++)
 			{
 				for (int x = (int)(x_pixel * x_mult); x < (x_pixel + 1) * x_mult; x++)
