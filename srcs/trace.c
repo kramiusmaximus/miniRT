@@ -30,7 +30,7 @@ t_object	*ray_intersect_plane(t_3dvec p_origin, t_3dvec v_dir, t_object *pl_obj,
 
 	nominator = vector_dot(pl_obj->shape.pl.normal, vector_subtract(pl_obj->shape.pl.coordinates, p_origin));
 	denominator = vector_dot(pl_obj->shape.pl.normal, v_dir);
-	if ((res = nominator / denominator) > *t)
+	if (isinf(res = nominator / denominator))
 		return (NULL);
 	*t = res;
 	return (pl_obj);
@@ -146,21 +146,19 @@ t_object	*ray_intersect_cy(t_3dvec p_origin, t_3dvec v_dir, t_object *cy_object,
 	t_cy 	cy = cy_object->shape.cy;
 	int 	sausage_hit;
 	int 	caps_hit;
-	double	t1[2];
-	double 	t2[2];
 
 	sausage_hit = ray_intersect_sausage(p_origin, v_dir, cy_object, t);
 	caps_hit = ray_intersect_caps(p_origin, v_dir, cy_object, t, sausage_hit);
 	if (caps_hit || sausage_hit)
 		return (cy_object);
-
 	return (NULL);
 }
-
 
 t_3dvec 	surface_vector(t_object *obj, t_3dvec p_contact)
 {
 	t_3dvec n = {0,0,0};
+	t_cy	cy;
+	double 	d;
 
 	if (obj->type & SP)
 		n = vector_normalize(vector_subtract(p_contact, obj->shape.sp.coordinates));
@@ -169,7 +167,14 @@ t_3dvec 	surface_vector(t_object *obj, t_3dvec p_contact)
 	else if (obj->type & SQ)
 		n = obj->shape.sq.top;
 	else if (obj->type & CY)
-	{}
+	{
+		cy = obj->shape.cy;
+		d = point_line_dist(cy.coordinates, vector_add(cy.coordinates, vector_scalar_mult(cy.normal, cy.height)), p_contact);
+		if (d < cy.diameter / 2 - 0.0001)
+			n = cy.normal;
+		else
+		{}
+	}
 	else if (obj->type & TR)
 	{}
 	return (n);

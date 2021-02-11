@@ -82,6 +82,17 @@ t_3dvec vector_random(t_3dvec v, double amount)
 	return (v);
 }
 
+double point_line_dist(t_3dvec x0, t_3dvec x1, t_3dvec p)
+{
+	double nom;
+	double denom;
+
+	nom = vector_norm(vector_cross(vector_subtract(p, x0), vector_subtract(p, x1)));
+	denom = vector_norm(vector_subtract(x1, x0));
+
+	return (nom / denom);
+}
+
 int max(int a, int b)
 {
 	return (a > b ? a : b);

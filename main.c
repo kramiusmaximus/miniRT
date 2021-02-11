@@ -11,29 +11,29 @@ int	initiate_jesus_resurrection()
 	int z = 	300;
 	t_scene		scene;
 	t_ambient	ambient = {0.3 , 0xE9DC65};
-	t_light		l1 = {1, {200,300, z}, 0x00FFFFFF, NULL};
+	t_light		l1 = {1, {300,300, z}, 0x00FFFFFF, NULL};
 	//t_light		l2 = {0, {0,0, 0}, 0x00FFFFFF, &l1};
 
 	// shapes
-	t_camera	camera = {{-100,0,z + 100}, {0,0, 0}, 90, 1, NULL};
+	t_camera	camera = {{0,0,0}, {0,0, 0}, 90, 1, NULL};
 	t_sp		sp1 = {{-70, 0, z - 20 }, 30};
 	t_sp		sp2 = {{0, 0, z}, 100};
 	t_sp		sp3 = {{70, 0, z}, 30};
 	t_sp		sp4 = {{20, 20, z-55}, 20};
 	t_pl		pl1 = {{0, -60, 0}, {0,1,0}};
 	t_sq		sq1 = {{0, -50, z}, {0,1,0}, {0,0,1}, {1,0,0}, 120};
-	t_cy		cy1 = {{0,0,z}, {0, 1, 0}, 100, 100};
+	t_cy		cy1 = {{30,-50,z - 45}, {0, 1, 0}, 15, 25};
 	// ^ need to figure out how to find front and side vectors, and rotation of shapes in general...
 
 
 	// objects
-	//t_object	object0 = {SP, (t_shape)sp1,0,0,0x006FFF7E, NULL};
-	//t_object	object1 = {SP, (t_shape)sp2,0,0.5,0x00FFA267 , &object0};
-	//t_object	object2 = {SP, (t_shape)sp3,0,0,0x006FFFFD, &object1};
-	//t_object	object3 = {SP, (t_shape)sp4,0,0,0x007E6FFF, &object2};
-	t_object	object4 = {PL, (t_shape)pl1,0,0,0x00A9FFD5, NULL};
-	//t_object	object5 = {SQ, (t_shape)sq1,0,0,0x00FF8EE1, &object4};
-	t_object	object6 = {CY, (t_shape)cy1,0,0,0x007A9FFF, &object4};
+	t_object	object0 = {SP, (t_shape)sp1,0,0,0x006FFF7E, NULL};
+	t_object	object1 = {SP, (t_shape)sp2,0,0.5,0x00FFA267 , &object0};
+	t_object	object2 = {SP, (t_shape)sp3,0,0,0x006FFFFD, &object1};
+	t_object	object3 = {SP, (t_shape)sp4,0,0,0x007E6FFF, &object2};
+	t_object	object4 = {PL, (t_shape)pl1,0,0,0x00A9FFD5, &object3};
+	t_object	object5 = {SQ, (t_shape)sq1,0,0,0x00FF8EE1, &object4};
+	t_object	object6 = {CY, (t_shape)cy1,0,0,0x007A9FFF, &object5};
 	t_dims		window_dims = {720, 1280};
 	t_dims		image_res = {720, 1280};
 	t_mlx		mlx;

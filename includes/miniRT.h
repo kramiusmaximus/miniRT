@@ -14,6 +14,8 @@
 # define NUM_THREADS 4
 # define N_PASSES	1
 
+
+
 typedef struct		s_3dvec
 {
 	double 			x;
@@ -49,6 +51,14 @@ typedef struct		s_light
 	int 			color;
 	struct s_light	*next;
 }					t_light;
+
+typedef struct		s_intersect
+{
+	double 			t;
+	t_3dvec 		p;
+	t_3dvec			surface_v;
+	int 			inside;
+}					t_intersect;
 
 
 
@@ -181,6 +191,7 @@ t_3dvec 		vector_scalar_mult(t_3dvec v, double s);
 t_3dvec 		vector_normalize(t_3dvec v);
 t_3dvec 		vector_random(t_3dvec v, double amount);
 t_3dvec 		vector_cross(t_3dvec v1, t_3dvec v2);
+double			point_line_dist(t_3dvec x0, t_3dvec x1, t_3dvec p);
 
 // maths
 int				solve_quadratic(double a, double b, double c, double t[2]);
