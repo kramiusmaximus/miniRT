@@ -20,9 +20,9 @@ pthread.h
 
 ../includes/mlx.h
 
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/trace.c
-tcl.h
--
+/Users/pfelipa/Desktop/pfelipa/miniRT/main.c
 miniRT.h
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/miniRT.h
+/Users/pfelipa/Desktop/pfelipa/miniRT/miniRT.h
+pthread.h
+-
 

@@ -11,7 +11,7 @@
 # define SQ			0b00000100
 # define CY			0b00001000
 # define TR			0b00010000
-# define NUM_THREADS 1
+# define NUM_THREADS 4
 # define N_PASSES	1
 
 typedef struct		s_3dvec
@@ -196,7 +196,7 @@ t_object		*ray_intersect_sphere(t_3dvec p_origin, t_3dvec v_dir, t_object *spher
 t_object	*ray_intersect_plane(t_3dvec p_origin, t_3dvec v_dir, t_object *pl_obj, double *t);
 t_object	*ray_intersect_sq(t_3dvec p_origin, t_3dvec v_dir, t_object *sq_object, double *t);
 int 		ray_intersect_sausage(t_3dvec p_origin, t_3dvec v_dir, t_object *cy_object, double *t);
-int 		ray_intersect_caps(t_3dvec p_origin, t_3dvec v_dir, t_object *cy_object, double *t);
+int ray_intersect_caps(t_3dvec p_origin, t_3dvec v_dir, t_object *cy_object, double *t, int solution_n);
 
 t_3dvec 		surface_vector(t_object *obj, t_3dvec p_contact);
 int process_light(t_object *obj, t_3dvec contact_p, t_scene *scene, t_3dvec pixel_ray);

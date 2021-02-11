@@ -15,7 +15,7 @@ int	initiate_jesus_resurrection()
 	//t_light		l2 = {0, {0,0, 0}, 0x00FFFFFF, &l1};
 
 	// shapes
-	t_camera	camera = {{0,0,0}, {0,0, 0}, 90, 1, NULL};
+	t_camera	camera = {{-100,0,z + 100}, {0,0, 0}, 90, 1, NULL};
 	t_sp		sp1 = {{-70, 0, z - 20 }, 30};
 	t_sp		sp2 = {{0, 0, z}, 100};
 	t_sp		sp3 = {{70, 0, z}, 30};

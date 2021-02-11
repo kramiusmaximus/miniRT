@@ -107,7 +107,7 @@ int 		ray_intersect_sausage(t_3dvec p_origin, t_3dvec v_dir, t_object *cy_object
 	return (solution_n);
 }
 
-int 		ray_intersect_caps(t_3dvec p_origin, t_3dvec v_dir, t_object *cy_object, double *t)
+int ray_intersect_caps(t_3dvec p_origin, t_3dvec v_dir, t_object *cy_object, double *t, int solution_n)
 {
 	t_cy	cy;
 	double nominator;
@@ -115,21 +115,30 @@ int 		ray_intersect_caps(t_3dvec p_origin, t_3dvec v_dir, t_object *cy_object, d
 	double res;
 	t_3dvec p_contact;
 	t_3dvec v_contact;
-	double a1;
-	double a2;
-	double len;
 
 	// repeat this process for the top cap cause this is just the bottom cap rn
+	solution_n = 0;
 	cy = cy_object->shape.cy;
+	// top cap;
 	nominator = vector_dot(cy.normal, vector_subtract(cy.coordinates, p_origin));
 	denominator = vector_dot(cy.normal, v_dir);
-	if (isinf(res = nominator / denominator))
-		return (NULL);
-	p_contact = vector_add(p_origin, vector_scalar_mult(v_dir, res));
-	v_contact = vector_subtract(p_contact, cy.coordinates);
-	*t = res;
-
-	return (cy_object);
+	if (!isinf(res = nominator / denominator))
+	{
+		p_contact = vector_add(p_origin, vector_scalar_mult(v_dir, res));
+		v_contact = vector_subtract(p_contact, cy.coordinates);
+		if (vector_norm(v_contact) <= cy.diameter / 2)
+			t[solution_n++] = res;
+	}
+	nominator = vector_dot(cy.normal, vector_subtract(vector_add(cy.coordinates, vector_scalar_mult(cy.normal, cy.height)), p_origin));
+	denominator = vector_dot(cy.normal, v_dir);
+	if (!isinf(res = nominator / denominator))
+	{
+		p_contact = vector_add(p_origin, vector_scalar_mult(v_dir, res));
+		v_contact = vector_subtract(p_contact, vector_add(cy.coordinates, vector_scalar_mult(cy.normal, cy.height)));
+		if (vector_norm(v_contact) <= cy.diameter / 2)
+			t[solution_n++] = res;
+	}
+	return (solution_n);
 }
 
 t_object	*ray_intersect_cy(t_3dvec p_origin, t_3dvec v_dir, t_object *cy_object, double *t)
@@ -140,8 +149,10 @@ t_object	*ray_intersect_cy(t_3dvec p_origin, t_3dvec v_dir, t_object *cy_object,
 	double	t1[2];
 	double 	t2[2];
 
-	sausage_hit = ray_intersect_sausage(p_origin, v_dir, cy_object, &t1);
-	caps_hit = ray_intersect_caps(p_origin, v_dir, cy_object, &t2);
+	sausage_hit = ray_intersect_sausage(p_origin, v_dir, cy_object, t);
+	caps_hit = ray_intersect_caps(p_origin, v_dir, cy_object, t, sausage_hit);
+	if (caps_hit || sausage_hit)
+		return (cy_object);
 
 	return (NULL);
 }
@@ -186,7 +197,6 @@ t_object 	*trace_result(t_3dvec p_origin, t_3dvec v_dir, double *closest_t, t_sc
 			object_hit = ray_intersect_sq(p_origin, v_dir, p, &t);
 		else if (p->type & CY)
 			object_hit = ray_intersect_cy(p_origin, v_dir, p, &t);
-
 		else if (p->type & TR)
 		{}
 		if (t[0] > d && t[0] < *closest_t)
