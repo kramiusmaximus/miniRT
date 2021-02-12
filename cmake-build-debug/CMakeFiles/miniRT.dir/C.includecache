@@ -7,6 +7,16 @@
 #IncludeRegexTransform: 
 
 ../includes/miniRT.h
+objects.h
+../includes/objects.h
+visual.h
+../includes/visual.h
+vectors.h
+../includes/vectors.h
+scene.h
+../includes/scene.h
+tracing.h
+../includes/tracing.h
 math.h
 -
 mlx.h
@@ -20,13 +30,29 @@ pthread.h
 
 ../includes/mlx.h
 
+../includes/objects.h
+vectors.h
+../includes/vectors.h
+
+../includes/scene.h
+
+../includes/tracing.h
+
+../includes/vectors.h
+
+../includes/visual.h
+
 /Users/pfelipa/Desktop/pfelipa/miniRT/main.c
 miniRT.h
 /Users/pfelipa/Desktop/pfelipa/miniRT/miniRT.h
 pthread.h
 -
 
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/color.c
+/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/intersect_shapes.c
+miniRT.h
+/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/miniRT.h
+
+/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/light.c
 miniRT.h
 /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/miniRT.h
 
@@ -34,17 +60,29 @@ miniRT.h
 miniRT.h
 /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/miniRT.h
 
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/navigation.c
+/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/rendering.c
 miniRT.h
 /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/miniRT.h
 
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/trace.c
+/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/scene.c
+miniRT.h
+/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/miniRT.h
+
+/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/surface_vectors.c
+miniRT.h
+/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/miniRT.h
+
+/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/trace_ray.c
 tcl.h
 -
 miniRT.h
 /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/miniRT.h
 
 /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/utils.c
+miniRT.h
+/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/miniRT.h
+
+/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/visual.c
 miniRT.h
 /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/miniRT.h
 

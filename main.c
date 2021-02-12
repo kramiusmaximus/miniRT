@@ -2,8 +2,6 @@
 #include <pthread.h>
 
 t_vars	vars;
-int		**prev_frame;
-
 
 int	initiate_jesus_resurrection()
 {
@@ -11,7 +9,7 @@ int	initiate_jesus_resurrection()
 	int z = 	300;
 	t_scene		scene;
 	t_ambient	ambient = {0.3 , 0xE9DC65};
-	t_light		l1 = {1, {300,300, z}, 0x00FFFFFF, NULL};
+	t_light		l1 = {0.7, {300,300, z - 100}, 0x00FFFFFF, NULL};
 	//t_light		l2 = {0, {0,0, 0}, 0x00FFFFFF, &l1};
 
 	// shapes
@@ -55,7 +53,6 @@ int	initiate_jesus_resurrection()
 	scene.light = &l1;
 	scene.object = &object6;
 
-	prev_frame = malloc(sizeof(int) * scene.window_dims.width * scene.window_dims.height);
 	// lets get the party started;
 	mlx.mlx = mlx_init();
 	mlx.win = mlx_new_window(mlx.mlx, window_dims.width, window_dims.height, "Is this god?");

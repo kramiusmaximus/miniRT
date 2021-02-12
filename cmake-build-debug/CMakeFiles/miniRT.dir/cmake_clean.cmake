@@ -1,10 +1,14 @@
 file(REMOVE_RECURSE
   "CMakeFiles/miniRT.dir/main.c.o"
-  "CMakeFiles/miniRT.dir/srcs/color.c.o"
+  "CMakeFiles/miniRT.dir/srcs/intersect_shapes.c.o"
+  "CMakeFiles/miniRT.dir/srcs/light.c.o"
   "CMakeFiles/miniRT.dir/srcs/math.c.o"
-  "CMakeFiles/miniRT.dir/srcs/navigation.c.o"
-  "CMakeFiles/miniRT.dir/srcs/trace.c.o"
+  "CMakeFiles/miniRT.dir/srcs/rendering.c.o"
+  "CMakeFiles/miniRT.dir/srcs/scene.c.o"
+  "CMakeFiles/miniRT.dir/srcs/surface_vectors.c.o"
+  "CMakeFiles/miniRT.dir/srcs/trace_ray.c.o"
   "CMakeFiles/miniRT.dir/srcs/utils.c.o"
+  "CMakeFiles/miniRT.dir/srcs/visual.c.o"
   "miniRT"
   "miniRT.pdb"
 )

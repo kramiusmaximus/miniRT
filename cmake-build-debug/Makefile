@@ -170,32 +170,59 @@ main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/main.c.s
 .PHONY : main.c.s
 
-srcs/color.o: srcs/color.c.o
+srcs/intersect_shapes.o: srcs/intersect_shapes.c.o
 
-.PHONY : srcs/color.o
+.PHONY : srcs/intersect_shapes.o
 
 # target to build an object file
-srcs/color.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/color.c.o
-.PHONY : srcs/color.c.o
+srcs/intersect_shapes.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/intersect_shapes.c.o
+.PHONY : srcs/intersect_shapes.c.o
 
-srcs/color.i: srcs/color.c.i
+srcs/intersect_shapes.i: srcs/intersect_shapes.c.i
 
-.PHONY : srcs/color.i
+.PHONY : srcs/intersect_shapes.i
 
 # target to preprocess a source file
-srcs/color.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/color.c.i
-.PHONY : srcs/color.c.i
+srcs/intersect_shapes.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/intersect_shapes.c.i
+.PHONY : srcs/intersect_shapes.c.i
 
-srcs/color.s: srcs/color.c.s
+srcs/intersect_shapes.s: srcs/intersect_shapes.c.s
 
-.PHONY : srcs/color.s
+.PHONY : srcs/intersect_shapes.s
 
 # target to generate assembly for a file
-srcs/color.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/color.c.s
-.PHONY : srcs/color.c.s
+srcs/intersect_shapes.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/intersect_shapes.c.s
+.PHONY : srcs/intersect_shapes.c.s
+
+srcs/light.o: srcs/light.c.o
+
+.PHONY : srcs/light.o
+
+# target to build an object file
+srcs/light.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/light.c.o
+.PHONY : srcs/light.c.o
+
+srcs/light.i: srcs/light.c.i
+
+.PHONY : srcs/light.i
+
+# target to preprocess a source file
+srcs/light.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/light.c.i
+.PHONY : srcs/light.c.i
+
+srcs/light.s: srcs/light.c.s
+
+.PHONY : srcs/light.s
+
+# target to generate assembly for a file
+srcs/light.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/light.c.s
+.PHONY : srcs/light.c.s
 
 srcs/math.o: srcs/math.c.o
 
@@ -224,59 +251,113 @@ srcs/math.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/math.c.s
 .PHONY : srcs/math.c.s
 
-srcs/navigation.o: srcs/navigation.c.o
+srcs/rendering.o: srcs/rendering.c.o
 
-.PHONY : srcs/navigation.o
-
-# target to build an object file
-srcs/navigation.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/navigation.c.o
-.PHONY : srcs/navigation.c.o
-
-srcs/navigation.i: srcs/navigation.c.i
-
-.PHONY : srcs/navigation.i
-
-# target to preprocess a source file
-srcs/navigation.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/navigation.c.i
-.PHONY : srcs/navigation.c.i
-
-srcs/navigation.s: srcs/navigation.c.s
-
-.PHONY : srcs/navigation.s
-
-# target to generate assembly for a file
-srcs/navigation.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/navigation.c.s
-.PHONY : srcs/navigation.c.s
-
-srcs/trace.o: srcs/trace.c.o
-
-.PHONY : srcs/trace.o
+.PHONY : srcs/rendering.o
 
 # target to build an object file
-srcs/trace.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/trace.c.o
-.PHONY : srcs/trace.c.o
+srcs/rendering.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/rendering.c.o
+.PHONY : srcs/rendering.c.o
 
-srcs/trace.i: srcs/trace.c.i
+srcs/rendering.i: srcs/rendering.c.i
 
-.PHONY : srcs/trace.i
+.PHONY : srcs/rendering.i
 
 # target to preprocess a source file
-srcs/trace.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/trace.c.i
-.PHONY : srcs/trace.c.i
+srcs/rendering.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/rendering.c.i
+.PHONY : srcs/rendering.c.i
 
-srcs/trace.s: srcs/trace.c.s
+srcs/rendering.s: srcs/rendering.c.s
 
-.PHONY : srcs/trace.s
+.PHONY : srcs/rendering.s
 
 # target to generate assembly for a file
-srcs/trace.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/trace.c.s
-.PHONY : srcs/trace.c.s
+srcs/rendering.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/rendering.c.s
+.PHONY : srcs/rendering.c.s
+
+srcs/scene.o: srcs/scene.c.o
+
+.PHONY : srcs/scene.o
+
+# target to build an object file
+srcs/scene.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/scene.c.o
+.PHONY : srcs/scene.c.o
+
+srcs/scene.i: srcs/scene.c.i
+
+.PHONY : srcs/scene.i
+
+# target to preprocess a source file
+srcs/scene.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/scene.c.i
+.PHONY : srcs/scene.c.i
+
+srcs/scene.s: srcs/scene.c.s
+
+.PHONY : srcs/scene.s
+
+# target to generate assembly for a file
+srcs/scene.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/scene.c.s
+.PHONY : srcs/scene.c.s
+
+srcs/surface_vectors.o: srcs/surface_vectors.c.o
+
+.PHONY : srcs/surface_vectors.o
+
+# target to build an object file
+srcs/surface_vectors.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/surface_vectors.c.o
+.PHONY : srcs/surface_vectors.c.o
+
+srcs/surface_vectors.i: srcs/surface_vectors.c.i
+
+.PHONY : srcs/surface_vectors.i
+
+# target to preprocess a source file
+srcs/surface_vectors.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/surface_vectors.c.i
+.PHONY : srcs/surface_vectors.c.i
+
+srcs/surface_vectors.s: srcs/surface_vectors.c.s
+
+.PHONY : srcs/surface_vectors.s
+
+# target to generate assembly for a file
+srcs/surface_vectors.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/surface_vectors.c.s
+.PHONY : srcs/surface_vectors.c.s
+
+srcs/trace_ray.o: srcs/trace_ray.c.o
+
+.PHONY : srcs/trace_ray.o
+
+# target to build an object file
+srcs/trace_ray.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/trace_ray.c.o
+.PHONY : srcs/trace_ray.c.o
+
+srcs/trace_ray.i: srcs/trace_ray.c.i
+
+.PHONY : srcs/trace_ray.i
+
+# target to preprocess a source file
+srcs/trace_ray.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/trace_ray.c.i
+.PHONY : srcs/trace_ray.c.i
+
+srcs/trace_ray.s: srcs/trace_ray.c.s
+
+.PHONY : srcs/trace_ray.s
+
+# target to generate assembly for a file
+srcs/trace_ray.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/trace_ray.c.s
+.PHONY : srcs/trace_ray.c.s
 
 srcs/utils.o: srcs/utils.c.o
 
@@ -305,6 +386,33 @@ srcs/utils.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/utils.c.s
 .PHONY : srcs/utils.c.s
 
+srcs/visual.o: srcs/visual.c.o
+
+.PHONY : srcs/visual.o
+
+# target to build an object file
+srcs/visual.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/visual.c.o
+.PHONY : srcs/visual.c.o
+
+srcs/visual.i: srcs/visual.c.i
+
+.PHONY : srcs/visual.i
+
+# target to preprocess a source file
+srcs/visual.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/visual.c.i
+.PHONY : srcs/visual.c.i
+
+srcs/visual.s: srcs/visual.c.s
+
+.PHONY : srcs/visual.s
+
+# target to generate assembly for a file
+srcs/visual.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/srcs/visual.c.s
+.PHONY : srcs/visual.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -317,21 +425,33 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... srcs/color.o"
-	@echo "... srcs/color.i"
-	@echo "... srcs/color.s"
+	@echo "... srcs/intersect_shapes.o"
+	@echo "... srcs/intersect_shapes.i"
+	@echo "... srcs/intersect_shapes.s"
+	@echo "... srcs/light.o"
+	@echo "... srcs/light.i"
+	@echo "... srcs/light.s"
 	@echo "... srcs/math.o"
 	@echo "... srcs/math.i"
 	@echo "... srcs/math.s"
-	@echo "... srcs/navigation.o"
-	@echo "... srcs/navigation.i"
-	@echo "... srcs/navigation.s"
-	@echo "... srcs/trace.o"
-	@echo "... srcs/trace.i"
-	@echo "... srcs/trace.s"
+	@echo "... srcs/rendering.o"
+	@echo "... srcs/rendering.i"
+	@echo "... srcs/rendering.s"
+	@echo "... srcs/scene.o"
+	@echo "... srcs/scene.i"
+	@echo "... srcs/scene.s"
+	@echo "... srcs/surface_vectors.o"
+	@echo "... srcs/surface_vectors.i"
+	@echo "... srcs/surface_vectors.s"
+	@echo "... srcs/trace_ray.o"
+	@echo "... srcs/trace_ray.i"
+	@echo "... srcs/trace_ray.s"
 	@echo "... srcs/utils.o"
 	@echo "... srcs/utils.i"
 	@echo "... srcs/utils.s"
+	@echo "... srcs/visual.o"
+	@echo "... srcs/visual.i"
+	@echo "... srcs/visual.s"
 .PHONY : help
 
 

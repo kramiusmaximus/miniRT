@@ -32,12 +32,12 @@ t_intersect	*process_t(t_ray *ray, t_object *obj, t_t *t)
 {
 	t_intersect *inter;
 
-	if (!ray || !obj || !t || !t->size || !(inter = malloc(sizeof(t_intersect))))
+	if (!ray || !obj || !t || !(inter = malloc(sizeof(t_intersect))))
 		return (NULL);
 	inter->t = t->closest;
 	inter->contact = v_add(ray->origin, v_scalar_mult(ray->dir, inter->t));
 	inter->obj = obj;
-	inter->surface_v = surface_vector_new(ray, obj, inter);
+	inter->surface_v = surface_vector(ray, obj, inter);
 	inter->next;
 	/// inter->inside = is_indside(inter);  inside function needs to be created
 	return (inter);

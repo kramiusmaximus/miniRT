@@ -15,8 +15,7 @@ int button_press(int key, t_vars *vars)
 		vars->nav.up_dwn = 1;
 	if (key == 5)
 		vars->nav.up_dwn = -1;
-
-	printf("%d\n", key);
+	//printf("%d\n", key);
 }
 
 int button_release(int key, t_vars *vars)

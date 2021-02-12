@@ -88,25 +88,52 @@
 		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/includes/mlx.h">
 			<Option target="miniRT"/>
 		</Unit>
+		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/includes/objects.h">
+			<Option target="miniRT"/>
+		</Unit>
+		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/includes/scene.h">
+			<Option target="miniRT"/>
+		</Unit>
+		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/includes/tracing.h">
+			<Option target="miniRT"/>
+		</Unit>
+		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/includes/vectors.h">
+			<Option target="miniRT"/>
+		</Unit>
+		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/includes/visual.h">
+			<Option target="miniRT"/>
+		</Unit>
 		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/main.c">
 			<Option target="miniRT"/>
 		</Unit>
 		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/mlx/libmlx.a">
 			<Option target="miniRT"/>
 		</Unit>
-		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/color.c">
+		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/intersect_shapes.c">
+			<Option target="miniRT"/>
+		</Unit>
+		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/light.c">
 			<Option target="miniRT"/>
 		</Unit>
 		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/math.c">
 			<Option target="miniRT"/>
 		</Unit>
-		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/navigation.c">
+		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/rendering.c">
 			<Option target="miniRT"/>
 		</Unit>
-		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/trace.c">
+		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/scene.c">
+			<Option target="miniRT"/>
+		</Unit>
+		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/surface_vectors.c">
+			<Option target="miniRT"/>
+		</Unit>
+		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/trace_ray.c">
 			<Option target="miniRT"/>
 		</Unit>
 		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/utils.c">
+			<Option target="miniRT"/>
+		</Unit>
+		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/visual.c">
 			<Option target="miniRT"/>
 		</Unit>
 		<Unit filename="/Users/pfelipa/Desktop/pfelipa/miniRT/CMakeLists.txt">

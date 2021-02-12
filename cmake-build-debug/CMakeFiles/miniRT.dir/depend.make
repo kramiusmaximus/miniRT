@@ -3,25 +3,91 @@
 
 CMakeFiles/miniRT.dir/main.c.o: ../includes/miniRT.h
 CMakeFiles/miniRT.dir/main.c.o: ../includes/mlx.h
+CMakeFiles/miniRT.dir/main.c.o: ../includes/objects.h
+CMakeFiles/miniRT.dir/main.c.o: ../includes/scene.h
+CMakeFiles/miniRT.dir/main.c.o: ../includes/tracing.h
+CMakeFiles/miniRT.dir/main.c.o: ../includes/vectors.h
+CMakeFiles/miniRT.dir/main.c.o: ../includes/visual.h
 CMakeFiles/miniRT.dir/main.c.o: ../main.c
 
-CMakeFiles/miniRT.dir/srcs/color.c.o: ../includes/miniRT.h
-CMakeFiles/miniRT.dir/srcs/color.c.o: ../includes/mlx.h
-CMakeFiles/miniRT.dir/srcs/color.c.o: ../srcs/color.c
+CMakeFiles/miniRT.dir/srcs/intersect_shapes.c.o: ../includes/miniRT.h
+CMakeFiles/miniRT.dir/srcs/intersect_shapes.c.o: ../includes/mlx.h
+CMakeFiles/miniRT.dir/srcs/intersect_shapes.c.o: ../includes/objects.h
+CMakeFiles/miniRT.dir/srcs/intersect_shapes.c.o: ../includes/scene.h
+CMakeFiles/miniRT.dir/srcs/intersect_shapes.c.o: ../includes/tracing.h
+CMakeFiles/miniRT.dir/srcs/intersect_shapes.c.o: ../includes/vectors.h
+CMakeFiles/miniRT.dir/srcs/intersect_shapes.c.o: ../includes/visual.h
+CMakeFiles/miniRT.dir/srcs/intersect_shapes.c.o: ../srcs/intersect_shapes.c
+
+CMakeFiles/miniRT.dir/srcs/light.c.o: ../includes/miniRT.h
+CMakeFiles/miniRT.dir/srcs/light.c.o: ../includes/mlx.h
+CMakeFiles/miniRT.dir/srcs/light.c.o: ../includes/objects.h
+CMakeFiles/miniRT.dir/srcs/light.c.o: ../includes/scene.h
+CMakeFiles/miniRT.dir/srcs/light.c.o: ../includes/tracing.h
+CMakeFiles/miniRT.dir/srcs/light.c.o: ../includes/vectors.h
+CMakeFiles/miniRT.dir/srcs/light.c.o: ../includes/visual.h
+CMakeFiles/miniRT.dir/srcs/light.c.o: ../srcs/light.c
 
 CMakeFiles/miniRT.dir/srcs/math.c.o: ../includes/miniRT.h
 CMakeFiles/miniRT.dir/srcs/math.c.o: ../includes/mlx.h
+CMakeFiles/miniRT.dir/srcs/math.c.o: ../includes/objects.h
+CMakeFiles/miniRT.dir/srcs/math.c.o: ../includes/scene.h
+CMakeFiles/miniRT.dir/srcs/math.c.o: ../includes/tracing.h
+CMakeFiles/miniRT.dir/srcs/math.c.o: ../includes/vectors.h
+CMakeFiles/miniRT.dir/srcs/math.c.o: ../includes/visual.h
 CMakeFiles/miniRT.dir/srcs/math.c.o: ../srcs/math.c
 
-CMakeFiles/miniRT.dir/srcs/navigation.c.o: ../includes/miniRT.h
-CMakeFiles/miniRT.dir/srcs/navigation.c.o: ../includes/mlx.h
-CMakeFiles/miniRT.dir/srcs/navigation.c.o: ../srcs/navigation.c
+CMakeFiles/miniRT.dir/srcs/rendering.c.o: ../includes/miniRT.h
+CMakeFiles/miniRT.dir/srcs/rendering.c.o: ../includes/mlx.h
+CMakeFiles/miniRT.dir/srcs/rendering.c.o: ../includes/objects.h
+CMakeFiles/miniRT.dir/srcs/rendering.c.o: ../includes/scene.h
+CMakeFiles/miniRT.dir/srcs/rendering.c.o: ../includes/tracing.h
+CMakeFiles/miniRT.dir/srcs/rendering.c.o: ../includes/vectors.h
+CMakeFiles/miniRT.dir/srcs/rendering.c.o: ../includes/visual.h
+CMakeFiles/miniRT.dir/srcs/rendering.c.o: ../srcs/rendering.c
 
-CMakeFiles/miniRT.dir/srcs/trace.c.o: ../includes/miniRT.h
-CMakeFiles/miniRT.dir/srcs/trace.c.o: ../includes/mlx.h
-CMakeFiles/miniRT.dir/srcs/trace.c.o: ../srcs/trace.c
+CMakeFiles/miniRT.dir/srcs/scene.c.o: ../includes/miniRT.h
+CMakeFiles/miniRT.dir/srcs/scene.c.o: ../includes/mlx.h
+CMakeFiles/miniRT.dir/srcs/scene.c.o: ../includes/objects.h
+CMakeFiles/miniRT.dir/srcs/scene.c.o: ../includes/scene.h
+CMakeFiles/miniRT.dir/srcs/scene.c.o: ../includes/tracing.h
+CMakeFiles/miniRT.dir/srcs/scene.c.o: ../includes/vectors.h
+CMakeFiles/miniRT.dir/srcs/scene.c.o: ../includes/visual.h
+CMakeFiles/miniRT.dir/srcs/scene.c.o: ../srcs/scene.c
+
+CMakeFiles/miniRT.dir/srcs/surface_vectors.c.o: ../includes/miniRT.h
+CMakeFiles/miniRT.dir/srcs/surface_vectors.c.o: ../includes/mlx.h
+CMakeFiles/miniRT.dir/srcs/surface_vectors.c.o: ../includes/objects.h
+CMakeFiles/miniRT.dir/srcs/surface_vectors.c.o: ../includes/scene.h
+CMakeFiles/miniRT.dir/srcs/surface_vectors.c.o: ../includes/tracing.h
+CMakeFiles/miniRT.dir/srcs/surface_vectors.c.o: ../includes/vectors.h
+CMakeFiles/miniRT.dir/srcs/surface_vectors.c.o: ../includes/visual.h
+CMakeFiles/miniRT.dir/srcs/surface_vectors.c.o: ../srcs/surface_vectors.c
+
+CMakeFiles/miniRT.dir/srcs/trace_ray.c.o: ../includes/miniRT.h
+CMakeFiles/miniRT.dir/srcs/trace_ray.c.o: ../includes/mlx.h
+CMakeFiles/miniRT.dir/srcs/trace_ray.c.o: ../includes/objects.h
+CMakeFiles/miniRT.dir/srcs/trace_ray.c.o: ../includes/scene.h
+CMakeFiles/miniRT.dir/srcs/trace_ray.c.o: ../includes/tracing.h
+CMakeFiles/miniRT.dir/srcs/trace_ray.c.o: ../includes/vectors.h
+CMakeFiles/miniRT.dir/srcs/trace_ray.c.o: ../includes/visual.h
+CMakeFiles/miniRT.dir/srcs/trace_ray.c.o: ../srcs/trace_ray.c
 
 CMakeFiles/miniRT.dir/srcs/utils.c.o: ../includes/miniRT.h
 CMakeFiles/miniRT.dir/srcs/utils.c.o: ../includes/mlx.h
+CMakeFiles/miniRT.dir/srcs/utils.c.o: ../includes/objects.h
+CMakeFiles/miniRT.dir/srcs/utils.c.o: ../includes/scene.h
+CMakeFiles/miniRT.dir/srcs/utils.c.o: ../includes/tracing.h
+CMakeFiles/miniRT.dir/srcs/utils.c.o: ../includes/vectors.h
+CMakeFiles/miniRT.dir/srcs/utils.c.o: ../includes/visual.h
 CMakeFiles/miniRT.dir/srcs/utils.c.o: ../srcs/utils.c
+
+CMakeFiles/miniRT.dir/srcs/visual.c.o: ../includes/miniRT.h
+CMakeFiles/miniRT.dir/srcs/visual.c.o: ../includes/mlx.h
+CMakeFiles/miniRT.dir/srcs/visual.c.o: ../includes/objects.h
+CMakeFiles/miniRT.dir/srcs/visual.c.o: ../includes/scene.h
+CMakeFiles/miniRT.dir/srcs/visual.c.o: ../includes/tracing.h
+CMakeFiles/miniRT.dir/srcs/visual.c.o: ../includes/vectors.h
+CMakeFiles/miniRT.dir/srcs/visual.c.o: ../includes/visual.h
+CMakeFiles/miniRT.dir/srcs/visual.c.o: ../srcs/visual.c
 
