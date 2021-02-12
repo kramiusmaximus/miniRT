@@ -41,5 +41,6 @@ int 				move_camera(t_vars *vars);
 int 				button_press(int key, t_vars *vars);
 int					button_release(int key, t_vars *vars);
 int					is_moving(t_nav *nav);
+int 				put_pixel(t_image *image, int x, int y, int color);
 
 #endif

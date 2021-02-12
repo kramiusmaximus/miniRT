@@ -21,7 +21,7 @@ int process_light(t_ray *ray, t_scene *scene)
 		t = 1;
 		l = v_normalize(v_subtract(p->coordinates, inter->contact));
 		ray_l = make_ray(inter->contact, l);
-		if (!trace_result(&ray_l, scene, 0.000000001) &&
+		if (!trace_result(&ray_l, scene, 0.0000001) &&
 			v_dot(n, ray->dir) < 0)  /// actually incorrect but works for now
 		{
 			dot = v_dot(n, l);

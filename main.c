@@ -9,7 +9,7 @@ int	initiate_jesus_resurrection()
 	int z = 	300;
 	t_scene		scene;
 	t_ambient	ambient = {0.3 , 0xE9DC65};
-	t_light		l1 = {0.7, {300,300, z - 100}, 0x00FFFFFF, NULL};
+	t_light		l1 = {0.7, {-300,300, z}, 0x00FFFFFF, NULL};
 	//t_light		l2 = {0, {0,0, 0}, 0x00FFFFFF, &l1};
 
 	// shapes
@@ -20,7 +20,7 @@ int	initiate_jesus_resurrection()
 	t_sp		sp4 = {{20, 20, z-55}, 20};
 	t_pl		pl1 = {{0, -60, 0}, {0,1,0}};
 	t_sq		sq1 = {{0, -50, z}, {0,1,0}, {0,0,1}, {1,0,0}, 120};
-	t_cy		cy1 = {{30,-50,z - 45}, {0, 1, 0}, 15, 25};
+	t_cy		cy1 = {{0,-50,z - 50}, {0, 1, 0}, 10, 10};
 	// ^ need to figure out how to find front and side vectors, and rotation of shapes in general...
 
 

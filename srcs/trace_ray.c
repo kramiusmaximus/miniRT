@@ -27,7 +27,7 @@ t_intersect *trace_result(t_ray *ray, t_scene *scene, double d)
 		else if (obj->type & CY)
 			ray_intersect_cy(ray, obj, &t);
 		else if (obj->type & TR)
-		{}
+			ray_intersect_tr(ray, obj, &t);
 		i = 0;
 		while (i < t.size)
 		{

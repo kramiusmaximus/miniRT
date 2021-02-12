@@ -42,47 +42,7 @@ vectors.h
 
 ../includes/visual.h
 
-/Users/pfelipa/Desktop/pfelipa/miniRT/main.c
-miniRT.h
-/Users/pfelipa/Desktop/pfelipa/miniRT/miniRT.h
-pthread.h
--
-
 /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/intersect_shapes.c
-miniRT.h
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/miniRT.h
-
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/light.c
-miniRT.h
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/miniRT.h
-
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/math.c
-miniRT.h
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/miniRT.h
-
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/rendering.c
-miniRT.h
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/miniRT.h
-
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/scene.c
-miniRT.h
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/miniRT.h
-
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/surface_vectors.c
-miniRT.h
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/miniRT.h
-
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/trace_ray.c
-tcl.h
--
-miniRT.h
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/miniRT.h
-
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/utils.c
-miniRT.h
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/miniRT.h
-
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/visual.c
 miniRT.h
 /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/miniRT.h
 

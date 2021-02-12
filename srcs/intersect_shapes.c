@@ -63,7 +63,7 @@ int ray_intersect_sq(t_ray *ray, t_object *sq_object, t_t *t)
 	return (0);
 }
 
-static int ray_intersect_sausage(t_ray *ray, t_object *cy_object, double *t)
+static int ray_intersect_sausage(t_ray *ray, t_object *cy_object, t_t *t)
 {
 	t_cy 	cy = cy_object->data.cy;
 	double 	a;
@@ -81,31 +81,31 @@ static int ray_intersect_sausage(t_ray *ray, t_object *cy_object, double *t)
 	int 	i;
 
 
+	if (!ray || !cy_object || !t)
+		return (1);
 	a = v_dot(v_cross(ray->dir, cy.normal), v_cross(ray->dir, cy.normal));
-	b1 = 2 * v_dot(v_cross(ray->dir, cy.normal), v_cross(ray->dir, cy.normal));
+	b1 = 2 * v_dot(v_cross(ray->dir, cy.normal), v_cross(ray->origin, cy.normal));
 	b2 = -2 * v_dot(v_cross(ray->dir, cy.normal), v_cross(cy.coordinates, cy.normal));
 	b = b1 + b2;
 	c1 = v_dot(v_cross(cy.coordinates, cy.normal), v_cross(cy.coordinates, cy.normal));
-	c2 = v_dot(v_cross(ray->dir, cy.normal), v_cross(ray->dir, cy.normal));
+	c2 = v_dot(v_cross(ray->origin, cy.normal), v_cross(ray->origin, cy.normal));
 	c3 = -2 * v_dot(v_cross(ray->origin, cy.normal), v_cross(cy.coordinates, cy.normal)) - pow(cy.diameter / 2, 2);
 	c = c1 + c2 + c3;
-	solution_n = solve_quadratic(a, b, c, t);
-	if (solution_n)
+	solve_quadratic(a, b, c, t);
+	i = t->size;
+	while (i > 0)
 	{
-		i = solution_n;
-		while (i > 0)
+		p_contact = v_add(ray->origin, v_scalar_mult(ray->dir, t->arr[i - 1]));
+		op = v_subtract(p_contact, cy.coordinates);
+		if (v_dot(op, cy.normal) > cy.height || v_dot(op, cy.normal) < 0)
 		{
-			p_contact = v_add(ray->origin, v_scalar_mult(ray->dir, t[i - 1]));
-			op = v_subtract(p_contact, cy.coordinates);
-			if (v_dot(op, cy.normal) > cy.height || v_dot(op, cy.normal) < 0)
-			{
-				t[i - 1] = MAX_DIST;
-				solution_n--;
-			}
-			i--;
+			t->arr[i - 1] = MAX_DIST;
 		}
+		i--;							// need to decrease t array size indrementally
 	}
-	return (solution_n);
+	selection_sort(t->arr, t->size);
+
+	return (0);
 }
 
 static int ray_intersect_caps(t_ray *ray, t_object *cy_object, t_t *t)
@@ -117,40 +117,45 @@ static int ray_intersect_caps(t_ray *ray, t_object *cy_object, t_t *t)
 	t_v p_contact;
 	t_v v_contact;
 
-	// repeat this process for the top cap cause this is just the bottom cap rn
-	solution_n = 0;
+	if (!ray || !cy_object || !t)
+		return (1);
 	cy = cy_object->data.cy;
-	// top cap;
-	nominator = v_dot(cy.normal, v_subtract(cy.coordinates, p_origin));
-	denominator = v_dot(cy.normal, v_dir);
+	nominator = v_dot(cy.normal, v_subtract(cy.coordinates, ray->origin));
+	denominator = v_dot(cy.normal, ray->dir);
 	if (!isinf(res = nominator / denominator))
 	{
-		p_contact = v_add(p_origin, v_scalar_mult(v_dir, res));
+		p_contact = v_add(ray->origin, v_scalar_mult(ray->dir, res));
 		v_contact = v_subtract(p_contact, cy.coordinates);
 		if (v_norm(v_contact) <= cy.diameter / 2)
-			t[solution_n++] = res;
+			t->arr[t->size++] = res;
+		nominator = v_dot(cy.normal,
+						  v_subtract(v_add(cy.coordinates, v_scalar_mult(cy.normal, cy.height)), ray->origin));
+		denominator = v_dot(cy.normal, ray->dir);
 	}
-	nominator = v_dot(cy.normal,
-					  v_subtract(v_add(cy.coordinates, v_scalar_mult(cy.normal, cy.height)), p_origin));
-	denominator = v_dot(cy.normal, v_dir);
+
 	if (!isinf(res = nominator / denominator))
 	{
-		p_contact = v_add(p_origin, v_scalar_mult(v_dir, res));
+		p_contact = v_add(ray->origin, v_scalar_mult(ray->dir, res));
 		v_contact = v_subtract(p_contact, v_add(cy.coordinates, v_scalar_mult(cy.normal, cy.height)));
 		if (v_norm(v_contact) <= cy.diameter / 2)
-			t[solution_n++] = res;
+			t->arr[t->size++] = res;
 	}
-	return (solution_n);
+	return (0);
 }
 
-int 		ray_intersect_cy(t_ray *ray, t_object *cy_object, t_t *t)
+int			ray_intersect_cy(t_ray *ray, t_object *cy_object, t_t *t)
 {
-	t_cy 	cy = cy_object->data.cy;
 	int 	sausage_hit;
 	int 	caps_hit;
 
 	if (!ray || ray_intersect_sausage(ray, cy_object, t) ||
 		ray_intersect_caps(ray, cy_object, t))
 		return (1);
+
 	return (0);
+}
+
+int 		ray_intersect_tr(t_ray *ray, t_object *tr_object, t_t *t)
+{
+
 }

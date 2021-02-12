@@ -37,7 +37,7 @@ t_intersect	*process_t(t_ray *ray, t_object *obj, t_t *t)
 	inter->t = t->closest;
 	inter->contact = v_add(ray->origin, v_scalar_mult(ray->dir, inter->t));
 	inter->obj = obj;
-	inter->surface_v = surface_vector(ray, obj, inter);
+	inter->surface_v = surface_vector(ray, inter, obj);
 	inter->next;
 	/// inter->inside = is_indside(inter);  inside function needs to be created
 	return (inter);
@@ -49,4 +49,42 @@ t_ray		make_ray(t_v origin, t_v dir)
 	ray.origin = origin;
 	ray.dir = dir;
 	return (ray);
+}
+
+int 		swap(double *a, double *b)
+{
+	double temp;
+
+	if (!a || !b)
+		return (1);
+	temp = *a;
+	*a = *b;
+	*b = temp;
+	return (0);
+}
+
+int 		selection_sort(double arr[], int size)
+{
+	int i;
+	int j;
+	double min;
+	if (!arr)
+		return (1);
+	i = 0;
+	while (i < size)
+	{
+		min = arr[i];
+		j = i + 1;
+		while (j < size)
+		{
+			if (arr[j] < min)
+			{
+				swap(&arr[i], &arr[j]);
+				min = arr[j];
+			}
+			j++;
+		}
+		i++;
+	}
+	return (0);
 }
