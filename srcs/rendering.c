@@ -26,7 +26,7 @@ void 		*render_section(void *arg)
 			r_dir = v_subtract(c_coords, cam->coordinates);
 			ray.dir = r_dir;
 			ray.origin = c_coords;
-			color = trace_ray(&ray, scene);
+			color = trace_ray(&ray, scene, N_PASSES);
 			for (int y = (int)(y_pixel * y_mult); y < (y_pixel + 1) * y_mult; y++)
 			{
 				for (int x = (int)(x_pixel * x_mult); x < (x_pixel + 1) * x_mult; x++)
@@ -53,7 +53,7 @@ int render_image()
 	if (is_moving(&vars.nav))
 	{
 		vars.scene->parked = 0;
-		vars.scene->adjustment_factor = 0.2;
+		vars.scene->adjustment_factor = 0.15;
 		for (int tid = 0; tid < NUM_THREADS; tid++)
 			pthread_create(&threads[tid], NULL, render_section, (void *)tid);
 		for (int tid = 0; tid < NUM_THREADS; tid++)

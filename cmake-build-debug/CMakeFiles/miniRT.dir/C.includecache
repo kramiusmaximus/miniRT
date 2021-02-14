@@ -42,7 +42,9 @@ vectors.h
 
 ../includes/visual.h
 
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/intersect_shapes.c
+/Users/markartyukh/CLionProjects/miniRT/main.c
 miniRT.h
-/Users/pfelipa/Desktop/pfelipa/miniRT/srcs/miniRT.h
+/Users/markartyukh/CLionProjects/miniRT/miniRT.h
+pthread.h
+-
 

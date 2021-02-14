@@ -8,30 +8,34 @@ int	initiate_jesus_resurrection()
 	// stuff that would come from the parser. Parser would return a 'scene' file I reckon;
 	int z = 	300;
 	t_scene		scene;
-	t_ambient	ambient = {0.3 , 0xE9DC65};
-	t_light		l1 = {0.7, {-300,300, z}, 0x00FFFFFF, NULL};
-	//t_light		l2 = {0, {0,0, 0}, 0x00FFFFFF, &l1};
+	t_ambient	ambient = {0.1 , 0x00FFFFFF};
+	t_light		l1 = {0.3, {-300,200, z}, 0x00FF0505, NULL};
+	t_light		l2 = {0.3, {300,200, z}, 0x000505FF, &l1};
+	t_light		l3 = {0.6, {0,200, 20}, 0x00FFFFFF, &l2};
+
 
 	// shapes
-	t_camera	camera = {{0,0,0}, {0,0, 0}, 90, 1, NULL};
-	t_sp		sp1 = {{-70, 0, z - 20 }, 30};
-	t_sp		sp2 = {{0, 0, z}, 100};
-	t_sp		sp3 = {{70, 0, z}, 30};
-	t_sp		sp4 = {{20, 20, z-55}, 20};
-	t_pl		pl1 = {{0, -60, 0}, {0,1,0}};
-	t_sq		sq1 = {{0, -50, z}, {0,1,0}, {0,0,1}, {1,0,0}, 120};
-	t_cy		cy1 = {{0,-50,z - 50}, {0, 1, 0}, 10, 10};
+	t_camera	camera = {{0,5,0}, {0,0, 0}, 90, 1, NULL};
+	t_sp		sp0 = {30};
+	t_sp		sp1 = { 100};
+	t_sp		sp2 = { 30};
+	t_sp		sp3 = { 20};
+	t_pl		pl0 = { {0, 1, 0}};
+	t_sq		sq0 = { {0, 1, 0}, {0, 0, 1}, {1, 0, 0}, 120};
+	t_cy		cy0 = { {0.577, 0.577, .577}, 10, 10};
+	t_tr 		tr0 = { { {80, -20, z - 10},{-10,70,z +40},{-50,10,z - 60}}};
 	// ^ need to figure out how to find front and side vectors, and rotation of shapes in general...
 
 
 	// objects
-	t_object	object0 = {SP, (t_shape)sp1,0,0,0x006FFF7E, NULL};
-	t_object	object1 = {SP, (t_shape)sp2,0,0.5,0x00FFA267 , &object0};
-	t_object	object2 = {SP, (t_shape)sp3,0,0,0x006FFFFD, &object1};
-	t_object	object3 = {SP, (t_shape)sp4,0,0,0x007E6FFF, &object2};
-	t_object	object4 = {PL, (t_shape)pl1,0,0,0x00A9FFD5, &object3};
-	t_object	object5 = {SQ, (t_shape)sq1,0,0,0x00FF8EE1, &object4};
-	t_object	object6 = {CY, (t_shape)cy1,0,0,0x007A9FFF, &object5};
+	//t_object	object7= {TR, (t_shape)&tr0, {0,0,0},0, 0.1, 0x00FF0000, NULL};
+	t_object	object0 = {SP, (t_shape)&sp0, {-40, -65, z - 10 }, 0, 0.09, 0x006FFF7E, NULL};
+	t_object	object1 = {SP, (t_shape)&sp1, {0, 0, z},0, 1, 0x00FFFFFF , &object0};
+	t_object	object2 = {SP, (t_shape)&sp2,{70, 0, z}, 0, 0.09, 0x006FFFFD, &object1};
+	t_object	object3 = {SP, (t_shape)&sp3, {20, 20, z - 55},0, 0.08, 0x007E6FFF, &object2};
+	t_object	object4 = {PL, (t_shape)&pl0, {0, -150, 0},0, 0, 0x00A9FFD5, &object3};
+	t_object	object5 = {SQ, (t_shape)&sq0,{0, -50, z}, 0, 0.05, 0x00FF8EE1, &object4};
+	t_object	object6 = {CY, (t_shape)&cy0, {0, -50, z - 50},0.00, 0.05, 0x007A9FFF, &object5};
 	t_dims		window_dims = {720, 1280};
 	t_dims		image_res = {720, 1280};
 	t_mlx		mlx;
@@ -50,7 +54,7 @@ int	initiate_jesus_resurrection()
 	scene.parked = 0;
 	scene.camera = &camera;
 	scene.ambient = ambient;
-	scene.light = &l1;
+	scene.light = &l3;
 	scene.object = &object6;
 
 	// lets get the party started;

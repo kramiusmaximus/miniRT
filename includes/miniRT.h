@@ -11,8 +11,9 @@
 # include <stdio.h>
 # include <pthread.h>
 # define MAX_DIST	1000000000
+# define BG_COLOR	0x00050505
 # define NUM_THREADS 4
-# define N_PASSES	1
+# define N_PASSES	3
 
 typedef struct  	s_mlx
 {

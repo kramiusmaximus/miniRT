@@ -9,7 +9,7 @@ CMakeFiles/miniRT.dir/main.c.o
  ../includes/tracing.h
  ../includes/vectors.h
  ../includes/visual.h
- /Users/pfelipa/Desktop/pfelipa/miniRT/main.c
+ /Users/markartyukh/CLionProjects/miniRT/main.c
 CMakeFiles/miniRT.dir/srcs/intersect_shapes.c.o
  ../includes/miniRT.h
  ../includes/mlx.h
@@ -18,7 +18,7 @@ CMakeFiles/miniRT.dir/srcs/intersect_shapes.c.o
  ../includes/tracing.h
  ../includes/vectors.h
  ../includes/visual.h
- /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/intersect_shapes.c
+ /Users/markartyukh/CLionProjects/miniRT/srcs/intersect_shapes.c
 CMakeFiles/miniRT.dir/srcs/light.c.o
  ../includes/miniRT.h
  ../includes/mlx.h
@@ -27,7 +27,7 @@ CMakeFiles/miniRT.dir/srcs/light.c.o
  ../includes/tracing.h
  ../includes/vectors.h
  ../includes/visual.h
- /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/light.c
+ /Users/markartyukh/CLionProjects/miniRT/srcs/light.c
 CMakeFiles/miniRT.dir/srcs/math.c.o
  ../includes/miniRT.h
  ../includes/mlx.h
@@ -36,7 +36,7 @@ CMakeFiles/miniRT.dir/srcs/math.c.o
  ../includes/tracing.h
  ../includes/vectors.h
  ../includes/visual.h
- /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/math.c
+ /Users/markartyukh/CLionProjects/miniRT/srcs/math.c
 CMakeFiles/miniRT.dir/srcs/rendering.c.o
  ../includes/miniRT.h
  ../includes/mlx.h
@@ -45,7 +45,7 @@ CMakeFiles/miniRT.dir/srcs/rendering.c.o
  ../includes/tracing.h
  ../includes/vectors.h
  ../includes/visual.h
- /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/rendering.c
+ /Users/markartyukh/CLionProjects/miniRT/srcs/rendering.c
 CMakeFiles/miniRT.dir/srcs/scene.c.o
  ../includes/miniRT.h
  ../includes/mlx.h
@@ -54,7 +54,7 @@ CMakeFiles/miniRT.dir/srcs/scene.c.o
  ../includes/tracing.h
  ../includes/vectors.h
  ../includes/visual.h
- /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/scene.c
+ /Users/markartyukh/CLionProjects/miniRT/srcs/scene.c
 CMakeFiles/miniRT.dir/srcs/surface_vectors.c.o
  ../includes/miniRT.h
  ../includes/mlx.h
@@ -63,7 +63,7 @@ CMakeFiles/miniRT.dir/srcs/surface_vectors.c.o
  ../includes/tracing.h
  ../includes/vectors.h
  ../includes/visual.h
- /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/surface_vectors.c
+ /Users/markartyukh/CLionProjects/miniRT/srcs/surface_vectors.c
 CMakeFiles/miniRT.dir/srcs/trace_ray.c.o
  ../includes/miniRT.h
  ../includes/mlx.h
@@ -72,7 +72,7 @@ CMakeFiles/miniRT.dir/srcs/trace_ray.c.o
  ../includes/tracing.h
  ../includes/vectors.h
  ../includes/visual.h
- /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/trace_ray.c
+ /Users/markartyukh/CLionProjects/miniRT/srcs/trace_ray.c
 CMakeFiles/miniRT.dir/srcs/utils.c.o
  ../includes/miniRT.h
  ../includes/mlx.h
@@ -81,7 +81,7 @@ CMakeFiles/miniRT.dir/srcs/utils.c.o
  ../includes/tracing.h
  ../includes/vectors.h
  ../includes/visual.h
- /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/utils.c
+ /Users/markartyukh/CLionProjects/miniRT/srcs/utils.c
 CMakeFiles/miniRT.dir/srcs/visual.c.o
  ../includes/miniRT.h
  ../includes/mlx.h
@@ -90,4 +90,4 @@ CMakeFiles/miniRT.dir/srcs/visual.c.o
  ../includes/tracing.h
  ../includes/vectors.h
  ../includes/visual.h
- /Users/pfelipa/Desktop/pfelipa/miniRT/srcs/visual.c
+ /Users/markartyukh/CLionProjects/miniRT/srcs/visual.c

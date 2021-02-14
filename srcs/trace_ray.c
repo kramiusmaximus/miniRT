@@ -47,22 +47,29 @@ t_intersect *trace_result(t_ray *ray, t_scene *scene, double d)
 
 
 
-int 		trace_ray(t_ray	*ray, t_scene *scene)
+int trace_ray(t_ray *ray, t_scene *scene, int n_passes)
 {
 	t_intersect int_p;
 	double 		closest_t;
 	t_intersect *inter;
 	int 		color;
 	int 		light_effects;
+	t_ray 		ref_ray;
+	int 		l_color;
+	//make_ray(inter->contact,ray->intersect->ref_dir)
 
 	if ((inter = trace_result(ray, scene, 1)))
 	{
+		ref_ray = make_ray(inter->contact, inter->ref_dir);
 		color = inter->obj->color;
-		light_effects = process_light(ray, scene);
-		//origin = v_add(origin, v_scalar_mult(dir, closest_t));
-		//dir = surface_vector(inter, origin);
-		return (rgb_multiply(color, light_effects));
-		//return (rgb_add(rgb_multiply_scalar(color, (1 - inter->reflectivity)),rgb_multiply_scalar(, )));
+		l_color = process_light(ray, scene);
+		//color = rgb_add(rgb_multiply(color, l[1]), l[1]);
+		color = rgb_multiply(color, l_color);
+		n_passes--;
+		if (n_passes)		// doesnt work with trianglesa for some reason
+			color = rgb_add(rgb_multiply_scalar(color, 1 - inter->obj->reflectivity), \
+		rgb_multiply_scalar(trace_ray(&ref_ray,scene,n_passes), inter->obj->reflectivity));
+		return (color);
 	}
-	return (0xE9DC65);
+	return (BG_COLOR);
 }

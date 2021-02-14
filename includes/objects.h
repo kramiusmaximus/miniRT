@@ -9,19 +9,16 @@
 
 typedef struct		s_sp
 {
-	t_v				coordinates;
 	double 			diameter;
 }					t_sp;
 
 typedef struct		s_pl
 {
-	t_v				coordinates;
 	t_v 			normal;
 }					t_pl;
 
 typedef struct		s_sq
 {
-	t_v				coordinates;
 	t_v 			top;
 	t_v				front;
 	t_v 			side;
@@ -30,7 +27,6 @@ typedef struct		s_sq
 
 typedef	struct		s_cy
 {
-	t_v				coordinates;
 	t_v 			normal;
 	double 			diameter;
 	double 			height;
@@ -38,24 +34,23 @@ typedef	struct		s_cy
 
 typedef struct 		s_tr
 {
-	t_v				p1;
-	t_v				p2;
-	t_v				p3;
+	t_v				p[3];
 }					t_tr;
 
 typedef union		u_shape
 {
-	t_sp			sp;
-	t_pl			pl;
-	t_sq			sq;
-	t_cy			cy;
-	t_tr			tr;
+	t_sp			*sp;
+	t_pl			*pl;
+	t_sq			*sq;
+	t_cy			*cy;
+	t_tr			*tr;
 }					t_shape;
 
 typedef struct		s_object
 {
 	int 			type;
-	t_shape			data;
+	t_shape			item;
+	t_v				coordinates;
 	double 			refraction;
 	double 			reflectivity;
 	int 			color;

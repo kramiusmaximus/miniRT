@@ -38,6 +38,8 @@ t_intersect	*process_t(t_ray *ray, t_object *obj, t_t *t)
 	inter->contact = v_add(ray->origin, v_scalar_mult(ray->dir, inter->t));
 	inter->obj = obj;
 	inter->surface_v = surface_vector(ray, inter, obj);
+	inter->surface_v = v_dot(inter->surface_v , ray->dir) > 0 ? v_scalar_mult(inter->surface_v,-1) : inter->surface_v;
+	inter->ref_dir = v_subtract(ray->dir,v_scalar_mult(inter->surface_v , 2 * v_dot(inter->surface_v, ray->dir)));
 	inter->next;
 	/// inter->inside = is_indside(inter);  inside function needs to be created
 	return (inter);
@@ -48,6 +50,7 @@ t_ray		make_ray(t_v origin, t_v dir)
 	t_ray ray;
 	ray.origin = origin;
 	ray.dir = dir;
+	ray.intersect = NULL;
 	return (ray);
 }
 
