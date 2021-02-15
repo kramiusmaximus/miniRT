@@ -26,7 +26,7 @@ void 		*render_section(void *arg)
 			r_dir = v_subtract(c_coords, cam->coordinates);
 			ray.dir = r_dir;
 			ray.origin = c_coords;
-			color = trace_ray(&ray, scene, N_PASSES);
+			color = trace_ray(&ray, scene, N_PASSES, 1);
 			for (int y = (int)(y_pixel * y_mult); y < (y_pixel + 1) * y_mult; y++)
 			{
 				for (int x = (int)(x_pixel * x_mult); x < (x_pixel + 1) * x_mult; x++)

@@ -24,9 +24,9 @@ int 	ray_intersect_plane(t_ray	*ray, t_object *pl_obj, t_t *t)
 	double 	res;
 	t_pl	*pl;
 
-	pl = pl_obj->item.pl;
 	if (!ray || !pl_obj || !t)
 		return (1);
+	pl = pl_obj->item.pl;
 	nominator = v_dot(pl->normal, v_subtract(pl_obj->coordinates, ray->origin));
 	denominator = v_dot(pl->normal, ray->dir);
 	if (!isinf(res = nominator / denominator))
@@ -95,9 +95,7 @@ static int ray_intersect_sausage(t_ray *ray, t_object *cy_obj, t_t *t)
 	b = b1 + b2;
 	c1 = v_dot(v_cross(cy_obj->coordinates, cy->normal), v_cross(cy_obj->coordinates, cy->normal));
 	c2 = v_dot(v_cross(ray->origin, cy->normal), v_cross(ray->origin, cy->normal));
-	c3 = -2 * v_dot(v_cross(ray->origin, cy->normal), v_cross(cy_obj->coordinates, cy->normal)) - pow(cy->diameter
-																									  / 2,
-																									  2);
+	c3 = -2 * v_dot(v_cross(ray->origin, cy->normal), v_cross(cy_obj->coordinates, cy->normal)) - pow(cy->diameter / 2, 2);
 	c = c1 + c2 + c3;
 	solve_quadratic(a, b, c, t);
 	i = t->size;
@@ -136,12 +134,10 @@ static int ray_intersect_caps(t_ray *ray, t_object *cy_obj, t_t *t)
 		v_contact = v_subtract(p_contact, cy_obj->coordinates);
 		if (v_norm(v_contact) <= cy->diameter / 2)
 			t->arr[t->size++] = res;
-		nominator = v_dot(cy->normal,
-						  v_subtract(v_add(cy_obj->coordinates, v_scalar_mult(cy->normal, cy->height)),
-				   ray->origin));
-		denominator = v_dot(cy->normal, ray->dir);
 	}
-
+	nominator = v_dot(cy->normal, v_subtract(v_add(cy_obj->coordinates, v_scalar_mult(cy->normal, cy->height)),\
+	ray->origin));
+	denominator = v_dot(cy->normal, ray->dir);
 	if (!isinf(res = nominator / denominator))
 	{
 		p_contact = v_add(ray->origin, v_scalar_mult(ray->dir, res));
