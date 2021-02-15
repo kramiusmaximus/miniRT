@@ -65,8 +65,7 @@ int trace_ray(t_ray *ray, t_scene *scene, int n_passes)
 		l_color = process_light(ray, scene);
 		//color = rgb_add(rgb_multiply(color, l[1]), l[1]);
 		color = rgb_multiply(color, l_color);
-		n_passes--;
-		if (n_passes)		// doesnt work with trianglesa for some reason
+		if (--n_passes)		// doesnt work with triangles for some reason
 			color = rgb_add(rgb_multiply_scalar(color, 1 - inter->obj->reflectivity), \
 		rgb_multiply_scalar(trace_ray(&ref_ray,scene,n_passes), inter->obj->reflectivity));
 		return (color);

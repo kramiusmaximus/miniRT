@@ -1,5 +1,5 @@
-/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/markartyukh/CLionProjects/miniRT
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/pfelipa/Desktop/pfelipa/miniRT
 -- Configuring done
-WARNING: Target "miniRT" requests linking to directory "/Users/markartyukh/Desktop/code/pfelipa/miniRT".  Targets may link only to libraries.  CMake is dropping the item.
+WARNING: Target "miniRT" requests linking to directory "/Users/pfelipa/Desktop/pfelipa/miniRT".  Targets may link only to libraries.  CMake is dropping the item.
 -- Generating done
--- Build files have been written to: /Users/markartyukh/CLionProjects/miniRT/cmake-build-debug
+-- Build files have been written to: /Users/pfelipa/Desktop/pfelipa/miniRT/cmake-build-debug

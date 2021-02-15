@@ -23,19 +23,20 @@ int	initiate_jesus_resurrection()
 	t_pl		pl0 = { {0, 1, 0}};
 	t_sq		sq0 = { {0, 1, 0}, {0, 0, 1}, {1, 0, 0}, 120};
 	t_cy		cy0 = { {0.577, 0.577, .577}, 10, 10};
-	t_tr 		tr0 = { { {80, -20, z - 10},{-10,70,z +40},{-50,10,z - 60}}};
+	t_tr 		tr0 = { { {-100, 0, z},{0,100,z},{100, 0,z}}};
 	// ^ need to figure out how to find front and side vectors, and rotation of shapes in general...
 
 
 	// objects
-	//t_object	object7= {TR, (t_shape)&tr0, {0,0,0},0, 0.1, 0x00FF0000, NULL};
-	t_object	object0 = {SP, (t_shape)&sp0, {-40, -65, z - 10 }, 0, 0.09, 0x006FFF7E, NULL};
-	t_object	object1 = {SP, (t_shape)&sp1, {0, 0, z},0, 1, 0x00FFFFFF , &object0};
-	t_object	object2 = {SP, (t_shape)&sp2,{70, 0, z}, 0, 0.09, 0x006FFFFD, &object1};
-	t_object	object3 = {SP, (t_shape)&sp3, {20, 20, z - 55},0, 0.08, 0x007E6FFF, &object2};
-	t_object	object4 = {PL, (t_shape)&pl0, {0, -150, 0},0, 0, 0x00A9FFD5, &object3};
-	t_object	object5 = {SQ, (t_shape)&sq0,{0, -50, z}, 0, 0.05, 0x00FF8EE1, &object4};
-	t_object	object6 = {CY, (t_shape)&cy0, {0, -50, z - 50},0.00, 0.05, 0x007A9FFF, &object5};
+//	t_object	object0 = {SP, (t_shape)&sp0, {-40, -65, z - 10 }, 0, 0.09, 0x006FFF7E, NULL};
+//	t_object	object1 = {SP, (t_shape)&sp1, {0, 0, z},0, 1, 0x00FFFFFF , &object0};
+//	t_object	object2 = {SP, (t_shape)&sp2,{70, 0, z}, 0, 0.09, 0x006FFFFD, &object1};
+//	t_object	object3 = {SP, (t_shape)&sp3, {20, 20, z - 55},0, 0.08, 0x007E6FFF, &object2};
+//	t_object	object4 = {PL, (t_shape)&pl0, {0, -150, 0},0, 0, 0x00A9FFD5, &object3};
+//	t_object	object5 = {SQ, (t_shape)&sq0,{0, -50, z}, 0, 0.05, 0x00FF8EE1, &object4};
+//	t_object	object6 = {CY, (t_shape)&cy0, {0, -50, z - 50},0.00, 0.05, 0x007A9FFF, &object5};
+	t_object	object7= {TR, (t_shape)&tr0, {0,0,0},0, 0.6, 0x00FF0000, NULL};
+	t_object	object8 = {SP, (t_shape)&sp3, {0, 50, z  -20},0, 0.08, 0x007E6FFF, &object7};
 	t_dims		window_dims = {720, 1280};
 	t_dims		image_res = {720, 1280};
 	t_mlx		mlx;
@@ -55,7 +56,7 @@ int	initiate_jesus_resurrection()
 	scene.camera = &camera;
 	scene.ambient = ambient;
 	scene.light = &l3;
-	scene.object = &object6;
+	scene.object = &object8;
 
 	// lets get the party started;
 	mlx.mlx = mlx_init();
