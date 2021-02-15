@@ -189,4 +189,5 @@ int 		ray_intersect_tr(t_ray *ray, t_object *tr_obj, t_t *t)
 				t->size = 0;
 		}
 	}
+	return (0);
 }

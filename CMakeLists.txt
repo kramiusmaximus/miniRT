@@ -6,10 +6,13 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(includes)
 
 file(GLOB LIBRARIES
-        mlx/libmlx.a)
+        mlx/libmlx.a
+        libft/libft.a
+        )
 
 file(GLOB SOURCES
         srcs/*.c
+        srcs/*/*.c
         mlx/libmlx.a
         includes/*.h
         )

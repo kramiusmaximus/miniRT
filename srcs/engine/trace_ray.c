@@ -1,7 +1,6 @@
 #include <tcl.h>
 #include "miniRT.h"
 
-extern 		t_vars vars;
 
 t_intersect *trace_result(t_ray *ray, t_scene *scene, double d)
 {
