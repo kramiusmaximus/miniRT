@@ -1,24 +1,26 @@
 #include "miniRT.h"
 
-int button_press(int key, t_vars *vars)
+int key_press_hook(int key, t_vars *vars)
 {
 	// navigation controls
 	if (key == 13)
 		vars->nav.fwd_back = 1;
-	if (key == 1)
+	else if (key == 1)
 		vars->nav.fwd_back = -1;
-	if (key == 0)
+	else if (key == 0)
 		vars->nav.lft_rght = -1;
-	if (key == 2)
+	else if (key == 2)
 		vars->nav.lft_rght = 1;
-	if (key == 3)
+	else if (key == 3)
 		vars->nav.up_dwn = 1;
-	if (key == 5)
+	else if (key == 5)
 		vars->nav.up_dwn = -1;
-	//printf("%d\n", key);
+	else if (key == 53)
+		exit_hook(vars);
+	printf("%d\n", key);
 }
 
-int button_release(int key, t_vars *vars)
+int key_release_hook(int key, t_vars *vars)
 {
 	// navigation controls
 	if (key == 13 && vars->nav.fwd_back == 1)
@@ -35,10 +37,16 @@ int button_release(int key, t_vars *vars)
 		vars->nav.up_dwn = 0;
 }
 
+int exit_hook(t_vars *vars)
+{
+	ft_printf("Quitting application...\n");
+	exit(0);
+}
+
 int move_camera(t_vars *vars)
 {
 	t_nav nav = vars->nav;
-	t_camera *camera = vars->scene->camera;
+	t_camera *camera = vars->scene.camera;
 	double d = 5;
 
 	if (nav.fwd_back && nav.lft_rght)

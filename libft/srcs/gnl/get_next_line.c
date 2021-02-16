@@ -11,33 +11,28 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "libft.h"
 #include <stdio.h>
 
-void	*ft_memcpy(void *dst, const void *src, size_t len)
+static char	*ft_strjoin_gnl(char const *s1, char const *s2)
 {
-	unsigned char		*ptrdst;
-	const unsigned char	*ptrsrc;
+	char	*res;
+	int		l1;
+	int		l2;
 
-	if (!dst && !src)
+	if (!s1 || !s2)
 		return (NULL);
-	ptrdst = dst;
-	ptrsrc = src;
-	while (len-- > 0)
-		*ptrdst++ = *ptrsrc++;
-	return (dst);
-}
-
-int		ft_strlen(const char *str)
-{
-	int	len;
-
-	len = 0;
-	while (*str)
+	l1 = ft_strlen(s1);
+	l2 = ft_strlen(s2);
+	res = malloc((l1 + l2 + 1) * sizeof(char));
+	if (res)
 	{
-		str++;
-		len++;
+		res[0] = '\0';
+		ft_strlcat(res, s1, (l1 + l2 + 1) * sizeof(char));
+		ft_strlcat(res, s2, (l1 + l2 + 1) * sizeof(char));
 	}
-	return (len);
+	free((void *)s1);
+	return (res);
 }
 
 int		liberate_s(char **s, int out)
@@ -89,7 +84,7 @@ int		get_next_line(int fd, char **line)
 				return (-1);
 			continue ;
 		}
-		if (!(s[fd] = ft_strjoin(s[fd], buff)))
+		if (!(s[fd] = ft_strjoin_gnl(s[fd], buff)))
 			return (-1);
 	}
 	if (!s[fd])

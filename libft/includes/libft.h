@@ -83,6 +83,7 @@ t_list				*ft_lstget(t_list *lst, int index);
 void				ft_lstremove(t_list **lst, int index);
 int					ft_atoi_base(char *s, char *base);
 char				*ft_itoa_base(int n, char *base);
+double 				ft_atof(const char *str);
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void*),\
 					void (*del)(void *));
 int					ft_abs(int a);

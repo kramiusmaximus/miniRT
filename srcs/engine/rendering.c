@@ -4,7 +4,6 @@ static int render_image(t_vars *vars)
 {
 	t_render	rvars;
 
-	rvars.scene = vars->scene;
 	rvars.mult[0] = ((double)rvars.scene->window_dims.height / (double)rvars.scene->res.height) / vars->af;
 	rvars.mult[1] = ((double)rvars.scene->window_dims.width / (double)rvars.scene->res.width) / vars->af;
 	for (int v = 0; v < (int)(((double)rvars.scene->res.height) * vars->af); v++) //
@@ -17,7 +16,7 @@ static int render_image(t_vars *vars)
 			rvars.color = trace_ray(&rvars.ray, rvars.scene, N_PASSES, 1);
 			for (int y_pixel = (int)(v * rvars.mult[0]); y_pixel < (int)((double)(v + 1) * rvars.mult[0]); y_pixel++)
 				for (int x_pixel = (int)(h * rvars.mult[1]); x_pixel < (int)((double)(h + 1) * rvars.mult[1]); x_pixel++)
-					put_pixel(&vars->mlx->image, x_pixel, y_pixel, rvars.color);
+					put_pixel(&vars->mlx.image, x_pixel, y_pixel, rvars.color);
 		}
 	}
 	return (0);
@@ -25,9 +24,7 @@ static int render_image(t_vars *vars)
 
 int render(t_vars *vars)
 {
-	t_mlx		*mlx = vars->mlx;
-
-	vars->scene->adjustment_factor = 1;
+	vars->scene.adjustment_factor = 1;
 	move_camera(vars);
 	if (is_moving(&vars->nav))
 	{
@@ -45,6 +42,6 @@ int render(t_vars *vars)
 		render_multi(vars);
 	else
 		render_image(vars);
-	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->image.img, 0, 0);
+	mlx_put_image_to_window(vars->mlx.mlx, vars->mlx.win, vars->mlx.image.img, 0, 0);
 	return (0);
 }

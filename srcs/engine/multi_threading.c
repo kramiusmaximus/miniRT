@@ -6,7 +6,6 @@ static void 		*render_section(void *arg)
 	int			section_h;
 
 	rvars.vars = ((t_tvars *)arg)->vars;
-	rvars.scene = rvars.vars->scene;
 	rvars.tid = ((t_tvars *)arg)->tid;
 	rvars.mult[0] = ((double)rvars.scene->window_dims.height / (double)rvars.scene->res.height) / rvars.vars->af;
 	rvars.mult[1] = ((double)rvars.scene->window_dims.width / (double)rvars.scene->res.width) / rvars.vars->af;
@@ -21,7 +20,7 @@ static void 		*render_section(void *arg)
 			rvars.color = trace_ray(&rvars.ray, rvars.scene, N_PASSES, 1);
 			for (int y_pixel = (int)(v * rvars.mult[0]); y_pixel < (int)((double)(v + 1) * rvars.mult[0]); y_pixel++)
 				for (int x_pixel = (int)(h * rvars.mult[1]); x_pixel < (int)((double)(h + 1) * rvars.mult[1]); x_pixel++)
-					put_pixel(&rvars.vars->mlx->image, x_pixel, y_pixel, rvars.color);
+					put_pixel(&rvars.vars->mlx.image, x_pixel, y_pixel, rvars.color);
 		}
 	}
 	pthread_exit(NULL);

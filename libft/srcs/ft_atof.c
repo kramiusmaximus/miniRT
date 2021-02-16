@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_atof.c                                           :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pfelipa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,18 +10,44 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_GET_NEXT_LINE_H
-# define GET_NEXT_LINE_GET_NEXT_LINE_H
-# define BUFFER_SIZE  8
-# include <unistd.h>
-# include <stdlib.h>
+#include "libft.h"
 
-int		get_next_line(int fd, char **line);
-char	*ft_strdup(const char *s);
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-int		ft_strlen(const char *str);
-void	*ft_memcpy(void *dst, const void *src, size_t len);
-char	*ft_strchr(const char *s, int c);
+static double pow(double a, int b)
+{
+	if (a == 0)
+		return (0);
+	if (b == 0)
+		return (1);
+	return (a * pow(a, b - 1));
+}
 
-#endif
+double ft_atof(const char *str)
+{
+	double 		res;
+	double 		neg;
+	const char 	*p;
+
+	p = NULL;
+	res = 0;
+	neg = 1;
+	while (*str == ' ')
+		str++;
+	while (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			neg *= -1;
+		str++;
+	}
+	while (ft_isdigit(*str) || *str == '.')
+	{
+		if (*str == '.')
+		{
+			p = str++;
+			continue ;
+		}
+			res = res * 10 + (double)(*str++ - '0');
+	}
+	if (p)
+		res /= pow(10, (str - p - 1));
+	return (neg * res);
+}

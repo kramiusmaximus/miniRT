@@ -46,23 +46,20 @@ t_intersect *trace_result(t_ray *ray, t_scene *scene, double d)
 
 int trace_ray(t_ray *ray, t_scene *scene, int n_passes, double d)
 {
-	t_intersect int_p;
-	double 		closest_t;
 	t_intersect *inter;
-	int 		color;
-	int 		light_effects;
+	int 		c[2];
 	t_ray 		ref_ray;
-	int 		l_color;
+
 	if ((inter = trace_result(ray, scene, d)))
 	{
 		ref_ray = make_ray(inter->contact, v_normalize(inter->ref_dir));
-		color = inter->obj->color;
-		l_color = process_light(ray, scene);
-		color = rgb_multiply(color, l_color);
+		c[0] = inter->obj->color;
+		c[1] = process_light(ray, scene);
+		c[0] = rgb_multiply(c[0], c[1]);
 		if (--n_passes && inter->obj->reflectivity)
-			color = rgb_add(rgb_multiply_scalar(color, 1 - inter->obj->reflectivity), \
-		rgb_multiply_scalar(trace_ray(&ref_ray, scene, n_passes, EPS), inter->obj->reflectivity));
-		return (color);
+			c[0] = rgb_add(rgb_multiply_scalar(c[0], 1 - inter->obj->reflectivity), rgb_multiply_scalar(trace_ray(&ref_ray, scene, n_passes, EPS), inter->obj->reflectivity));
+		free(inter);
+	   	return (c[0]);
 	}
 	return (BG_COLOR);
 }

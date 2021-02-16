@@ -5,7 +5,6 @@ int	initiate_jesus_resurrection()
 {
 	// stuff that would come from the parser. Parser would return a 'scene' file I reckon;
 	int z = 	300;
-	t_scene		scene;
 	t_ambient	ambient = {0.1 , 0x00FFFFFF};
 	t_vars		vars;
 	t_light		l1 = {0.3, {-300,200, z}, 0x00FF0505, NULL};
@@ -14,7 +13,8 @@ int	initiate_jesus_resurrection()
 
 
 	// shapes
-	t_camera	camera = {{0,50,0}, {0,-0.05, 0}, 90, 1, NULL};
+	t_camera	camera0 = {{0, 50, 0}, {0, 0, 0}, 90, 1, NULL};
+	t_camera	camera1 = {{0, 20, 0}, {0, 0, 0}, 90, 1, &camera0};
 	t_sp		sp0 = {30};
 	t_sp		sp1 = { 100};
 	t_sp		sp2 = { 30};
@@ -27,52 +27,83 @@ int	initiate_jesus_resurrection()
 
 
 	// objects
-	t_object	object0 = {SP, (t_shape)&sp0, {-40, -65, z - 10 }, 0, 0.09, 0x006FFF7E, NULL};
-	t_object	object1 = {SP, (t_shape)&sp1, {0, 0, z},0, 0.06, 0x00FFFFFF , &object0};
-	t_object	object2 = {SP, (t_shape)&sp2,{70, 0, z}, 0, 0.09, 0x006FFFFD, &object1};
-	t_object	object3 = {SP, (t_shape)&sp3, {20, 20, z - 55},0, 0.08, 0x007E6FFF, &object2};
-	t_object	object4 = {PL, (t_shape)&pl0, {0, -150, 0},0, 0, 0x00A9FFD5, &object3};
-	t_object	object5 = {SQ, (t_shape)&sq0,{0, -50, z}, 0, 0.05, 0x00FF8EE1, &object4};
+	t_object	object0 = {SP, (t_shape)&sp0, {-40, -65, z - 10 }, 0, 0.6, 0x006FFF7E, NULL};
+	t_object	object1 = {SP, (t_shape)&sp1, {0, 0, z},0, 0.6, 0x00FFFFFF , &object0};
+	t_object	object2 = {SP, (t_shape)&sp2,{70, 0, z}, 0, 0.6, 0x006FFFFD, &object1};
+	t_object	object3 = {SP, (t_shape)&sp3, {20, 20, z - 55},0, 0.6, 0x007E6FFF, &object2};
+	t_object	object4 = {PL, (t_shape)&pl0, {0, -150, 0},0, 0.08, 0x00A9FFD5, &object3};
+	t_object	object5 = {SQ, (t_shape)&sq0,{0, -50, z}, 0, 0.6, 0x00FF8EE1, &object4};
 	t_object	object6 = {CY, (t_shape)&cy0, {0, -50, z - 50},0.00, 1, 0x007A9FFF, &object5};
-	t_object	object7= {TR, (t_shape)&tr0, {0,0,0},0, 0.9, 0x00FFD064, &object6};
-	t_object	object8 = {SP, (t_shape)&sp3, {0, 60, z },0, 0.08, 0x007E6FFF, &object7};
-	t_dims		window_dims = {720, 1280};
-	t_dims		image_res = {720, 1280};
-	t_mlx		mlx;
-	t_image 	image;
-	t_nav		nav = {0,0,0};
-
-	vars.mlx = &mlx;
-	vars.scene = &scene;
-	vars.nav = nav;
+	t_object	object7= {TR, (t_shape)&tr0, {0,0,0},0, 0.6, 0x00FFD064, &object6};
+	t_object	object8 = {SP, (t_shape)&sp3, {0, 60, z },0, 0.6, 0x007E6FFF, &object7};
+	vars.mlx.window_dims.width  = 720;
+	vars.mlx.window_dims.height = 1280;
+	vars.scene.res.width = 1280;
+	vars.scene.res.height = 720;
+	vars.nav.fwd_back = 0;
+	vars.nav.lft_rght = 0;
+	vars.nav.up_dwn = 0;
 	vars.rendered = 0;
-
-	// initializing scene;  use parser for this
-	scene.window_dims = window_dims;
-	scene.res = image_res;
-	scene.adjustment_factor = 1;
-	scene.parked = 0;
-	scene.camera = &camera;
-	scene.ambient = ambient;
-	scene.light = &l3;
-	scene.object = &object8;
+	vars.scene.adjustment_factor = 1;
+	vars.scene.parked = 0;
+	vars.scene.camera = &camera1;
+	vars.scene.ambient = ambient;
+	vars.scene.light = &l3;
+	vars.scene.object = &object8;
 
 	// lets get the party started;
-	mlx.mlx = mlx_init();
-	mlx.win = mlx_new_window(mlx.mlx, window_dims.width, window_dims.height, "Is this god?");
-	image.img = mlx_new_image(mlx.mlx, window_dims.width, window_dims.width);
-	image.addr = mlx_get_data_addr(image.img, &image.bits_per_pixel, &image.line_length, &image.endian);
-	mlx.image = image;
-	mlx_loop_hook(vars.mlx->mlx, render, &vars);
-	mlx_hook(vars.mlx->win, 2, 1L << 2, button_press, &vars);
-	mlx_hook(vars.mlx->win, 3, 1L << 3, button_release, &vars);
-	//mlx_key_hook(vars.mlx->win, move_camera, &vars);
-	mlx_loop(vars.mlx->mlx);
+	vars.mlx.mlx = mlx_init();
+	vars.mlx.win = mlx_new_window(vars.mlx.mlx, vars.mlx.window_dims.width, vars.mlx.window_dims.height, "Is this god?");
+	vars.mlx.image.img = mlx_new_image(vars.mlx.mlx, vars.mlx.window_dims.width, vars.mlx.window_dims.height);
+	vars.mlx.image.addr = mlx_get_data_addr(vars.mlx.image.img, &vars.mlx.image.bits_per_pixel, &vars.mlx.image.line_length, &vars.mlx.image.endian);
+	mlx_loop_hook(vars.mlx.mlx, render, &vars);
+	mlx_hook(vars.mlx.win, 2, 1L << 2, key_press_hook, &vars);
+	mlx_hook(vars.mlx.win, 3, 1L << 3, key_release_hook, &vars);
+	mlx_hook(vars.mlx.win, 17, 1L << 17, exit_hook, &vars);
+	mlx_loop(vars.mlx.mlx);
 }
 
-int main()
+int error(char *msg)
 {
-	initiate_jesus_resurrection();
+	perror(msg);
+	exit(errno);
+}
+
+
+
+int make_bmp(char *rt)
+{}
+
+int launch_renderer(char *rt)
+{
+	t_vars	vars;
+	t_scene scene;
+
+	parse_rt(rt, &scene);  /// process errors
+	// lets get the party started;
+	vars.mlx.mlx = mlx_init();
+	vars.mlx.win = mlx_new_window(vars.mlx.mlx, vars.mlx.window_dims.width, vars.mlx.window_dims.height, "Is this god?");
+	vars.mlx.image.img = mlx_new_image(vars.mlx.mlx, vars.mlx.window_dims.width, vars.mlx.window_dims.width);
+	vars.mlx.image.addr = mlx_get_data_addr(vars.mlx.image.img, &vars.mlx.image.bits_per_pixel, &vars.mlx.image.line_length, &vars.mlx.image.endian);
+	mlx_loop_hook(vars.mlx.mlx, render, &vars);
+	mlx_hook(vars.mlx.win, 2, 1L << 2, key_press_hook, &vars);
+	mlx_hook(vars.mlx.win, 3, 1L << 3, key_release_hook, &vars);
+	mlx_hook(vars.mlx.win, 17, 1L << 17, exit_hook, &vars);
+	mlx_loop(vars.mlx.mlx);
+}
+
+int main(int n_args, char **args)
+{
+	if (n_args == 3)
+	{
+		if (!ft_strcmp(args[2], "--save"))
+			make_bmp(args[1]);
+		else
+			ft_printf("Incorrect argument (%s) specified. Use '--save' as second argument to save scene as .bmp file.\n", args[2]);
+	}  // access given rt file, render it into a bmp file format, save it in 'rendered files' folder
+	if (n_args == 2)
+		launch_renderer(args[1]); // open window, access given rt file, and render it, and upload it to the opened window
+	/// initiate_jesus_resurrection();
 	return (0);
 }
 
