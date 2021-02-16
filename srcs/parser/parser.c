@@ -11,14 +11,14 @@ int 		process_r(char **args, t_scene *scene)
 
 int 		process_a(char **args, t_scene *scene)
 {
-	int *rgb;
+	char **rgb;
 
 	if (!(*args && is_float(*args) && *(args + 1) && is_input_color(*(args + 1))))
 	{} /// process error
 	if ((scene->ambient.intensity = ft_atof(*args++)) < 0 || scene->ambient.intensity > 1)
 	{} /// process error
 	rgb = ft_split(*args, ',');
-	scene->ambient.color = rgb_create(0, rgb[0], rgb[1], rgb[2]);
+	scene->ambient.color = rgb_create(0, ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
 	return (0);
 }
 
@@ -31,7 +31,7 @@ static int process_line(char *line, t_scene *scene)
 {
 	char **split;
 
-	if (!(split = ft_split(line, ' ')))      /// if line is empty or there is error, return value is the same - NULL
+	if ((split = ft_split(line, ' ')))      /// if line is empty or there is error, return value is the same - NULL
 	{
 		if (!ft_strcmp(*split, "R"))
 		{
@@ -84,12 +84,13 @@ int parse_rt(char *rt, t_scene *scene)
 	char 	*line;
 
 	ft_bzero(scene, sizeof(t_scene)); // initializing structure values to zero
-	if ((fd = open(rt, O_RDONLY) < 0))
+	if ((fd = open(rt, O_RDONLY)) < 0)
 		error(NULL);
-	while ((n = get_next_line(fd, &line)) > 0)
+	while (get_next_line(fd, &line))
 	{
 		process_line(line, &scene);
 	}
+
 	if (n < 0)
 		error(NULL); /// need to set errno accordingly (in gnl?)
 }

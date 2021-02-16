@@ -11,7 +11,6 @@ int	initiate_jesus_resurrection()
 	t_light		l2 = {0.3, {300,200, z}, 0x000505FF, &l1};
 	t_light		l3 = {0.6, {0,200, 20}, 0x00FFFFFF, &l2};
 
-
 	// shapes
 	t_camera	camera0 = {{0, 50, 0}, {0, 0, 0}, 90, 1, NULL};
 	t_camera	camera1 = {{0, 20, 0}, {0, 0, 0}, 90, 1, &camera0};
@@ -24,7 +23,6 @@ int	initiate_jesus_resurrection()
 	t_cy		cy0 = { {0.0, 1, .0}, 10, 10};
 	t_tr 		tr0 = { { {-100, 0, z},{0,100,z},{100, 0,z}}};
 	// ^ need to figure out how to find front and side vectors, and rotation of shapes in general...
-
 
 	// objects
 	t_object	object0 = {SP, (t_shape)&sp0, {-40, -65, z - 10 }, 0, 0.6, 0x006FFF7E, NULL};
@@ -94,6 +92,7 @@ int launch_renderer(char *rt)
 
 int main(int n_args, char **args)
 {
+
 	if (n_args == 3)
 	{
 		if (!ft_strcmp(args[2], "--save"))

@@ -3,7 +3,7 @@ project(miniRT)
 
 set(CMAKE_CXX_STANDARD 14)
 
-include_directories(includes)
+include_directories(includes libft/includes)
 
 file(GLOB LIBRARIES
         mlx/libmlx.a
@@ -15,6 +15,7 @@ file(GLOB SOURCES
         srcs/*/*.c
         mlx/libmlx.a
         includes/*.h
+        libft/includes/*.h
         )
 add_executable(miniRT ${SOURCES} main.c)
 target_link_libraries(miniRT ${LIBRARIES})
