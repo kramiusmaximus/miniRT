@@ -3,14 +3,13 @@
 t_v 		canvas_to_coords(int x_pixel, int y_pixel, t_scene *scene)
 {
 	t_v		coords;
-	t_camera	*cam = scene->camera;
+	t_camera	*cam = scene->camera->content;
 	double 		af = scene->adjustment_factor;
-	double 		pixel_width = scene->camera->d * 2 * tan(scene->camera->fov / 2 * M_PI / 180) / scene->res.width;
+	double 		pixel_width = 2 * tan(cam->fov / 2 * M_PI / 180) / scene->res.width;
 
 	coords.x = (x_pixel - (scene->res.width * af / 2)) * pixel_width + cam->coordinates.x;
 	coords.y = -(y_pixel - (scene->res.height * af / 2)) * pixel_width + cam->coordinates.y;
-	coords.z = pixel_width * scene->res.width * af / (2 * tan(scene->camera->fov / 2 * M_PI / 180)) +
-			cam->coordinates.z;
+	coords.z = pixel_width * scene->res.width * af / (2 * tan(cam->fov / 2 * M_PI / 180)) + cam->coordinates.z;
 
 	return (coords);
 }
@@ -44,7 +43,7 @@ t_intersect	*process_t(t_ray *ray, t_object *obj, t_t *t)
 	inter->surface_v = surface_vector(ray, inter, obj);
 	inter->surface_v = v_dot(inter->surface_v , ray->dir) > 0 ? v_scalar_mult(inter->surface_v,-1) : inter->surface_v;
 	inter->ref_dir = v_subtract(ray->dir,v_scalar_mult(inter->surface_v , 2 * v_dot(inter->surface_v, ray->dir)));
-	inter->next;
+	//inter->next;
 	/// inter->inside = is_indside(inter);  inside function needs to be created
 	return (inter);
 }

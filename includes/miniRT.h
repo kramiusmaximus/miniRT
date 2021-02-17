@@ -16,9 +16,9 @@
 # include "main_structs.h"
 # include "../libft/includes/libft.h"
 # define MAX_DIST		1000000000
-# define BG_COLOR		0x00050505
+# define BG_COLOR		0x00101010
 # define NUM_THREADS 	4
-# define N_PASSES		1
+# define N_PASSES		4
 # define EPS			0.00000000001
 
 int 				put_pixel(t_image *image, int x, int y, int color);

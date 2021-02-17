@@ -15,6 +15,16 @@ int key_press_hook(int key, t_vars *vars)
 		vars->nav.up_dwn = 1;
 	else if (key == 5)
 		vars->nav.up_dwn = -1;
+	else if (key == 123)
+	{
+		if ((vars->scene.camera = vars->scene.camera->prev) != vars->scene.camera->prev)
+			vars->rendered = 0;
+	}
+	else if (key == 124)
+	{
+		if ((vars->scene.camera = vars->scene.camera->next) != vars->scene.camera->next)
+			vars->rendered = 0;
+	}
 	else if (key == 53)
 		exit_hook(vars);
 	printf("%d\n", key);
@@ -46,7 +56,7 @@ int exit_hook(t_vars *vars)
 int move_camera(t_vars *vars)
 {
 	t_nav nav = vars->nav;
-	t_camera *camera = vars->scene.camera;
+	t_camera *camera = vars->scene.camera->content;
 	double d = 5;
 
 	if (nav.fwd_back && nav.lft_rght)

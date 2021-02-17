@@ -1,37 +1,11 @@
 #include "miniRT.h"
 
-int 		process_r(char **args, t_scene *scene)
-{
-	if (!(*args && is_int(*args) && *(args + 1) && is_int(*(args + 1))))
-	{} /// process error
-	scene->window_dims.width = ft_atoi(*args++);
-	scene->window_dims.height = ft_atoi(*args);
-	return (0);
-}
-
-int 		process_a(char **args, t_scene *scene)
-{
-	char **rgb;
-
-	if (!(*args && is_float(*args) && *(args + 1) && is_input_color(*(args + 1))))
-	{} /// process error
-	if ((scene->ambient.intensity = ft_atof(*args++)) < 0 || scene->ambient.intensity > 1)
-	{} /// process error
-	rgb = ft_split(*args, ',');
-	scene->ambient.color = rgb_create(0, ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
-	return (0);
-}
-
-int 		process_c(char **args, t_scene *scene)
-{
-
-}
-
-static int process_line(char *line, t_scene *scene)
+static int 	process_line(char *line, t_scene *scene)
 {
 	char **split;
 
-	if ((split = ft_split(line, ' ')))      /// if line is empty or there is error, return value is the same - NULL
+	/// need to check that too many arguments aren't given
+	if ((split = ft_split(line, ' ')) && *split)      /// if line is empty or there is error, return value is the same - NULL
 	{
 		if (!ft_strcmp(*split, "R"))
 		{
@@ -47,27 +21,27 @@ static int process_line(char *line, t_scene *scene)
 		}
 		else if (!ft_strcmp(*split, "l"))
 		{
-			//process_l(++split);
+			process_l(++split, scene);
 		}
 		else if (!ft_strcmp(*split, "pl"))
 		{
-			//process_pl(++split);
+			process_pl(++split, scene);
 		}
 		else if (!ft_strcmp(*split, "sp"))
 		{
-			//process_sp(++split);
+			process_sp(++split, scene);
 		}
 		else if (!ft_strcmp(*split, "sq"))
 		{
-			//process_sq(++split);
+			process_sq(++split, scene);
 		}
 		else if (!ft_strcmp(*split, "cy"))
 		{
-			//process_cy(++split);
+			process_cy(++split, scene);
 		}
 		else if (!ft_strcmp(*split, "tr"))
 		{
-			//process_tr(++split);
+			process_tr(++split, scene);
 		}
 		else
 		{
@@ -77,7 +51,7 @@ static int process_line(char *line, t_scene *scene)
 	return (0);
 }
 
-int parse_rt(char *rt, t_scene *scene)
+int 		parse_rt(char *rt, t_scene *scene)
 {
 	int 	fd;
 	int 	n;
@@ -86,11 +60,12 @@ int parse_rt(char *rt, t_scene *scene)
 	ft_bzero(scene, sizeof(t_scene)); // initializing structure values to zero
 	if ((fd = open(rt, O_RDONLY)) < 0)
 		error(NULL);
-	while (get_next_line(fd, &line))
+	while ((n = get_next_line(fd, &line)) > 0)
 	{
-		process_line(line, &scene);
+		process_line(line, scene);
 	}
-
+	get_next_line(fd, &line);
+	process_line(line, scene);
 	if (n < 0)
 		error(NULL); /// need to set errno accordingly (in gnl?)
 }

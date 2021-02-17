@@ -1,6 +1,7 @@
 #include "miniRT.h"
 #include <pthread.h>
 
+/*
 int	initiate_jesus_resurrection()
 {
 	// stuff that would come from the parser. Parser would return a 'scene' file I reckon;
@@ -60,6 +61,7 @@ int	initiate_jesus_resurrection()
 	mlx_hook(vars.mlx.win, 17, 1L << 17, exit_hook, &vars);
 	mlx_loop(vars.mlx.mlx);
 }
+ */
 
 int error(char *msg)
 {
@@ -75,11 +77,22 @@ int make_bmp(char *rt)
 int launch_renderer(char *rt)
 {
 	t_vars	vars;
-	t_scene scene;
 
-	parse_rt(rt, &scene);  /// process errors
+	parse_rt(rt, &vars.scene);  /// process errors
 	// lets get the party started;
+	vars.rendered = 0;
+	vars.nav.up_dwn = 0;
+	vars.nav.lft_rght = 0;
+	vars.nav.fwd_back = 0;
 	vars.mlx.mlx = mlx_init();
+	vars.mlx.window_dims.height = 720;
+	vars.mlx.window_dims.width = 1280;
+	if (vars.mlx.window_dims.height < vars.scene.res.height ||  /// should use res parameter rather than windwo_dims in vars. Also make more pretty
+		vars.mlx.window_dims.width < vars.scene.res.width)
+	{
+		vars.scene.res.height = vars.mlx.window_dims.height;
+		vars.scene.res.width = vars.mlx.window_dims.width;
+	}
 	vars.mlx.win = mlx_new_window(vars.mlx.mlx, vars.mlx.window_dims.width, vars.mlx.window_dims.height, "Is this god?");
 	vars.mlx.image.img = mlx_new_image(vars.mlx.mlx, vars.mlx.window_dims.width, vars.mlx.window_dims.width);
 	vars.mlx.image.addr = mlx_get_data_addr(vars.mlx.image.img, &vars.mlx.image.bits_per_pixel, &vars.mlx.image.line_length, &vars.mlx.image.endian);
@@ -88,6 +101,7 @@ int launch_renderer(char *rt)
 	mlx_hook(vars.mlx.win, 3, 1L << 3, key_release_hook, &vars);
 	mlx_hook(vars.mlx.win, 17, 1L << 17, exit_hook, &vars);
 	mlx_loop(vars.mlx.mlx);
+	printf("hey");
 }
 
 int main(int n_args, char **args)

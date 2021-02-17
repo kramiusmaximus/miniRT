@@ -1,5 +1,15 @@
 #include "miniRT.h"
 
+t_v v_create(double x1, double x2, double x3)
+{
+	t_v v;
+
+	v.x = x1;
+	v.y = x2;
+	v.z = x3;
+	return (v);
+}
+
 t_v	v_add(t_v v1, t_v v2)
 {
 	v1.x += v2.x;

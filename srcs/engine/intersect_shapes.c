@@ -2,17 +2,15 @@
 
 int			ray_intersect_sphere(t_ray *ray, t_object *sp_obj, t_t *t)
 {
-	t_sp		*sp;
 	double		coeff[3];
+	t_sp		*sp;
 
 	if (!ray || !sp_obj || !t)
 		return (1);
-	sp = sp_obj->item.sp;
+	sp = &sp_obj->item.sp;
 	coeff[0] = v_dot(ray->dir, ray->dir);
-	coeff[1] = 2 * v_dot(v_subtract(ray->origin, sp_obj->coordinates), ray->dir);
-	coeff[2] = v_dot(v_subtract(ray->origin, sp_obj->coordinates), v_subtract(ray->origin,
-																			  sp_obj->coordinates)) - pow
-																			   		(sp->diameter / 2, 2);
+	coeff[1] = 2 * v_dot(v_subtract(ray->origin, sp->coord), ray->dir);
+	coeff[2] = v_dot(v_subtract(ray->origin, sp->coord), v_subtract(ray->origin, sp->coord)) - pow(sp->diameter / 2, 2);
 	solve_quadratic(coeff[0], coeff[1], coeff[2], t);
 	return (0);
 }
@@ -26,9 +24,9 @@ int 	ray_intersect_plane(t_ray	*ray, t_object *pl_obj, t_t *t)
 
 	if (!ray || !pl_obj || !t)
 		return (1);
-	pl = pl_obj->item.pl;
-	nominator = v_dot(pl->normal, v_subtract(pl_obj->coordinates, ray->origin));
-	denominator = v_dot(pl->normal, ray->dir);
+	pl = &pl_obj->item.pl;
+	nominator = v_dot(pl->norm, v_subtract(pl->coord, ray->origin));
+	denominator = v_dot(pl->norm, ray->dir);
 	if (!isinf(res = nominator / denominator))
 	{
 		t->size = 1;
@@ -50,13 +48,13 @@ int ray_intersect_sq(t_ray *ray, t_object *sq_obj, t_t *t)
 
 	if (!ray || !sq_obj || !t)
 		return (1);
-	sq = sq_obj->item.sq;  // i dont think i even need a union sttucture here tbh
-	nominator = v_dot(sq->top, v_subtract(sq_obj->coordinates, ray->origin));
-	denominator = v_dot(sq->top, ray->dir);
+	sq = &sq_obj->item.sq;  // i dont think i even need a union sttucture here tbh
+	nominator = v_dot(sq->norm, v_subtract(sq->coord, ray->origin));
+	denominator = v_dot(sq->norm, ray->dir);
 	if (!isinf(res = nominator / denominator))
 	{
 		p_contact = v_add(ray->origin, v_scalar_mult(ray->dir, res));
-		v_contact = v_subtract(p_contact, sq_obj->coordinates);
+		v_contact = v_subtract(p_contact, sq->coord);
 		a[0] = v_dot(v_contact, sq->front); // front and side vectors are assumed to be unit vectors
 		a[1] = v_dot(v_contact, sq->side);
 		len = sq->side_len / 2;
@@ -71,7 +69,7 @@ int ray_intersect_sq(t_ray *ray, t_object *sq_obj, t_t *t)
 
 static int ray_intersect_sausage(t_ray *ray, t_object *cy_obj, t_t *t)
 {
-	t_cy 	*cy = cy_obj->item.cy;
+	t_cy 	*cy;
 	double 	a;
 	double	b1;
 	double	b2;
@@ -89,21 +87,22 @@ static int ray_intersect_sausage(t_ray *ray, t_object *cy_obj, t_t *t)
 
 	if (!ray || !cy_obj || !t)
 		return (1);
-	a = v_dot(v_cross(ray->dir, cy->normal), v_cross(ray->dir, cy->normal));
-	b1 = 2 * v_dot(v_cross(ray->dir, cy->normal), v_cross(ray->origin, cy->normal));
-	b2 = -2 * v_dot(v_cross(ray->dir, cy->normal), v_cross(cy_obj->coordinates, cy->normal));
+	cy = &cy_obj->item.cy;
+	a = v_dot(v_cross(ray->dir, cy->norm), v_cross(ray->dir, cy->norm));
+	b1 = 2 * v_dot(v_cross(ray->dir, cy->norm), v_cross(ray->origin, cy->norm));
+	b2 = -2 * v_dot(v_cross(ray->dir, cy->norm), v_cross(cy->coord, cy->norm));
 	b = b1 + b2;
-	c1 = v_dot(v_cross(cy_obj->coordinates, cy->normal), v_cross(cy_obj->coordinates, cy->normal));
-	c2 = v_dot(v_cross(ray->origin, cy->normal), v_cross(ray->origin, cy->normal));
-	c3 = -2 * v_dot(v_cross(ray->origin, cy->normal), v_cross(cy_obj->coordinates, cy->normal)) - pow(cy->diameter / 2, 2);
+	c1 = v_dot(v_cross(cy->coord, cy->norm), v_cross(cy->coord, cy->norm));
+	c2 = v_dot(v_cross(ray->origin, cy->norm), v_cross(ray->origin, cy->norm));
+	c3 = -2 * v_dot(v_cross(ray->origin, cy->norm), v_cross(cy->coord, cy->norm)) - pow(cy->diameter / 2, 2);
 	c = c1 + c2 + c3;
 	solve_quadratic(a, b, c, t);
 	i = t->size;
 	while (i > 0)
 	{
 		p_contact = v_add(ray->origin, v_scalar_mult(ray->dir, t->arr[i - 1]));
-		op = v_subtract(p_contact, cy_obj->coordinates);
-		if (v_dot(op, cy->normal) > cy->height || v_dot(op, cy->normal) < 0)
+		op = v_subtract(p_contact, cy->coord);
+		if (v_dot(op, cy->norm) > cy->height || v_dot(op, cy->norm) < 0)
 		{
 			t->arr[i - 1] = MAX_DIST;
 		}
@@ -125,23 +124,23 @@ static int ray_intersect_caps(t_ray *ray, t_object *cy_obj, t_t *t)
 
 	if (!ray || !cy_obj || !t)
 		return (1);
-	cy = cy_obj->item.cy;
-	nominator = v_dot(cy->normal, v_subtract(cy_obj->coordinates, ray->origin));
-	denominator = v_dot(cy->normal, ray->dir);
+	cy = &cy_obj->item.cy;
+	nominator = v_dot(cy->norm, v_subtract(cy->coord, ray->origin));
+	denominator = v_dot(cy->norm, ray->dir);
 	if (!isinf(res = nominator / denominator))
 	{
 		p_contact = v_add(ray->origin, v_scalar_mult(ray->dir, res));
-		v_contact = v_subtract(p_contact, cy_obj->coordinates);
+		v_contact = v_subtract(p_contact, cy->coord);
 		if (v_norm(v_contact) <= cy->diameter / 2)
 			t->arr[t->size++] = res;
 	}
-	nominator = v_dot(cy->normal, v_subtract(v_add(cy_obj->coordinates, v_scalar_mult(cy->normal, cy->height)),\
+	nominator = v_dot(cy->norm, v_subtract(v_add(cy->coord, v_scalar_mult(cy->norm, cy->height)),\
 	ray->origin));
-	denominator = v_dot(cy->normal, ray->dir);
+	denominator = v_dot(cy->norm, ray->dir);
 	if (!isinf(res = nominator / denominator))
 	{
 		p_contact = v_add(ray->origin, v_scalar_mult(ray->dir, res));
-		v_contact = v_subtract(p_contact, v_add(cy_obj->coordinates, v_scalar_mult(cy->normal, cy->height)));
+		v_contact = v_subtract(p_contact, v_add(cy->coord, v_scalar_mult(cy->norm, cy->height)));
 		if (v_norm(v_contact) <= cy->diameter / 2)
 			t->arr[t->size++] = res;
 	}
@@ -162,19 +161,17 @@ int			ray_intersect_cy(t_ray *ray, t_object *cy_obj, t_t *t)
 
 int 		ray_intersect_tr(t_ray *ray, t_object *tr_obj, t_t *t)
 {
-	t_pl		pl;
 	t_v 		v[7];
 	t_tr 		*tr;
 	t_object 	pl_obj;
 	double		a;
 
-	tr = tr_obj->item.tr;
+	tr = &tr_obj->item.tr;
 	v[0] = v_subtract(tr->p[1], tr->p[0]);
 	v[1] = v_subtract(tr->p[2], tr->p[1]);
 	v[2] = v_subtract(tr->p[0], tr->p[2]);
-	pl.normal = v_cross(v[1], v[0]);
-	pl_obj.coordinates = tr->p[0];
-	pl_obj.item.pl = &pl;
+	pl_obj.item.pl.norm = v_cross(v[1], v[0]);
+	pl_obj.item.pl.coord = tr->p[0];
 	ray_intersect_plane(ray, &pl_obj, t);
 	if (t->size)
 	{

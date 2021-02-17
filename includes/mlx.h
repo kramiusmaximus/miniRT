@@ -34,7 +34,7 @@
 ** les numeros des boutons souris ne sont pas les memes.
 ** Egalement l'expose est gere differemment, et sous MacOS
 ** il est preferable d'entrer le plus tot possible dans mlx_loop,
-** il est normal que les fenetres n'apparaissent pas avant mlx_loop
+** il est norm que les fenetres n'apparaissent pas avant mlx_loop
 ** (ou bien forcez avec mlx_do_sync mais c'est pas genial).
 ** Sous MacOS, l'octet Alpha est pris en compte dans toutes les
 ** images, et represente la transparence et non l'opacite comme
@@ -65,7 +65,7 @@ void	*mlx_new_window(void *mlx_ptr, int size_x, int size_y, char *title);
 int	mlx_clear_window(void *mlx_ptr, void *win_ptr);
 int	mlx_pixel_put(void *mlx_ptr, void *win_ptr, int x, int y, int color);
 /*
-**  origin for x & y is top left corner of the window
+**  origin for x & y is norm left corner of the window
 **  y down is positive
 **  color is 0x00RRGGBB
 */

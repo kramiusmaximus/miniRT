@@ -4,16 +4,16 @@ static int render_image(t_vars *vars)
 {
 	t_render	rvars;
 
-	rvars.mult[0] = ((double)rvars.scene->window_dims.height / (double)rvars.scene->res.height) / vars->af;
-	rvars.mult[1] = ((double)rvars.scene->window_dims.width / (double)rvars.scene->res.width) / vars->af;
-	for (int v = 0; v < (int)(((double)rvars.scene->res.height) * vars->af); v++) //
+	rvars.mult[0] = ((double)vars->mlx.window_dims.height / (double)vars->scene.res.height) / vars->af;
+	rvars.mult[1] = ((double)vars->mlx.window_dims.width / (double)vars->scene.res.width) / vars->af;
+	for (int v = 0; v < (int)(((double)vars->scene.res.height) * vars->af); v++) //
 	{
-		for (int h = 0; h < (int)(((double)rvars.scene->res.width) * vars->af); h++)
+		for (int h = 0; h < (int)(((double)vars->scene.res.width) * vars->af); h++)
 		{
-			rvars.vec[0] = canvas_to_coords(h / vars->af, v / vars->af, rvars.scene);
-			rvars.vec[1] = v_subtract(rvars.vec[0], rvars.scene->camera->coordinates);
-			rvars.ray = make_ray(rvars.vec[0], rvars.vec[1]);
-			rvars.color = trace_ray(&rvars.ray, rvars.scene, N_PASSES, 1);
+			rvars.vec[0] = canvas_to_coords(h / vars->af, v / vars->af, &vars->scene);
+			rvars.vec[1] = v_subtract(rvars.vec[0], ((t_camera *)vars->scene.camera->content)->coordinates);
+			rvars.ray = make_ray(((t_camera *)vars->scene.camera->content)->coordinates, rvars.vec[1]);
+			rvars.color = trace_ray(&rvars.ray, &vars->scene, N_PASSES, 1);
 			for (int y_pixel = (int)(v * rvars.mult[0]); y_pixel < (int)((double)(v + 1) * rvars.mult[0]); y_pixel++)
 				for (int x_pixel = (int)(h * rvars.mult[1]); x_pixel < (int)((double)(h + 1) * rvars.mult[1]); x_pixel++)
 					put_pixel(&vars->mlx.image, x_pixel, y_pixel, rvars.color);

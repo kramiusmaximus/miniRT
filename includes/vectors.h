@@ -7,6 +7,7 @@ typedef struct		s_v
 	double 			z;
 }					t_v;
 
+t_v 				v_create(double x1, double x2, double x3);
 t_v					v_add(t_v v1, t_v v2);
 t_v					v_subtract(t_v v1, t_v v2);
 double				v_dot(t_v v1, t_v v2);

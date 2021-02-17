@@ -4,6 +4,7 @@
 
 t_intersect *trace_result(t_ray *ray, t_scene *scene, double d)
 {
+	t_list 		*p;
 	t_object	*obj;
 	t_object	*obj_closest;
 	t_t 		t;
@@ -12,10 +13,11 @@ t_intersect *trace_result(t_ray *ray, t_scene *scene, double d)
 	t.closest = MAX_DIST;
 	if (!ray || !scene)
 		return (NULL);
-	obj = scene->object;
+	p = scene->object;
 	obj_closest = NULL;
-	while (obj)
+	while (p)
 	{
+		obj = p->content;
 		t.size = 0;
 		if (obj->type & SP)
 			ray_intersect_sphere(ray, obj, &t);
@@ -37,7 +39,7 @@ t_intersect *trace_result(t_ray *ray, t_scene *scene, double d)
 			}
 			i++;
 		}
-		obj = obj->next;
+		p = p->next;
 	}
 	if (obj_closest)
 		return (ray->intersect = process_t(ray, obj_closest, &t));
