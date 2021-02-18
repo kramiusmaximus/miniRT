@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-int process_light(t_ray *ray, t_scene *scene)
+void process_light(t_ray *ray, t_scene *scene, int *c)
 {
 	t_v 		l;
 	int 		l_color;
@@ -9,7 +9,7 @@ int process_light(t_ray *ray, t_scene *scene)
 	t_ray 		ray_l;
 	double 		dot;
 
-	l_color = rgb_multiply_scalar(scene->ambient.color, scene->ambient.intensity);
+	c[1] = rgb_multiply_scalar(scene->ambient.color, scene->ambient.intensity);
 	p = scene->light;
 	while (p)
 	{
@@ -21,10 +21,9 @@ int process_light(t_ray *ray, t_scene *scene)
 			// calculating diffuse lighting
 			dot = v_dot(ray->intersect->surface_v, l);
 			dot = dot < 0 ? 0 : dot;
-			l_color = rgb_add(rgb_multiply_scalar(light->color, dot * light->intensity), l_color); // diffuse
-			l_color = rgb_add(rgb_multiply_scalar(light->color, (pow(dot, 60)) * light->intensity), l_color); // specular
+			c[1] = rgb_add(rgb_multiply_scalar(light->color, dot * light->intensity), c[1]); // diffuse
+			c[2] = rgb_add(rgb_multiply_scalar(light->color, (pow(100, -(50 / dot - 50))) * light->intensity), c[2]); // specular
 		}
 		p = p->next;
 	}
-	return (l_color);
 }

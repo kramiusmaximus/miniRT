@@ -54,8 +54,9 @@ typedef struct		s_object
 {
 	int 			type;
 	t_shape			item;
-	double 			refraction;
 	double 			reflectivity;
+	double 			transperancy;
+	double 			refraction;
 	int 			color;
 }					t_object;
 

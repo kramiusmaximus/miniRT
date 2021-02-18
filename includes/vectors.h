@@ -2,10 +2,13 @@
 # define VECTORS_H
 typedef struct		s_v
 {
-	double 			x;
-	double 			y;
-	double 			z;
+	double 			v[3];
 }					t_v;
+
+typedef struct		s_3dmat
+{
+	double 			m[3][3];
+}					t_3dmat;
 
 t_v 				v_create(double x1, double x2, double x3);
 t_v					v_add(t_v v1, t_v v2);

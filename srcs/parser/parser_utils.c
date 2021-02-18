@@ -1,60 +1,72 @@
 #include "miniRT.h"
 
-int 		is_int(char *str)
+int 		is_int(char **arg)
 {
-	while (*str)
+	char *p;
+
+	if (!*arg)
+		return (0);
+	p = *arg;
+	while (*p)
 	{
-		if (!ft_isdigit(*str))
+		if (!ft_isdigit(*p))
 			return (0);
-		str++;
+		p++;
 	}
 	return (1);
 }
 
-int 		is_float(char *str)
+int 		is_float(char **arg)
 {
-	while (*str == '+' || *str == '-')
-		str++;
-	while (ft_isdigit(*str))
-		str++;
-	if (*str == '.')
-		str++;
-	while (ft_isdigit(*str))
-		str++;
-	if (*str)
+	char *p;
+
+	if (!*arg)
+		return (0);
+	p = *arg;
+	while (*p == '+' || *p == '-')
+		p++;
+	while (ft_isdigit(*p))
+		p++;
+	if (*p == '.')
+		p++;
+	while (ft_isdigit(*p))
+		p++;
+	if (*p)
 		return (0);
 	return (1);
 }
 
-int 		is_input_color(char *str)
+int 		is_color(char **arg)
 {
 	char 	**rgb;
 	int 	k;
 	int		i;
 
+	if (!*arg)
+		return (0);
 	i = 0;
-	rgb = ft_split(str, ',');
+	rgb = ft_split(*arg, ',');
 	while (rgb[i])
 	{
-		if (i > 2 || !is_int(*rgb))
+		if (i > 2 || !is_int(&rgb[i]))
 			return (0);
-		k = ft_atoi(rgb[i++]);
-		if (k < 0 || k > 255)
-			return (0);
+		i++;
 	}
 	return (1);
 }
 
-int 		is_coords(char *str)
+int 		is_coord(char **arg)
 {
 	char **coord;
 	int i;
 
+	if (!*arg)
+		return (0);
 	i = 0;
-	coord = ft_split(str, ',');
+	coord = ft_split(*arg, ',');
 	while (coord[i])
 	{
-		if (i > 2 || !is_float(coord[i++]))
+		if (i > 2 || !is_float(&coord[i++]))
 			return (0);
 	}
 	return (1);

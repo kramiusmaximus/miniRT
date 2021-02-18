@@ -55,22 +55,21 @@ int exit_hook(t_vars *vars)
 
 int move_camera(t_vars *vars)
 {
-	t_nav nav = vars->nav;
-	t_camera *camera = vars->scene.camera->content;
-	double d = 5;
+	t_nav 		nav;
+	t_camera 	*camera;
+	double 		d;
+	int 		dirs;
 
-	if (nav.fwd_back && nav.lft_rght)
+	nav = vars->nav;
+	camera = vars->scene.camera->content;
+	dirs = abs(nav.fwd_back) + abs(nav.lft_rght) + abs(nav.up_dwn);
+	d = pow(STEP_SIZE, (double)1 / dirs);
+	if (is_moving(&nav))
 	{
-		d /= sqrt(2);
-		camera->coordinates.z += d * nav.fwd_back;
 		camera->coordinates.x += d * nav.lft_rght;
-	}
-	else if (nav.lft_rght)
-		camera->coordinates.x += d * nav.lft_rght;
-	else if (nav.fwd_back)
-		camera->coordinates.z += d * nav.fwd_back;
-	if (nav.up_dwn)
 		camera->coordinates.y += d * nav.up_dwn;
+		camera->coordinates.z += d * nav.fwd_back;
+	}
 	return (0);
 }
 

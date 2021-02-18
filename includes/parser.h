@@ -11,10 +11,10 @@ int 		process_sp(char **args, t_scene *scene);
 int 		process_sq(char **args, t_scene *scene);
 int 		process_cy(char **args, t_scene *scene);
 int 		process_tr(char **args, t_scene *scene);
-int 		is_int(char *str);
-int 		is_float(char *str);
-int 		is_input_color(char *str);
-int 		is_coords(char *str);
+int 		is_int(char **arg);
+int 		is_float(char **arg);
+int 		is_color(char **arg);
+int 		is_coord(char **arg);
 t_listc		*ft_lstcnew(t_camera *data);
 void		ft_lstcadd_front(t_listc **head, t_listc *node);
 

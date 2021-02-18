@@ -4,16 +4,16 @@ t_v v_create(double x1, double x2, double x3)
 {
 	t_v v;
 
-	v.x = x1;
-	v.y = x2;
-	v.z = x3;
+	v.v[0] = x1;
+	v.v[1] = x2;
+	v.v[2] = x3;
 	return (v);
 }
 
 t_v	v_add(t_v v1, t_v v2)
 {
-	v1.x += v2.x;
-	v1.y += v2.y;
+	v1.v[0] += v2.v[0];
+	v1.v[1] += v2.;
 	v1.z += v2.z;
 	return (v1);
 }
@@ -118,4 +118,9 @@ int			solve_quadratic(double a, double b, double c, t_t *t)
 		t->size = 2;
 	}
 	return (0);
+}
+
+t_3dmat		mat_inverse(t_3dmat m)
+{
+	for (int i = 0; i < 2)
 }

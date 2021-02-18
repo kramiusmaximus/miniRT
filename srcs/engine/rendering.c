@@ -24,12 +24,15 @@ static int render_image(t_vars *vars)
 
 int render(t_vars *vars)
 {
+	clock_t t;
+
+	t = clock();
 	vars->scene.adjustment_factor = 1;
 	move_camera(vars);
 	if (is_moving(&vars->nav))
 	{
 		vars->rendered = 0;
-		vars->af = 0.15;
+		vars->af = AF;
 	}
 	else if (!vars->rendered)
 	{
@@ -42,6 +45,9 @@ int render(t_vars *vars)
 		render_multi(vars);
 	else
 		render_image(vars);
+	t = clock() - t;
+	printf("%d\n", t);
+	usleep(max(50000 - t, 0));
 	mlx_put_image_to_window(vars->mlx.mlx, vars->mlx.win, vars->mlx.image.img, 0, 0);
 	return (0);
 }
