@@ -7,9 +7,9 @@ t_v 		canvas_to_coords(int x_pixel, int y_pixel, t_scene *scene)
 	double 		af = scene->adjustment_factor;
 	double 		pixel_width = 2 * tan(cam->fov / 2 * M_PI / 180) / scene->res.width;
 
-	coords.x = (x_pixel - (scene->res.width * af / 2)) * pixel_width + cam->coordinates.x;
-	coords.y = -(y_pixel - (scene->res.height * af / 2)) * pixel_width + cam->coordinates.y;
-	coords.z = pixel_width * scene->res.width * af / (2 * tan(cam->fov / 2 * M_PI / 180)) + cam->coordinates.z;
+	coords.v[0] = (x_pixel - (scene->res.width * af / 2)) * pixel_width + cam->coord.v[0];
+	coords.v[1] = -(y_pixel - (scene->res.height * af / 2)) * pixel_width + cam->coord.v[1];
+	coords.v[2] = pixel_width * scene->res.width * af / (2 * tan(cam->fov / 2 * M_PI / 180)) + cam->coord.v[2];
 
 	return (coords);
 }
@@ -93,4 +93,109 @@ int 		selection_sort(double arr[], int size)
 		i++;
 	}
 	return (0);
+}
+
+double determinant(double a[25][25], double k)
+{
+	double s = 1, det = 0, b[25][25];
+	int i, j, m, n, c;
+	if (k == 1)
+	{
+		return (a[0][0]);
+	}
+	else
+	{
+		det = 0;
+		for (c = 0; c < k; c++)
+		{
+			m = 0;
+			n = 0;
+			for (i = 0;i < k; i++)
+			{
+				for (j = 0 ;j < k; j++)
+				{
+					b[i][j] = 0;
+					if (i != 0 && j != c)
+					{
+						b[m][n] = a[i][j];
+						if (n < (k - 2))
+							n++;
+						else
+						{
+							n = 0;
+							m++;
+						}
+					}
+				}
+			}
+			det = det + s * (a[0][c] * determinant(b, k - 1));
+			s = -1 * s;
+		}
+	}
+
+	return (det);
+}
+/*Finding transpose of matrix*/
+void transpose(double num[25][25], double fac[25][25], double r)
+{
+	int i, j;
+	double b[25][25], inverse[25][25], d;
+
+	for (i = 0;i < r; i++)
+	{
+		for (j = 0;j < r; j++)
+		{
+			b[i][j] = fac[j][i];
+		}
+	}
+	d = determinant(num, r);
+	for (i = 0;i < r; i++)
+	{
+		for (j = 0;j < r; j++)
+		{
+			inverse[i][j] = b[i][j] / d;
+		}
+	}
+	printf("\n\n\nThe inverse of matrix is : \n");
+
+	for (i = 0;i < r; i++)
+	{
+		for (j = 0;j < r; j++)
+		{
+			printf("\t%f", inverse[i][j]);
+		}
+		printf("\n");
+	}
+}
+void cofactor(double num[25][25], double f)
+{
+	double b[25][25], fac[25][25];
+	int p, q, m, n, i, j;
+	for (q = 0;q < f; q++)
+	{
+		for (p = 0;p < f; p++)
+		{
+			m = 0;
+			n = 0;
+			for (i = 0;i < f; i++)
+			{
+				for (j = 0;j < f; j++)
+				{
+					if (i != q && j != p)
+					{
+						b[m][n] = num[i][j];
+						if (n < (f - 2))
+							n++;
+						else
+						{
+							n = 0;
+							m++;
+						}
+					}
+				}
+			}
+			fac[q][p] = pow(-1, q + p) * determinant(b, f - 1);
+		}
+	}
+	transpose(num, fac, f);
 }

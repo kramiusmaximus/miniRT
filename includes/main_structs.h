@@ -10,7 +10,6 @@ typedef struct			s_intersect
 	t_v					ref_dir;
 	t_v					surface_v;
 	int 				inside;
-	//struct s_intersect	*next;
 }						t_intersect;
 
 typedef struct 			s_ray
@@ -18,16 +17,14 @@ typedef struct 			s_ray
 	t_v 				origin;
 	t_v					dir;
 	t_intersect			*intersect;
-	t_v 				dir_ref;
-	//struct s_ray		*next;
 }						t_ray;
 
 typedef struct		s_camera
 {
-	t_v				coordinates;
+	t_v				coord;
 	t_v 			dir;
+	t_m				t_m;
 	double 			fov;
-	int 			d;
 }					t_camera;
 
 typedef struct			s_listc

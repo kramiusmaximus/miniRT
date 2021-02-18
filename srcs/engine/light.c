@@ -22,7 +22,7 @@ void process_light(t_ray *ray, t_scene *scene, int *c)
 			dot = v_dot(ray->intersect->surface_v, l);
 			dot = dot < 0 ? 0 : dot;
 			c[1] = rgb_add(rgb_multiply_scalar(light->color, dot * light->intensity), c[1]); // diffuse
-			c[2] = rgb_add(rgb_multiply_scalar(light->color, (pow(100, -(50 / dot - 50))) * light->intensity), c[2]); // specular
+			c[2] = rgb_add(rgb_multiply_scalar(light->color, (pow(200, -(200 / dot - 200))) * light->intensity), c[2]); // specular
 		}
 		p = p->next;
 	}

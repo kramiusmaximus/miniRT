@@ -66,9 +66,9 @@ int move_camera(t_vars *vars)
 	d = pow(STEP_SIZE, (double)1 / dirs);
 	if (is_moving(&nav))
 	{
-		camera->coordinates.x += d * nav.lft_rght;
-		camera->coordinates.y += d * nav.up_dwn;
-		camera->coordinates.z += d * nav.fwd_back;
+		camera->coord.v[0] += d * nav.lft_rght;
+		camera->coord.v[1] += d * nav.up_dwn;
+		camera->coord.v[2] += d * nav.fwd_back;
 	}
 	return (0);
 }

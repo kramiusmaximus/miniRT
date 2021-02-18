@@ -13,34 +13,34 @@ t_v v_create(double x1, double x2, double x3)
 t_v	v_add(t_v v1, t_v v2)
 {
 	v1.v[0] += v2.v[0];
-	v1.v[1] += v2.;
-	v1.z += v2.z;
+	v1.v[1] += v2.v[1];
+	v1.v[2] += v2.v[2];
 	return (v1);
 }
 
 t_v	v_subtract(t_v v1, t_v v2)
 {
-	v1.x -= v2.x;
-	v1.y -= v2.y;
-	v1.z -= v2.z;
+	v1.v[0] -= v2.v[0];
+	v1.v[1] -= v2.v[1];
+	v1.v[2] -= v2.v[2];
 	return (v1);
 }
 
 double		v_dot(t_v v1, t_v v2)
 {
-	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
+	return (v1.v[0] * v2.v[0] + v1.v[1] * v2.v[1] + v1.v[2] * v2.v[2]);
 }
 
 double		v_norm(t_v v)
 {
-	return (sqrt(pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2)));
+	return (sqrt(pow(v.v[0], 2) + pow(v.v[1], 2) + pow(v.v[2], 2)));
 }
 
 t_v 	v_scalar_mult(t_v v, double s)
 {
-	v.x *= s;
-	v.y *= s;
-	v.z *= s;
+	v.v[0] *= s;
+	v.v[1] *= s;
+	v.v[2] *= s;
 	return (v);
 }
 
@@ -53,9 +53,9 @@ t_v v_cross(t_v v1, t_v v2)
 {
 	t_v	res;
 
-	res.x = v1.y * v2.z - v1.z * v2.y;
-	res.y = v1.z * v2.x - v1.x * v2.z;
-	res.z = v1.x * v2.y - v1.y * v2.x;
+	res.v[0] = v1.v[1] * v2.v[2] - v1.v[2] * v2.v[1];
+	res.v[1] = v1.v[2] * v2.v[0] - v1.v[0] * v2.v[2];
+	res.v[2] = v1.v[0] * v2.v[1] - v1.v[1] * v2.v[0];
 	return (res);
 }
 
@@ -64,9 +64,9 @@ t_v v_random(t_v v, double amount)
 	double sign = rand() / 10000000;
 
 	sign = sign > 100 ? 1 : -1;
-	v.x += sign*random() / amount;
-	v.y += sign*random() / amount;
-	v.z += sign*random() / amount;
+	v.v[0] += sign*random() / amount;
+	v.v[1] += sign*random() / amount;
+	v.v[2] += sign*random() / amount;
 
 	return (v);
 }
@@ -118,9 +118,4 @@ int			solve_quadratic(double a, double b, double c, t_t *t)
 		t->size = 2;
 	}
 	return (0);
-}
-
-t_3dmat		mat_inverse(t_3dmat m)
-{
-	for (int i = 0; i < 2)
 }

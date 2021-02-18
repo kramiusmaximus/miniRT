@@ -58,7 +58,7 @@ int trace_ray(t_ray *ray, t_scene *scene, int n_passes, double d)
 		c[0] = inter->obj->color;
 		process_light(ray, scene, c);
 		c[1] = rgb_multiply(c[0], c[1]);
-		c[2] = rgb_multiply(c[0], c[2]);
+		//c[2] = rgb_multiply(c[0], c[2]);
 		c[0] = rgb_add(c[1], c[2]);
 		if (--n_passes && inter->obj->reflectivity)
 			c[0] = rgb_add(rgb_multiply_scalar(c[0], 1 - inter->obj->reflectivity), rgb_multiply_scalar(trace_ray(&ref_ray, scene, n_passes, EPS), inter->obj->reflectivity));

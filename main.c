@@ -104,9 +104,11 @@ int launch_renderer(char *rt)
 	printf("hey");
 }
 
+
+
+
 int main(int n_args, char **args)
 {
-
 	if (n_args == 3)
 	{
 		if (!ft_strcmp(args[2], "--save"))

@@ -42,9 +42,9 @@ int 		process_c(char **args, t_scene *scene)
 	if (is_coord(args) && is_coord(args + 1))
 	{
 		coord = ft_split(*args++, ',');
-		camera->coordinates = v_create(ft_atof(coord[0]), ft_atof(coord[1]), ft_atof(coord[2]));
+		camera->coord = v_create(ft_atof(coord[0]), ft_atof(coord[1]), ft_atof(coord[2]));
 		dir = ft_split(*args++, ',');
-		camera->dir = v_create(ft_atof(dir[0]), ft_atof(dir[1]), ft_atof(dir[2]));
+		camera->dir = v_normalize(v_create(ft_atof(dir[0]), ft_atof(dir[1]), ft_atof(dir[2])));
 	}
 	if (is_float(args))
 	{
