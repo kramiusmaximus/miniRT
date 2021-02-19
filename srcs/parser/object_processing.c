@@ -54,6 +54,8 @@ int 		process_c(char **args, t_scene *scene)
 	}
 	if (*args || !(node = ft_lstcnew(camera)))
 	{} /// process error
+	camera->basis = m_i(3);
+	camera->basis = cam_dir_transform(camera->basis, camera->dir);
 	ft_lstcadd_front(&scene->camera, node);
 }
 

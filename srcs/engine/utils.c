@@ -1,15 +1,15 @@
 #include "miniRT.h"
 
-t_v 		canvas_to_coords(int x_pixel, int y_pixel, t_scene *scene)
+t_v 		canvas_to_coords(int x_pixel, int y_pixel, t_vars *vars)
 {
 	t_v		coords;
-	t_camera	*cam = scene->camera->content;
-	double 		af = scene->adjustment_factor;
-	double 		pixel_width = 2 * tan(cam->fov / 2 * M_PI / 180) / scene->res.width;
+	t_camera	*cam = vars->scene.camera->content;
+	double 		af = vars->af;
+	double 		pixel_width = 2 * tan(cam->fov / 2 * M_PI / 180) / vars->scene.res.width;
 
-	coords.v[0] = (x_pixel - (scene->res.width * af / 2)) * pixel_width + cam->coord.v[0];
-	coords.v[1] = -(y_pixel - (scene->res.height * af / 2)) * pixel_width + cam->coord.v[1];
-	coords.v[2] = pixel_width * scene->res.width * af / (2 * tan(cam->fov / 2 * M_PI / 180)) + cam->coord.v[2];
+	coords.v[0] = (x_pixel - (vars->scene.res.width * af / 2)) * pixel_width + cam->coord.v[0];
+	coords.v[1] = -(y_pixel - (vars->scene.res.height * af / 2)) * pixel_width + cam->coord.v[1];
+	coords.v[2] = pixel_width * vars->scene.res.width * af / (2 * tan(cam->fov / 2 * M_PI / 180)) + cam->coord.v[2];
 
 	return (coords);
 }
@@ -95,9 +95,9 @@ int 		selection_sort(double arr[], int size)
 	return (0);
 }
 
-double determinant(double a[25][25], double k)
+double determinant(double a[3][3], double k)
 {
-	double s = 1, det = 0, b[25][25];
+	double s = 1, det = 0, b[3][3];
 	int i, j, m, n, c;
 	if (k == 1)
 	{
@@ -136,10 +136,10 @@ double determinant(double a[25][25], double k)
 	return (det);
 }
 /*Finding transpose of matrix*/
-void transpose(double num[25][25], double fac[25][25], double r)
+void transpose(double num[3][3], double fac[3][3], double r)
 {
 	int i, j;
-	double b[25][25], inverse[25][25], d;
+	double b[3][3], inverse[3][3], d;
 
 	for (i = 0;i < r; i++)
 	{
@@ -167,9 +167,9 @@ void transpose(double num[25][25], double fac[25][25], double r)
 		printf("\n");
 	}
 }
-void cofactor(double num[25][25], double f)
+void cofactor(double num[3][3], double f)
 {
-	double b[25][25], fac[25][25];
+	double b[3][3], fac[3][3];
 	int p, q, m, n, i, j;
 	for (q = 0;q < f; q++)
 	{
@@ -198,4 +198,60 @@ void cofactor(double num[25][25], double f)
 		}
 	}
 	transpose(num, fac, f);
+}
+
+double abs_f(double i)
+{
+	return (i > 0 ? -i : i);
+}
+
+t_v 	v_make(double x, double y, double z)
+{
+	t_v res;
+
+	res.v[0] = x;
+	res.v[1] = y;
+	res.v[2] = z;
+	return (res);
+}
+
+t_m 	m_i(int n)
+{
+	// will work only with i , j < 4
+	int i;
+	int j;
+	t_m	m;
+
+	m.size[0] = n;
+	m.size[1] = n;
+	i = 0;
+	while (i < n)
+	{
+		j = 0;
+		while (j < n)
+		{
+			m.m[i][j] = i == j ? 1 : 0;
+			j++;
+		}
+		i++;
+	}
+	return m;
+}
+
+t_m 	cam_dir_transform(t_m bas, t_v dir)
+{
+	double rot[3];
+
+	rot[0] = atan(dir.v[1] / dir.v[2]);
+	if (dir.v[2] < EPS && dir.v[2] > -EPS)
+		rot[0] = atan(dir.v[1]/ EPS);
+
+	rot[1] = atan(dir.v[0] / dir.v[2]);
+	if (dir.v[2] < EPS && dir.v[2] > -EPS)
+		rot[1] = atan(dir.v[0]/ EPS);
+	if (dir.v[2] < 0)
+		rot[1] += M_PI;
+	bas = v_mat_mul(rotate_x(rot[0]), bas);
+	bas = v_mat_mul(rotate_y(rot[1]), bas);
+	return (bas);
 }

@@ -119,3 +119,92 @@ int			solve_quadratic(double a, double b, double c, t_t *t)
 	}
 	return (0);
 }
+
+t_v v_mat_mul_vec(t_m m, t_v v)  /// would be interesting to see the difference in performance when using this func and
+/// one with pointers
+{
+	int i;
+	int j;
+	t_v res = {0,0,0};
+
+	i = 0;
+	while (i < 3)
+	{
+		j = 0;
+		while (j < 3)
+		{
+			res.v[i] += m.m[i][j] * v.v[j];
+			j++;
+		}
+		i++;
+	}
+	return (res);
+}
+
+t_m v_mat_mul(t_m a1, t_m a2)
+{
+	t_m res;
+	int i;
+	int j;
+	int k;
+
+	res.size[0] = a1.size[0];
+	res.size[1] = a2.size[1];
+	if (a1.size[1] != a2.size[0])
+		ft_printf("Matrix size mismatch!\n");
+	i = 0;
+	while (i < a1.size[0])
+	{
+		j = 0;
+		while (j < a2.size[1])
+		{
+			res.m[i][j] = 0;
+			k = 0;
+			while (k < a1.size[1])
+			{
+				res.m[i][j] += a1.m[i][k] * a2.m[k][j];
+				k++;
+			}
+			j++;
+		}
+		i++;
+	}
+	return (res);
+}
+
+t_m rotate_x(double theta)
+{
+	t_m 	m;
+
+	theta *= -1;
+	m.size[0] = 3;
+	m.size[1] = 3;
+	m.m[0][0] = 1;
+	m.m[0][1] = 0;
+	m.m[0][2] = 0;
+	m.m[1][0] = 0;
+	m.m[1][1] = cos(theta);
+	m.m[1][2] = -sin(theta);
+	m.m[2][0] = 0;
+	m.m[2][1] = sin(theta);
+	m.m[2][2] = cos(theta);
+	return (m);
+}
+
+t_m rotate_y(double theta)
+{
+	t_m 	m;
+
+	m.size[0] = 3;
+	m.size[1] = 3;
+	m.m[0][0] = cos(theta);
+	m.m[0][1] = 0;
+	m.m[0][2] = sin(theta);
+	m.m[1][0] = 0;
+	m.m[1][1] = 1;
+	m.m[1][2] = 0;
+	m.m[2][0] = -sin(theta);
+	m.m[2][1] = 0;
+	m.m[2][2] = cos(theta);
+	return (m);
+}

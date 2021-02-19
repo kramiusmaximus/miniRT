@@ -14,7 +14,7 @@ static void 		*render_section(void *arg)
 	{
 		for (int h = 0; h < rvars.vars->scene.res.width * rvars.vars->af; h++)
 		{
-			rvars.vec[0] = canvas_to_coords(h / rvars.vars->af, v / rvars.vars->af, &rvars.vars->scene);
+			rvars.vec[0] = screen_to_world(h, v, rvars.vars);
 			rvars.vec[1] = v_subtract(rvars.vec[0], ((t_camera *)rvars.vars->scene.camera->content)->coord);
 			rvars.ray = make_ray(((t_camera *)rvars.vars->scene.camera->content)->coord, rvars.vec[1]);
 			rvars.color = trace_ray(&rvars.ray, &rvars.vars->scene, N_PASSES, 1);

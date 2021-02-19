@@ -7,7 +7,8 @@ typedef struct		s_v
 
 typedef struct		s_m
 {
-	double 			m[25][25];
+	int 			size[2];
+	double 			m[3][3];
 }					t_m;
 
 t_v 				v_create(double x1, double x2, double x3);
@@ -20,7 +21,18 @@ t_v 				v_normalize(t_v v);
 t_v 				v_random(t_v v, double amount);
 t_v 				v_cross(t_v v1, t_v v2);
 double				point_line_dist(t_v x0, t_v x1, t_v p);
-void 				cofactor(double num[25][25], double f);
+void 				cofactor(double num[3][3], double f);
+t_v 				v_mat_mul_vec(t_m m, t_v v);
+t_m 				v_mat_mul(t_m a1, t_m a2);
+t_m 				rotate_x(double theta);
+t_m 				rotate_y(double theta);
+double 				abs_f(double i);
+t_v 				v_make(double x, double y, double z);
+t_m 				m_i(int n);
+t_m 				cam_dir_transform(t_m bas, t_v dir);
+
+
+
 
 
 #endif

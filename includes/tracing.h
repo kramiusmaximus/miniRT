@@ -17,7 +17,6 @@ int 					ray_intersect_tr(t_ray *ray, t_object *tr_obj, t_t *t);
 t_ray					make_ray(t_v origin, t_v dir);
 t_intersect				*process_t(t_ray *ray, t_object *obj, t_t *t);
 int						solve_quadratic(double a, double b, double c, t_t *t);
-t_v 					canvas_to_coords(int x_pixel, int y_pixel, t_scene *scene);
 int 					min(int a, int b);
 int 					max(int a, int b);
 int 					abs(int a);
@@ -27,5 +26,6 @@ t_intersect 			*trace_result(t_ray *ray, t_scene *scene, double d);
 int 					trace_ray(t_ray *ray, t_scene *scene, int n_passes, double d);
 int 					swap(double *a, double *b);
 int 					selection_sort(double arr[], int size);
+t_v						screen_to_world(int h, int v, t_vars *vars);
 
 #endif

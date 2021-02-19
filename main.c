@@ -84,6 +84,8 @@ int launch_renderer(char *rt)
 	vars.nav.up_dwn = 0;
 	vars.nav.lft_rght = 0;
 	vars.nav.fwd_back = 0;
+	vars.nav.rot_lft_rght = 0;
+	vars.nav.rot_up_dwn = 0;
 	vars.mlx.mlx = mlx_init();
 	vars.mlx.window_dims.height = 720;
 	vars.mlx.window_dims.width = 1280;

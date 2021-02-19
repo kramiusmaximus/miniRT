@@ -23,7 +23,7 @@ typedef struct		s_camera
 {
 	t_v				coord;
 	t_v 			dir;
-	t_m				t_m;
+	t_m				basis;
 	double 			fov;
 }					t_camera;
 
@@ -74,6 +74,8 @@ typedef struct 		s_nav
 	int 			fwd_back;
 	int 			lft_rght;
 	int 			up_dwn;
+	int 			rot_lft_rght;
+	int 			rot_up_dwn;
 }					t_nav;
 
 typedef struct 		s_vars

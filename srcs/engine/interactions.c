@@ -16,11 +16,19 @@ int key_press_hook(int key, t_vars *vars)
 	else if (key == 5)
 		vars->nav.up_dwn = -1;
 	else if (key == 123)
+		vars->nav.rot_lft_rght = -1;
+	else if (key == 124)
+		vars->nav.rot_lft_rght = 1;
+	else if (key == 126)
+		vars->nav.rot_up_dwn = 1;
+	else if (key == 125)
+		vars->nav.rot_up_dwn = -1;
+	else if (key == 45)
 	{
 		if ((vars->scene.camera = vars->scene.camera->prev) != vars->scene.camera->prev)
 			vars->rendered = 0;
 	}
-	else if (key == 124)
+	else if (key == 46)
 	{
 		if ((vars->scene.camera = vars->scene.camera->next) != vars->scene.camera->next)
 			vars->rendered = 0;
@@ -45,6 +53,14 @@ int key_release_hook(int key, t_vars *vars)
 		vars->nav.up_dwn = 0;
 	if (key == 5 && vars->nav.up_dwn == -1)
 		vars->nav.up_dwn = 0;
+	if (key == 123 && vars->nav.rot_lft_rght == -1)
+		vars->nav.rot_lft_rght = 0;
+	if (key == 124 && vars->nav.rot_lft_rght == 1)
+		vars->nav.rot_lft_rght = 0;
+	if (key == 126 && vars->nav.rot_up_dwn == 1)
+		vars->nav.rot_up_dwn = 0;
+	if (key == 125 && vars->nav.rot_up_dwn == -1)
+		vars->nav.rot_up_dwn = 0;
 }
 
 int exit_hook(t_vars *vars)
@@ -59,23 +75,48 @@ int move_camera(t_vars *vars)
 	t_camera 	*camera;
 	double 		d;
 	int 		dirs;
+	t_m 		b;
+	t_v 		disp;
 
 	nav = vars->nav;
 	camera = vars->scene.camera->content;
-	dirs = abs(nav.fwd_back) + abs(nav.lft_rght) + abs(nav.up_dwn);
-	d = pow(STEP_SIZE, (double)1 / dirs);
-	if (is_moving(&nav))
+
+	/// change basis of camera to initial basis (remove rotation and displacement effects (wb canvaas centering
+	/// and protrusion?))
+
+	/// rotate camera
+	if (is_rotating(&vars->nav))
 	{
-		camera->coord.v[0] += d * nav.lft_rght;
-		camera->coord.v[1] += d * nav.up_dwn;
-		camera->coord.v[2] += d * nav.fwd_back;
+		if (nav.rot_lft_rght)
+			camera->basis = v_mat_mul(camera->basis, rotate_y(nav.rot_lft_rght * 0.1));
+		if (nav.rot_up_dwn)
+			camera->basis = v_mat_mul(camera->basis, rotate_x(nav.rot_up_dwn * 0.1));
 	}
+
+	/// move camera
+
+	if (is_moving(&vars->nav))
+	{
+		dirs = abs(nav.fwd_back) + abs(nav.lft_rght) + abs(nav.up_dwn);
+		d = pow(STEP_SIZE, (double)1 / dirs);
+		disp = v_make(d * nav.lft_rght, d * nav.up_dwn, d * nav.fwd_back);
+		camera->coord = v_add(camera->coord, v_mat_mul_vec(camera->basis, disp));
+	}
+
+
 	return (0);
 }
 
 int is_moving(t_nav *nav)
 {
 	if (nav->fwd_back || nav->lft_rght || nav->up_dwn)
+		return (1);
+	return (0);
+}
+
+int is_rotating(t_nav *nav)
+{
+	if (nav->rot_lft_rght || nav->rot_up_dwn)
 		return (1);
 	return (0);
 }
