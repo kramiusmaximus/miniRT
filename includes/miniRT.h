@@ -1,9 +1,9 @@
 #ifndef MINIRT_H
 # define MINIRT_H
 # include "objects.h"
-# include "visual.h"
-# include "vectors.h"
-# include "interactions.h"
+# include "color.h"
+# include "maths.h"
+# include "event_handling.h"
 # include "tracing.h"
 # include "parser.h"
 # include <math.h>
@@ -17,15 +17,17 @@
 # include "../libft/includes/libft.h"
 # define MAX_DIST		1000000000
 # define BG_COLOR		0x00070712
-# define NUM_THREADS 	3
+# define NUM_THREADS 	4
 # define N_PASSES		3
 # define EPS			0.00000000001
 # define AF				0.3
 # define STEP_SIZE		3
+# define WINDOW_HEIGHT 720
+# define WINDOW_WIDTH  1280
 
 int 				put_pixel(t_image *image, int x, int y, int color);
 int 				render(t_vars *vars);
 int 				render_multi(t_vars *vars);
-int 				error(char *msg);
+int error(char *msg, t_scene *scene);
 
 #endif

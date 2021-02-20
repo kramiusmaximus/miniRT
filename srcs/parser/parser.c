@@ -9,40 +9,30 @@ static int 	process_line(char *line, t_scene *scene)
 	{
 		if (!ft_strcmp(*split, "R"))
 		{
+			if (scene->s & 0b00000001)
+				error("Can only declare resolution dimensions once.", scene);
 			process_r(++split, scene);
 		}
 		else if (!ft_strcmp(*split, "A"))
 		{
+			if (scene->s & 0b00000010)
+				error("Can only declare resolution dimensions once.", scene);
 			process_a(++split, scene);
 		}
 		else if (!ft_strcmp(*split, "c"))
-		{
 			process_c(++split, scene);
-		}
 		else if (!ft_strcmp(*split, "l"))
-		{
 			process_l(++split, scene);
-		}
 		else if (!ft_strcmp(*split, "pl"))
-		{
 			process_pl(++split, scene);
-		}
 		else if (!ft_strcmp(*split, "sp"))
-		{
 			process_sp(++split, scene);
-		}
 		else if (!ft_strcmp(*split, "sq"))
-		{
 			process_sq(++split, scene);
-		}
 		else if (!ft_strcmp(*split, "cy"))
-		{
 			process_cy(++split, scene);
-		}
 		else if (!ft_strcmp(*split, "tr"))
-		{
 			process_tr(++split, scene);
-		}
 		else
 		{
 			// free 'split' using function that free's array's of strings (apply free function to all elements of an array) and exit app accordingly
@@ -59,7 +49,7 @@ int 		parse_rt(char *rt, t_scene *scene)
 
 	ft_bzero(scene, sizeof(t_scene)); // initializing structure values to zero
 	if ((fd = open(rt, O_RDONLY)) < 0)
-		error(NULL);
+		error(NULL, scene);
 	while ((n = get_next_line(fd, &line)) > 0)
 	{
 		process_line(line, scene);
@@ -67,5 +57,5 @@ int 		parse_rt(char *rt, t_scene *scene)
 	get_next_line(fd, &line);
 	process_line(line, scene);
 	if (n < 0)
-		error(NULL); /// need to set errno accordingly (in gnl?)
+		error(NULL, scene); /// need to set errno accordingly (in gnl?)
 }

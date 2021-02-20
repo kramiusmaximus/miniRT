@@ -8,5 +8,6 @@ int					key_release_hook(int key, t_vars *vars);
 int					is_moving(t_nav *nav);
 int 				is_rotating(t_nav *nav);
 int 				exit_hook(t_vars *vars);
+int 				switch_camera(int i, t_vars *vars);
 
 #endif

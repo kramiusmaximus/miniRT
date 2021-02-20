@@ -1,19 +1,5 @@
 #include "miniRT.h"
 
-t_v 		canvas_to_coords(int x_pixel, int y_pixel, t_vars *vars)
-{
-	t_v		coords;
-	t_camera	*cam = vars->scene.camera->content;
-	double 		af = vars->af;
-	double 		pixel_width = 2 * tan(cam->fov / 2 * M_PI / 180) / vars->scene.res.width;
-
-	coords.v[0] = (x_pixel - (vars->scene.res.width * af / 2)) * pixel_width + cam->coord.v[0];
-	coords.v[1] = -(y_pixel - (vars->scene.res.height * af / 2)) * pixel_width + cam->coord.v[1];
-	coords.v[2] = pixel_width * vars->scene.res.width * af / (2 * tan(cam->fov / 2 * M_PI / 180)) + cam->coord.v[2];
-
-	return (coords);
-}
-
 int 		put_pixel(t_image *image, int x, int y, int color)
 {
 	char	*p;
@@ -200,11 +186,6 @@ void cofactor(double num[3][3], double f)
 	transpose(num, fac, f);
 }
 
-double abs_f(double i)
-{
-	return (i > 0 ? -i : i);
-}
-
 t_v 	v_make(double x, double y, double z)
 {
 	t_v res;
@@ -251,7 +232,7 @@ t_m 	cam_dir_transform(t_m bas, t_v dir)
 		rot[1] = atan(dir.v[0]/ EPS);
 	if (dir.v[2] < 0)
 		rot[1] += M_PI;
-	bas = v_mat_mul(rotate_x(rot[0]), bas);
-	bas = v_mat_mul(rotate_y(rot[1]), bas);
+	//bas = v_mat_mul(rotate_x(rot[0]), bas);
+	//bas = v_mat_mul(rotate_y(rot[1]), bas);
 	return (bas);
 }

@@ -42,10 +42,8 @@ typedef struct 		s_dims
 
 typedef struct		s_scene
 {
-	t_dims			window_dims;
+	int 			s;
 	t_dims			res;
-	double 			adjustment_factor;
-	int 			parked;
 	t_ambient		ambient;
 	t_listc			*camera;
 	t_list			*light;

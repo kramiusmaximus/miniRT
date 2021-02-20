@@ -2,13 +2,14 @@
 
 int 		process_r(char **args, t_scene *scene)
 {
+	scene->s = scene->s | 0b00000001;
 	if (is_int(args) && is_int(args + 1))
 	{
 		scene->res.width = ft_atoi(*args++);
 		scene->res.height = ft_atoi(*args++);
 	}
 	if (*args)
-	{} /// process error
+		error("Too many arguments specified for resolution.", scene);
 	return (0);
 }
 
@@ -16,17 +17,16 @@ int 		process_a(char **args, t_scene *scene)
 {
 	char **rgb;
 
+	scene->s = scene->s | 0b00000010;
 	if (is_float(args))
-		scene->ambient.intensity = ft_atof(*args++);
-	scene->ambient.intensity = scene->ambient.intensity < 0 ? 0 : scene->ambient.intensity;
-	scene->ambient.intensity = scene->ambient.intensity > 1 ? 1 : scene->ambient.intensity;
+		scene->ambient.intensity = bound(ft_atof(*args++), 0, 1);
 	if (is_color(args))
 	{
 		rgb = ft_split(*args++, ',');
 		scene->ambient.color = rgb_create(0, ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
 	}
 	if (*args)
-	{} /// process error
+		error("Too many arguments specified for ambient light.", scene);
 	return (0);
 }
 
@@ -38,7 +38,7 @@ int 		process_c(char **args, t_scene *scene)
 	t_listc		*node;
 
 	if (!(camera = malloc(sizeof(t_camera))))
-	{}	/// process error
+		error(NULL, scene);
 	if (is_coord(args) && is_coord(args + 1))
 	{
 		coord = ft_split(*args++, ',');
@@ -47,13 +47,9 @@ int 		process_c(char **args, t_scene *scene)
 		camera->dir = v_normalize(v_create(ft_atof(dir[0]), ft_atof(dir[1]), ft_atof(dir[2])));
 	}
 	if (is_float(args))
-	{
-		camera->fov = ft_atof(*args++);
-		camera->fov = camera->fov > 180 ? 180 : camera->fov;
-		camera->fov = camera->fov < 0 ? 0 : camera->fov;
-	}
+		camera->fov = bound(ft_atof(*args++), 0, 180);
 	if (*args || !(node = ft_lstcnew(camera)))
-	{} /// process error
+		error("Too many arguments specified for camera or failed malloc", scene);
 	camera->basis = m_i(3);
 	camera->basis = cam_dir_transform(camera->basis, camera->dir);
 	ft_lstcadd_front(&scene->camera, node);
@@ -67,25 +63,21 @@ int 		process_l(char **args, t_scene *scene)
 	t_list *node;
 
 	if (!(light = malloc(sizeof(t_light))))
-	{} /// process error
+		error(NULL, scene);
 	if (is_coord(args))
 	{
 		coord = ft_split(*args++, ',');
 		light->coordinates = v_create(ft_atof(coord[0]), ft_atof(coord[1]), ft_atof(coord[2]));
 	}
 	if (is_float(args))
-	{
-		light->intensity = ft_atof(*args++);
-		light->intensity = light->intensity > 1 ? 1 : light->intensity;
-		light->intensity = light->intensity < 0 ? 0 : light->intensity;
-	}
+		light->intensity = bound(ft_atof(*args++), 0, 1);
 	if (is_color(args))
 	{
 		rgb = ft_split(*args++, ',');
 		light->color = rgb_create(0, ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
 	}
 	if (*args || !(node = ft_lstnew(light)))
-	{} /// process error
+		error("Too many arguments specified for light or failed malloc", scene);
 	ft_lstadd_front(&scene->light, node);
 }
 
@@ -98,7 +90,7 @@ int 		process_pl(char **args, t_scene *scene)
 	t_list		*node;
 
 	if (!(pl_obj = malloc(sizeof(t_object))))
-	{} /// process error
+		error(NULL, scene);
 	pl_obj->type = PL;
 	if (is_coord(args) && is_coord(args + 1))
 	{
@@ -113,25 +105,19 @@ int 		process_pl(char **args, t_scene *scene)
 		pl_obj->color = rgb_create(0, ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
 	}
 	if (is_float(args))
-	{
-		pl_obj->reflectivity = ft_atof(*args++);
-		pl_obj->reflectivity = pl_obj->reflectivity > 1 ? 1 : pl_obj->reflectivity;
-		pl_obj->reflectivity = pl_obj->reflectivity < 0 ? 0 : pl_obj->reflectivity;
-	}
+		pl_obj->reflectivity = bound(ft_atof(*args++), 0, 1);
 	if (is_float(args) && is_float(args + 1))
 	{
-		pl_obj->transperancy = ft_atof(*args++);
-		pl_obj->transperancy = pl_obj->transperancy > 1 ? 1 : pl_obj->transperancy;
-		pl_obj->transperancy = pl_obj->transperancy < 0 ? 0 : pl_obj->transperancy;
+		pl_obj->transperancy = bound(ft_atof(*args++), 0, 1);
 		pl_obj->refraction = ft_atof(*args++);
 		// need to make sure refraction index is within bound (what are the bound?)
 	}
 	if (*args || !(node = ft_lstnew(pl_obj)))
-	{} /// process error
+		error("Too many arguments specified for plane object or failed malloc", scene);
 	ft_lstadd_front(&scene->object, node);
 }
 
-int 		process_sp(char **args, t_scene *scene)
+void process_sp(char **args, t_scene *scene)
 {
 	char 		**coord;
 	char 		**rgb;
@@ -139,7 +125,7 @@ int 		process_sp(char **args, t_scene *scene)
 	t_list		*node;
 
 	if (!(sp_obj = malloc(sizeof(t_object))))
-	{} /// process error
+		error(NULL, scene);
 	sp_obj->type = SP;
 	if (is_coord(args) && is_coord(args + 1))
 	{
@@ -150,7 +136,10 @@ int 		process_sp(char **args, t_scene *scene)
 	{
 		sp_obj->item.sp.diameter = ft_atof(*args++);
 		if (sp_obj->item.sp.diameter <= 0)
-		{} /// process error
+		{
+			free(sp_obj);
+			return ;
+		}
 	}
 	if (is_color(args))
 	{
@@ -158,21 +147,15 @@ int 		process_sp(char **args, t_scene *scene)
 		sp_obj->color = rgb_create(0, ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
 	}
 	if (is_float(args))
-	{
-		sp_obj->reflectivity = ft_atof(*args++);
-		sp_obj->reflectivity = sp_obj->reflectivity > 1 ? 1 : sp_obj->reflectivity;
-		sp_obj->reflectivity = sp_obj->reflectivity < 0 ? 0 : sp_obj->reflectivity;
-	}
+		sp_obj->reflectivity = bound(ft_atof(*args++), 0, 1);
 	if (is_float(args) && is_float(args + 1))
 	{
-		sp_obj->transperancy = ft_atof(*args++);
-		sp_obj->transperancy = sp_obj->transperancy > 1 ? 1 : sp_obj->transperancy;
-		sp_obj->transperancy = sp_obj->transperancy < 0 ? 0 : sp_obj->transperancy;
+		sp_obj->transperancy = bound(ft_atof(*args++), 0, 1);
 		sp_obj->refraction = ft_atof(*args++);
 		// need to make sure refraction index is within bound (what are the bound?)
 	}
 	if (*args || !(node = ft_lstnew(sp_obj)))
-	{} /// process error
+		error("Too many arguments specified for sphere object or failed malloc", scene);
 	ft_lstadd_front(&scene->object, node);
 }
 

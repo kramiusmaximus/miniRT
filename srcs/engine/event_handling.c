@@ -2,7 +2,6 @@
 
 int key_press_hook(int key, t_vars *vars)
 {
-	// navigation controls
 	if (key == 13)
 		vars->nav.fwd_back = 1;
 	else if (key == 1)
@@ -11,9 +10,9 @@ int key_press_hook(int key, t_vars *vars)
 		vars->nav.lft_rght = -1;
 	else if (key == 2)
 		vars->nav.lft_rght = 1;
-	else if (key == 3)
+	else if (key == 49)
 		vars->nav.up_dwn = 1;
-	else if (key == 5)
+	else if (key == 14)
 		vars->nav.up_dwn = -1;
 	else if (key == 123)
 		vars->nav.rot_lft_rght = -1;
@@ -24,23 +23,15 @@ int key_press_hook(int key, t_vars *vars)
 	else if (key == 125)
 		vars->nav.rot_up_dwn = -1;
 	else if (key == 45)
-	{
-		if ((vars->scene.camera = vars->scene.camera->prev) != vars->scene.camera->prev)
-			vars->rendered = 0;
-	}
+		switch_camera(1, vars);
 	else if (key == 46)
-	{
-		if ((vars->scene.camera = vars->scene.camera->next) != vars->scene.camera->next)
-			vars->rendered = 0;
-	}
+		switch_camera(-1,vars);
 	else if (key == 53)
 		exit_hook(vars);
-	printf("%d\n", key);
 }
 
 int key_release_hook(int key, t_vars *vars)
 {
-	// navigation controls
 	if (key == 13 && vars->nav.fwd_back == 1)
 		vars->nav.fwd_back = 0;
 	if (key == 1 && vars->nav.fwd_back == -1)
@@ -49,9 +40,9 @@ int key_release_hook(int key, t_vars *vars)
 		vars->nav.lft_rght = 0;
 	if (key == 2 && vars->nav.lft_rght == 1)
 		vars->nav.lft_rght = 0;
-	if (key == 3 && vars->nav.up_dwn == 1)
+	if (key == 49 && vars->nav.up_dwn == 1)
 		vars->nav.up_dwn = 0;
-	if (key == 5 && vars->nav.up_dwn == -1)
+	if (key == 14 && vars->nav.up_dwn == -1)
 		vars->nav.up_dwn = 0;
 	if (key == 123 && vars->nav.rot_lft_rght == -1)
 		vars->nav.rot_lft_rght = 0;
@@ -67,6 +58,18 @@ int exit_hook(t_vars *vars)
 {
 	ft_printf("Quitting application...\n");
 	exit(0);
+}
+
+int switch_camera(int i, t_vars *vars)
+{
+	if (i || vars->scene.camera != vars->scene.camera->next)
+	{
+		if (i == 1)
+			vars->scene.camera = vars->scene.camera->next;
+		else
+			vars->scene.camera = vars->scene.camera->prev;
+		vars->rendered = 0;
+	}
 }
 
 int move_camera(t_vars *vars)
@@ -88,9 +91,9 @@ int move_camera(t_vars *vars)
 	if (is_rotating(&vars->nav))
 	{
 		if (nav.rot_lft_rght)
-			camera->basis = v_mat_mul(camera->basis, rotate_y(nav.rot_lft_rght * 0.1));
+			camera->basis = v_mat_mul(rotate_y(-nav.rot_lft_rght * 0.1), camera->basis);
 		if (nav.rot_up_dwn)
-			camera->basis = v_mat_mul(camera->basis, rotate_x(nav.rot_up_dwn * 0.1));
+			camera->basis = v_mat_mul(rotate_x(nav.rot_up_dwn * 0.1), camera->basis);
 	}
 
 	/// move camera
@@ -100,7 +103,7 @@ int move_camera(t_vars *vars)
 		dirs = abs(nav.fwd_back) + abs(nav.lft_rght) + abs(nav.up_dwn);
 		d = pow(STEP_SIZE, (double)1 / dirs);
 		disp = v_make(d * nav.lft_rght, d * nav.up_dwn, d * nav.fwd_back);
-		camera->coord = v_add(camera->coord, v_mat_mul_vec(camera->basis, disp));
+		camera->coord = v_add(camera->coord, v_mat_mul_vec(m_transpose(camera->basis), disp));
 	}
 
 

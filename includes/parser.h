@@ -7,7 +7,7 @@ int 		process_a(char **args, t_scene *scene);
 int 		process_c(char **args, t_scene *scene);
 int 		process_l(char **args, t_scene *scene);
 int 		process_pl(char **args, t_scene *scene);
-int 		process_sp(char **args, t_scene *scene);
+void process_sp(char **args, t_scene *scene);
 int 		process_sq(char **args, t_scene *scene);
 int 		process_cy(char **args, t_scene *scene);
 int 		process_tr(char **args, t_scene *scene);

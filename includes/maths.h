@@ -30,6 +30,11 @@ double 				abs_f(double i);
 t_v 				v_make(double x, double y, double z);
 t_m 				m_i(int n);
 t_m 				cam_dir_transform(t_m bas, t_v dir);
+t_m 				m_transpose(t_m m);
+double				max_f(double a, double b);
+double 				min_f(double a, double b);
+double 				abs_f(double a);
+double bound(double num, double lower_b, double upper_b);
 
 
 
