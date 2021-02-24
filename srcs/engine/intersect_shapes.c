@@ -55,8 +55,11 @@ int ray_intersect_sq(t_ray *ray, t_object *sq_obj, t_t *t)
 	{
 		p_contact = v_add(ray->origin, v_scalar_mult(ray->dir, res));
 		v_contact = v_subtract(p_contact, sq->coord);
-		a[0] = v_dot(v_contact, sq->front); // front and side vectors are assumed to be unit vectors
-		a[1] = v_dot(v_contact, sq->side);
+
+		a[0] = v_dot(v_contact, get_component(sq->basis, 2)); // front and side vectors are assumed to
+		// be unit
+		// vectors
+		a[1] = v_dot(v_contact, v_normalize(v_cross(get_component(sq->basis, 2), sq->norm)));
 		len = sq->side_len / 2;
 		if (a[0] < len && a[0] > -len && a[1] < len && a[1] > -len)
 		{
@@ -70,16 +73,7 @@ int ray_intersect_sq(t_ray *ray, t_object *sq_obj, t_t *t)
 static int ray_intersect_sausage(t_ray *ray, t_object *cy_obj, t_t *t)
 {
 	t_cy 	*cy;
-	double 	a;
-	double	b1;
-	double	b2;
-	double 	b;
-	double	c1;
-	double	c2;
-	double 	c3;
-	double 	c;
-	double 	theta;
-	int 	solution_n;
+	double 	a[8];
 	t_v p_contact;
 	t_v op;
 	int 	i;
@@ -88,15 +82,15 @@ static int ray_intersect_sausage(t_ray *ray, t_object *cy_obj, t_t *t)
 	if (!ray || !cy_obj || !t)
 		return (1);
 	cy = &cy_obj->item.cy;
-	a = v_dot(v_cross(ray->dir, cy->norm), v_cross(ray->dir, cy->norm));
-	b1 = 2 * v_dot(v_cross(ray->dir, cy->norm), v_cross(ray->origin, cy->norm));
-	b2 = -2 * v_dot(v_cross(ray->dir, cy->norm), v_cross(cy->coord, cy->norm));
-	b = b1 + b2;
-	c1 = v_dot(v_cross(cy->coord, cy->norm), v_cross(cy->coord, cy->norm));
-	c2 = v_dot(v_cross(ray->origin, cy->norm), v_cross(ray->origin, cy->norm));
-	c3 = -2 * v_dot(v_cross(ray->origin, cy->norm), v_cross(cy->coord, cy->norm)) - pow(cy->diameter / 2, 2);
-	c = c1 + c2 + c3;
-	solve_quadratic(a, b, c, t);
+	a[0] = v_dot(v_cross(ray->dir, cy->norm), v_cross(ray->dir, cy->norm));
+	a[1] = 2 * v_dot(v_cross(ray->dir, cy->norm), v_cross(ray->origin, cy->norm));
+	a[2] = -2 * v_dot(v_cross(ray->dir, cy->norm), v_cross(cy->coord, cy->norm));
+	a[3] = a[1] + a[2];
+	a[4] = v_dot(v_cross(cy->coord, cy->norm), v_cross(cy->coord, cy->norm));
+	a[5] = v_dot(v_cross(ray->origin, cy->norm), v_cross(ray->origin, cy->norm));
+	a[6] = -2 * v_dot(v_cross(ray->origin, cy->norm), v_cross(cy->coord, cy->norm)) - pow(cy->diameter / 2, 2);
+	a[7] = a[4] + a[5] + a[6];
+	solve_quadratic(a[0], a[3], a[7], t);
 	i = t->size;
 	while (i > 0)
 	{

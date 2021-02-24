@@ -118,10 +118,9 @@ double determinant(double a[3][3], double k)
 			s = -1 * s;
 		}
 	}
-
 	return (det);
 }
-/*Finding transpose of matrix*/
+
 void transpose(double num[3][3], double fac[3][3], double r)
 {
 	int i, j;
@@ -142,17 +141,8 @@ void transpose(double num[3][3], double fac[3][3], double r)
 			inverse[i][j] = b[i][j] / d;
 		}
 	}
-	printf("\n\n\nThe inverse of matrix is : \n");
-
-	for (i = 0;i < r; i++)
-	{
-		for (j = 0;j < r; j++)
-		{
-			printf("\t%f", inverse[i][j]);
-		}
-		printf("\n");
-	}
 }
+
 void cofactor(double num[3][3], double f)
 {
 	double b[3][3], fac[3][3];
@@ -198,7 +188,6 @@ t_v 	v_make(double x, double y, double z)
 
 t_m 	m_i(int n)
 {
-	// will work only with i , j < 4
 	int i;
 	int j;
 	t_m	m;
@@ -219,20 +208,52 @@ t_m 	m_i(int n)
 	return m;
 }
 
-t_m 	cam_dir_transform(t_m bas, t_v dir)
+t_m 	obj_dir_transform(t_m basis, t_v dir)
 {
 	double rot[3];
 
-	rot[0] = atan(dir.v[1] / dir.v[2]);
+	rot[0] = atan(-dir.v[1] / dir.v[2]);
 	if (dir.v[2] < EPS && dir.v[2] > -EPS)
 		rot[0] = atan(dir.v[1]/ EPS);
-
 	rot[1] = atan(dir.v[0] / dir.v[2]);
 	if (dir.v[2] < EPS && dir.v[2] > -EPS)
 		rot[1] = atan(dir.v[0]/ EPS);
 	if (dir.v[2] < 0)
 		rot[1] += M_PI;
-	//bas = v_mat_mul(rotate_x(rot[0]), bas);
-	//bas = v_mat_mul(rotate_y(rot[1]), bas);
-	return (bas);
+	rot[2] = 0;
+	basis = rotate_xyz(rot[0], rot[1], rot[2], basis);
+	return (basis);
+}
+
+t_m 	obj_norm_transform(t_m basis, t_v norm)
+{
+	double rot[3];
+
+	// y rotation
+	rot[1] = -atan(norm.v[0] / norm.v[2]);
+	if (norm.v[2] < EPS && norm.v[2] > -EPS)
+		rot[1] = -atan(norm.v[0]/ EPS);
+	if (basis.m[2] < 0)
+		rot[1] += M_PI;
+
+	basis = rotate_xyz(0, rot[1], 0, basis);
+
+	// x rotation
+	rot[0] = atan(norm.v[2] / norm.v[1]);
+	if (norm.v[1] < EPS && norm.v[1] > -EPS)
+		rot[0] = atan(norm.v[2]/ EPS);
+	if (norm.v[1] < 0)
+		rot[0] += M_PI;
+
+	basis = rotate_xyz(0, 0, 0, basis);
+
+	// z rotation
+	rot[2] = atan(norm.v[0] / norm.v[1]);
+	if (norm.v[1] < EPS && norm.v[1] > -EPS)
+		rot[2] = atan(norm.v[0]/ EPS);
+	if (norm.v[1] < 0)
+		rot[2] += M_PI;
+
+	basis = rotate_xyz(0, 0, 0, basis);
+	return (basis);
 }

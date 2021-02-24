@@ -22,9 +22,8 @@ typedef struct		s_pl
 typedef struct		s_sq
 {
 	t_v				coord;
+	t_m				basis;
 	t_v 			norm;
-	t_v				front;
-	t_v 			side;
 	double 			side_len;
 }					t_sq;
 

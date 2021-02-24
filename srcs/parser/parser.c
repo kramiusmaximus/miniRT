@@ -4,7 +4,6 @@ static int 	process_line(char *line, t_scene *scene)
 {
 	char **split;
 
-	/// need to check that too many arguments aren't given
 	if ((split = ft_split(line, ' ')) && *split)      /// if line is empty or there is error, return value is the same - NULL
 	{
 		if (!ft_strcmp(*split, "R"))
@@ -16,7 +15,7 @@ static int 	process_line(char *line, t_scene *scene)
 		else if (!ft_strcmp(*split, "A"))
 		{
 			if (scene->s & 0b00000010)
-				error("Can only declare resolution dimensions once.", scene);
+				error("Can only declare ambient light once.", scene);
 			process_a(++split, scene);
 		}
 		else if (!ft_strcmp(*split, "c"))
@@ -34,9 +33,7 @@ static int 	process_line(char *line, t_scene *scene)
 		else if (!ft_strcmp(*split, "tr"))
 			process_tr(++split, scene);
 		else
-		{
-			// free 'split' using function that free's array's of strings (apply free function to all elements of an array) and exit app accordingly
-		}
+			error("Unknown characters found in rt file", scene);
 	}
 	return (0);
 }
@@ -51,11 +48,8 @@ int 		parse_rt(char *rt, t_scene *scene)
 	if ((fd = open(rt, O_RDONLY)) < 0)
 		error(NULL, scene);
 	while ((n = get_next_line(fd, &line)) > 0)
-	{
 		process_line(line, scene);
-	}
-	get_next_line(fd, &line);
 	process_line(line, scene);
 	if (n < 0)
-		error(NULL, scene); /// need to set errno accordingly (in gnl?)
+		error(NULL, scene);
 }

@@ -16,11 +16,11 @@
 # include "main_structs.h"
 # include "../libft/includes/libft.h"
 # define MAX_DIST		1000000000
-# define BG_COLOR		0x00070712
-# define NUM_THREADS 	4
+# define BG_COLOR		0x0098EAE3
+# define NUM_THREADS 	2
 # define N_PASSES		3
 # define EPS			0.00000000001
-# define AF				0.3
+# define AF				0.2
 # define STEP_SIZE		3
 # define WINDOW_HEIGHT 720
 # define WINDOW_WIDTH  1280

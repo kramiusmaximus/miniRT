@@ -89,12 +89,7 @@ int move_camera(t_vars *vars)
 
 	/// rotate camera
 	if (is_rotating(&vars->nav))
-	{
-		if (nav.rot_lft_rght)
-			camera->basis = v_mat_mul(rotate_y(-nav.rot_lft_rght * 0.1), camera->basis);
-		if (nav.rot_up_dwn)
-			camera->basis = v_mat_mul(rotate_x(nav.rot_up_dwn * 0.1), camera->basis);
-	}
+		camera->basis = rotate_xyz(nav.rot_up_dwn * 0.1, -nav.rot_lft_rght * 0.1, 0, camera->basis);
 
 	/// move camera
 
@@ -105,8 +100,6 @@ int move_camera(t_vars *vars)
 		disp = v_make(d * nav.lft_rght, d * nav.up_dwn, d * nav.fwd_back);
 		camera->coord = v_add(camera->coord, v_mat_mul_vec(m_transpose(camera->basis), disp));
 	}
-
-
 	return (0);
 }
 

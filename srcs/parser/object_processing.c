@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-int 		process_r(char **args, t_scene *scene)
+void process_r(char **args, t_scene *scene)
 {
 	scene->s = scene->s | 0b00000001;
 	if (is_int(args) && is_int(args + 1))
@@ -10,10 +10,9 @@ int 		process_r(char **args, t_scene *scene)
 	}
 	if (*args)
 		error("Too many arguments specified for resolution.", scene);
-	return (0);
 }
 
-int 		process_a(char **args, t_scene *scene)
+void process_a(char **args, t_scene *scene)
 {
 	char **rgb;
 
@@ -27,10 +26,9 @@ int 		process_a(char **args, t_scene *scene)
 	}
 	if (*args)
 		error("Too many arguments specified for ambient light.", scene);
-	return (0);
 }
 
-int 		process_c(char **args, t_scene *scene)
+void process_c(char **args, t_scene *scene)
 {
 	char 		**coord;
 	char 		**dir;
@@ -51,11 +49,11 @@ int 		process_c(char **args, t_scene *scene)
 	if (*args || !(node = ft_lstcnew(camera)))
 		error("Too many arguments specified for camera or failed malloc", scene);
 	camera->basis = m_i(3);
-	camera->basis = cam_dir_transform(camera->basis, camera->dir);
+	camera->basis = obj_dir_transform(camera->basis, camera->dir);
 	ft_lstcadd_front(&scene->camera, node);
 }
 
-int 		process_l(char **args, t_scene *scene)
+void process_l(char **args, t_scene *scene)
 {
 	char **coord;
 	char **rgb;
@@ -81,7 +79,7 @@ int 		process_l(char **args, t_scene *scene)
 	ft_lstadd_front(&scene->light, node);
 }
 
-int 		process_pl(char **args, t_scene *scene)
+void process_pl(char **args, t_scene *scene)
 {
 	char 		**coord;
 	char 		**norm;
@@ -159,7 +157,7 @@ void process_sp(char **args, t_scene *scene)
 	ft_lstadd_front(&scene->object, node);
 }
 
-int 		process_sq(char **args, t_scene *scene)
+void process_sq(char **args, t_scene *scene)
 {
 	char 		**coord;
 	char 		**norm;
@@ -168,7 +166,7 @@ int 		process_sq(char **args, t_scene *scene)
 	t_list		*node;
 
 	if (!(sq_obj = malloc(sizeof(t_object))))
-	{} /// process error
+		error(NULL, scene);
 	sq_obj->type = SQ;
 	if (is_coord(args) && is_coord(args + 1))
 	{
@@ -181,7 +179,10 @@ int 		process_sq(char **args, t_scene *scene)
 	{
 		sq_obj->item.sq.side_len = ft_atof(*args++);
 		if (sq_obj->item.sq.side_len < 0)
-		{} /// process error
+		{
+			free(sq_obj);
+			return ;
+		}
 	}
 	if (is_color(args))
 	{
@@ -189,25 +190,21 @@ int 		process_sq(char **args, t_scene *scene)
 		sq_obj->color = rgb_create(0, ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
 	}
 	if (is_float(args))
-	{
-		sq_obj->reflectivity = ft_atof(*args++);
-		sq_obj->reflectivity = sq_obj->reflectivity > 1 ? 1 : sq_obj->reflectivity;
-		sq_obj->reflectivity = sq_obj->reflectivity < 0 ? 0 : sq_obj->reflectivity;
-	}
+		sq_obj->reflectivity = bound(ft_atof(*args++), 0, 1);
 	if (is_float(args) && is_float(args + 1))
 	{
-		sq_obj->transperancy = ft_atof(*args++);
-		sq_obj->transperancy = sq_obj->transperancy > 1 ? 1 : sq_obj->transperancy;
-		sq_obj->transperancy = sq_obj->transperancy < 0 ? 0 : sq_obj->transperancy;
+		sq_obj->transperancy = bound(ft_atof(*args++), 0, 1);
 		sq_obj->refraction = ft_atof(*args++);
 		// need to make sure refraction index is within bound (what are the bound?)
 	}
+	sq_obj->item.sq.basis = m_i(3);
+	sq_obj->item.sq.basis = obj_norm_transform(sq_obj->item.sq.basis, sq_obj->item.sq.norm);
 	if (*args || !(node = ft_lstnew(sq_obj)))
-	{} /// process error
+		error("Too many arguments specified for square object or failed malloc", scene);
 	ft_lstadd_front(&scene->object, node);
 }
 
-int 		process_cy(char **args, t_scene *scene)
+void process_cy(char **args, t_scene *scene)
 {
 	char 		**coord;
 	char 		**norm;
@@ -216,7 +213,7 @@ int 		process_cy(char **args, t_scene *scene)
 	t_list		*node;
 
 	if (!(cy_obj = malloc(sizeof(t_object))))
-	{} /// process error
+		error(NULL, scene);
 	cy_obj->type = CY;
 	if (is_coord(args) && is_coord(args + 1))
 	{
@@ -229,7 +226,11 @@ int 		process_cy(char **args, t_scene *scene)
 	{
 		cy_obj->item.cy.diameter = ft_atof(*args++);
 		cy_obj->item.cy.height = ft_atof(*args++);
-		/// make sure both parameters are above 0 or object is ignored
+		if (!(cy_obj->item.cy.diameter && cy_obj->item.cy.diameter))
+		{
+			free(cy_obj);
+			return ;
+		}
 	}
 	if (is_color(args))
 	{
@@ -237,21 +238,15 @@ int 		process_cy(char **args, t_scene *scene)
 		cy_obj->color = rgb_create(0, ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
 	}
 	if (is_float(args))
-	{
-		cy_obj->reflectivity = ft_atof(*args++);
-		cy_obj->reflectivity = cy_obj->reflectivity > 1 ? 1 : cy_obj->reflectivity;
-		cy_obj->reflectivity = cy_obj->reflectivity < 0 ? 0 : cy_obj->reflectivity;
-	}
+		cy_obj->reflectivity = bound(ft_atof(*args++), 0, 1);
 	if (is_float(args) && is_float(args + 1))
 	{
-		cy_obj->transperancy = ft_atof(*args++);
-		cy_obj->transperancy = cy_obj->transperancy > 1 ? 1 : cy_obj->transperancy;
-		cy_obj->transperancy = cy_obj->transperancy < 0 ? 0 : cy_obj->transperancy;
+		cy_obj->transperancy = bound(ft_atof(*args++), 0, 1);
 		cy_obj->refraction = ft_atof(*args++);
 		// need to make sure refraction index is within bound (what are the bound?)
 	}
 	if (*args || !(node = ft_lstnew(cy_obj)))
-	{} /// process error
+		error("Too many arguments specified for cylinder object or failed malloc", scene);
 	ft_lstadd_front(&scene->object, node);
 }
 
@@ -263,7 +258,7 @@ int 		process_tr(char **args, t_scene *scene)
 	t_list		*node;
 
 	if (!(tr_obj = malloc(sizeof(t_object))))
-	{} /// process error
+		error(NULL, scene);
 	tr_obj->type = TR;
 	if (is_coord(args) && is_coord(args + 1) && is_coord(args + 2))
 	{
@@ -280,20 +275,15 @@ int 		process_tr(char **args, t_scene *scene)
 		tr_obj->color = rgb_create(0, ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
 	}
 	if (is_float(args))
-	{
-		tr_obj->reflectivity = ft_atof(*args++);
-		tr_obj->reflectivity = tr_obj->reflectivity > 1 ? 1 : tr_obj->reflectivity;
-		tr_obj->reflectivity = tr_obj->reflectivity < 0 ? 0 : tr_obj->reflectivity;
-	}
+		tr_obj->reflectivity = bound(ft_atof(*args++), 0, 1);
 	if (is_float(args) && is_float(args + 1))
 	{
-		tr_obj->transperancy = ft_atof(*args++);
-		tr_obj->transperancy = tr_obj->transperancy > 1 ? 1 : tr_obj->transperancy;
-		tr_obj->transperancy = tr_obj->transperancy < 0 ? 0 : tr_obj->transperancy;
+		tr_obj->transperancy = bound(ft_atof(*args++), 0, 1);
 		tr_obj->refraction = ft_atof(*args++);
+		tr_obj->item.sq.norm = get_component(tr_obj->item.sq.basis, 1);
 		// need to make sure refraction index is within bound (what are the bound?)
 	}
 	if (*args || !(node = ft_lstnew(tr_obj)))
-	{} /// process error
+		error("Too many arguments specified for triangle object or failed malloc", scene);
 	ft_lstadd_front(&scene->object, node);
 }

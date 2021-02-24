@@ -45,7 +45,6 @@ int render(t_vars *vars)
 	else
 		render_image(vars);
 	t = clock() - t;
-	printf("%d\n", t);
 	usleep(max(40000 - t, 0));
 	mlx_put_image_to_window(vars->mlx.mlx, vars->mlx.win, vars->mlx.image.img, 0, 0);
 	return (0);
