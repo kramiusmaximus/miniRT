@@ -1,18 +1,20 @@
 #include "miniRT.h"
 
-int 		put_pixel(t_image *image, int x, int y, int color)
+int put_pixel(void *img, int x, int y, int color, int line_len, int bpp)
 {
-	char	*p;
+	void	*p;
 
-	if (!image)
+	if (!img)
 	{
 		ft_printf("Error at function \'put_pixel()\'\n");
 		exit(1);
 	}
-	p = image->addr + (y * image->line_length + x * (image->bits_per_pixel / 8));
+	p = img + (y * line_len + x * (bpp / 8));
 	*(unsigned int *)p = color;
 	return (0);
 }
+
+
 
 t_intersect	*process_t(t_ray *ray, t_object *obj, t_t *t)
 {
@@ -229,31 +231,23 @@ t_m 	obj_norm_transform(t_m basis, t_v norm)
 {
 	double rot[3];
 
+	// x rotation
+	rot[0] = atan(sqrt(pow(norm.v[2], 2) + pow(norm.v[0], 2)) / norm.v[1]);
+	if (norm.v[1] < EPS && norm.v[1] > -EPS)
+		rot[0] = atan(sqrt(pow(norm.v[2], 2) + pow(norm.v[0], 2))/ EPS);
+	if (norm.v[1] < 0)
+		rot[0] += M_PI;
+
+	basis = rotate_xyz(rot[0], 0, 0, basis);
+
 	// y rotation
-	rot[1] = -atan(norm.v[0] / norm.v[2]);
+	rot[1] = atan(norm.v[0] / norm.v[2]);
 	if (norm.v[2] < EPS && norm.v[2] > -EPS)
-		rot[1] = -atan(norm.v[0]/ EPS);
-	if (basis.m[2] < 0)
+		rot[1] = atan(norm.v[0]/ EPS);
+	if (norm.v[2] < 0)
 		rot[1] += M_PI;
 
 	basis = rotate_xyz(0, rot[1], 0, basis);
 
-	// x rotation
-	rot[0] = atan(norm.v[2] / norm.v[1]);
-	if (norm.v[1] < EPS && norm.v[1] > -EPS)
-		rot[0] = atan(norm.v[2]/ EPS);
-	if (norm.v[1] < 0)
-		rot[0] += M_PI;
-
-	basis = rotate_xyz(0, 0, 0, basis);
-
-	// z rotation
-	rot[2] = atan(norm.v[0] / norm.v[1]);
-	if (norm.v[1] < EPS && norm.v[1] > -EPS)
-		rot[2] = atan(norm.v[0]/ EPS);
-	if (norm.v[1] < 0)
-		rot[2] += M_PI;
-
-	basis = rotate_xyz(0, 0, 0, basis);
 	return (basis);
 }

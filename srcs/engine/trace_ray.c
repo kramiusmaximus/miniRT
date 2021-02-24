@@ -2,7 +2,7 @@
 #include "miniRT.h"
 
 
-t_intersect *trace_result(t_ray *ray, t_scene *scene, double d)
+t_intersect *trace_result(t_ray *ray, t_scene *scene, double min_d, double max_d)
 {
 	t_list 		*p;
 	t_object	*obj;
@@ -10,7 +10,7 @@ t_intersect *trace_result(t_ray *ray, t_scene *scene, double d)
 	t_t 		t;
 	int 		i;
 
-	t.closest = MAX_DIST;
+	t.closest = max_d;
 	if (!ray || !scene)
 		return (NULL);
 	p = scene->object;
@@ -32,7 +32,7 @@ t_intersect *trace_result(t_ray *ray, t_scene *scene, double d)
 		i = 0;
 		while (i < t.size)
 		{
-			if (t.arr[i] > d && t.arr[i] < t.closest)
+			if (t.arr[i] > min_d && t.arr[i] < t.closest)
 			{
 				t.closest = t.arr[i];
 				obj_closest = obj;
@@ -46,22 +46,23 @@ t_intersect *trace_result(t_ray *ray, t_scene *scene, double d)
 	return (NULL);
 }
 
-int trace_ray(t_ray *ray, t_scene *scene, int n_passes, double d)
+int trace_ray(t_ray *ray, t_scene *scene, int n_passes, double d)  // add max_d
 {
 	t_intersect *inter;
 	int 		c[3] = {0,0,0};
 	t_ray 		ref_ray;
+	double 		dist;
 
-	if ((inter = trace_result(ray, scene, d)))
+	if ((inter = trace_result(ray, scene, d, MAX_DIST)))
 	{
-		ref_ray = make_ray(inter->contact, v_normalize(inter->ref_dir));
 		c[0] = inter->obj->color;
 		process_light(ray, scene, c);
 		c[1] = rgb_multiply(c[0], c[1]);
-		//c[2] = rgb_multiply(c[0], c[2]);
 		c[0] = rgb_add(c[1], c[2]);
+		ref_ray = make_ray(inter->contact, v_normalize(inter->ref_dir));
+		dist = v_norm(v_subtract(ray->origin, inter->contact));
 		if (--n_passes && inter->obj->reflectivity)
-			c[0] = rgb_add(rgb_multiply_scalar(c[0], 1 - inter->obj->reflectivity), rgb_multiply_scalar(trace_ray(&ref_ray, scene, n_passes, EPS), inter->obj->reflectivity));
+			c[0] = rgb_add_weighted(c[0], trace_ray(&ref_ray, scene, n_passes, EPS),1 - inter->obj->reflectivity);
 		free(inter);
 	   	return (c[0]);
 	}

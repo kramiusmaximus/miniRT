@@ -1,6 +1,7 @@
 #ifndef MAIN_STRUCTS_H
 # define MAIN_STRUCTS_H
 # include "../libft/includes/libft.h"
+# include "bitmap.h"
 
 typedef struct			s_intersect
 {
@@ -78,6 +79,8 @@ typedef struct 		s_nav
 
 typedef struct 		s_vars
 {
+	t_BMPImage 		bmpim;
+	unsigned int 	*image;
 	t_mlx			mlx;
 	t_scene			scene;
 	int 			rendered;

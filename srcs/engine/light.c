@@ -8,6 +8,7 @@ void process_light(t_ray *ray, t_scene *scene, int *c)
 	t_light 	*light;
 	t_ray 		ray_l;
 	double 		dot;
+	double 		dist;
 
 	c[1] = rgb_multiply_scalar(scene->ambient.color, scene->ambient.intensity);
 	p = scene->light;
@@ -15,8 +16,9 @@ void process_light(t_ray *ray, t_scene *scene, int *c)
 	{
 		light = p->content;
 		l = v_normalize(v_subtract(light->coordinates, ray->intersect->contact));
+		dist = v_norm(v_subtract(light->coordinates, ray->intersect->contact));
 		ray_l = make_ray(ray->intersect->contact, l);
-		if (!trace_result(&ray_l, scene, EPS))  /// actually incorrect but works for now
+		if (!trace_result(&ray_l, scene, EPS, dist))  /// actually incorrect but works for now
 		{
 			// calculating diffuse lighting
 			dot = v_dot(ray->intersect->surface_v, l);

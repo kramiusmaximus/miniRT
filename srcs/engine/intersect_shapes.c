@@ -56,9 +56,7 @@ int ray_intersect_sq(t_ray *ray, t_object *sq_obj, t_t *t)
 		p_contact = v_add(ray->origin, v_scalar_mult(ray->dir, res));
 		v_contact = v_subtract(p_contact, sq->coord);
 
-		a[0] = v_dot(v_contact, get_component(sq->basis, 2)); // front and side vectors are assumed to
-		// be unit
-		// vectors
+		a[0] = v_dot(v_contact, get_component(sq->basis, 2));
 		a[1] = v_dot(v_contact, v_normalize(v_cross(get_component(sq->basis, 2), sq->norm)));
 		len = sq->side_len / 2;
 		if (a[0] < len && a[0] > -len && a[1] < len && a[1] > -len)

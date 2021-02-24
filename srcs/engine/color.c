@@ -66,6 +66,16 @@ int rgb_add(int c1, int c2)
 	return (rgb_create(t, r, g, b));
 }
 
+int rgb_add_weighted(int c1, int c2, double w)
+{
+	int t = get_t(c1);
+	int r = rgb_multiply_scalar(get_r(c1), w) + rgb_multiply_scalar(get_r(c2), 1 - w);
+	int g = rgb_multiply_scalar(get_g(c1), w) + rgb_multiply_scalar(get_g(c2), 1 - w);
+	int b = rgb_multiply_scalar(get_b(c1), w) + rgb_multiply_scalar(get_b(c2), 1 - w);
+
+	return (rgb_create(t, r, g, b));
+}
+
 int rgb_subtract(int c1, int c2)
 {
 	int t = get_t(c1);

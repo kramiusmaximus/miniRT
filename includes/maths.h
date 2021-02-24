@@ -36,7 +36,7 @@ double				max_f(double a, double b);
 double 				min_f(double a, double b);
 double 				abs_f(double a);
 double 				bound(double num, double lower_b, double upper_b);
-t_m rotate_xyz(double pitch, double yaw, double roll, t_m basis);
+t_m 				rotate_xyz(double pitch, double yaw, double roll, t_m basis);
 t_v 				get_component(t_m mat, int col);
 
 

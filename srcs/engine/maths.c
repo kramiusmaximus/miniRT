@@ -228,7 +228,7 @@ t_m rotate_z(double gamma)
 
 t_m rotate_xyz(double pitch, double yaw, double roll, t_m basis)
 {
-basis = v_mat_mul(rotate_x(pitch), basis);
+	basis = v_mat_mul(rotate_x(pitch), basis);
 	basis = v_mat_mul(rotate_y(yaw), basis);
 	basis = v_mat_mul(rotate_z(roll), basis);
 	return (basis);

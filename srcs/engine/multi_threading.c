@@ -20,7 +20,8 @@ static void 		*render_section(void *arg)
 			rvars.color = trace_ray(&rvars.ray, &rvars.vars->scene, N_PASSES, 1);
 			for (int y_pixel = (int)(v * rvars.mult[0]); y_pixel < (int)((double)(v + 1) * rvars.mult[0]); y_pixel++)
 				for (int x_pixel = (int)(h * rvars.mult[1]); x_pixel < (int)((double)(h + 1) * rvars.mult[1]); x_pixel++)
-					put_pixel(&rvars.vars->mlx.image, x_pixel, y_pixel, rvars.color);
+					put_pixel(rvars.vars->mlx.image.addr, x_pixel, y_pixel, rvars.color, rvars.vars->mlx.image.line_length, 32);
+
 		}
 	}
 	pthread_exit(NULL);

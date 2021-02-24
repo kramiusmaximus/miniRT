@@ -1,6 +1,8 @@
 #include "miniRT.h"
 
-static int render_image(t_vars *vars)
+
+
+static int render_image_bmp(t_vars *vars)
 {
 	t_render	rvars;
 
@@ -16,36 +18,18 @@ static int render_image(t_vars *vars)
 			rvars.color = trace_ray(&rvars.ray, &vars->scene, N_PASSES, 1);
 			for (int y_pixel = (int)(v * rvars.mult[0]); y_pixel < (int)((double)(v + 1) * rvars.mult[0]); y_pixel++)
 				for (int x_pixel = (int)(h * rvars.mult[1]); x_pixel < (int)((double)(h + 1) * rvars.mult[1]); x_pixel++)
-					put_pixel(vars->mlx.image.addr, x_pixel, y_pixel, rvars.color, vars->mlx.image.line_length, vars->mlx.image.bits_per_pixel);
+					put_pixel(vars->bmpim.image, x_pixel, y_pixel, rvars.color, vars->bmpim.header.width_px *  vars->bmpim.header.bits_per_pixel / 8, vars->mlx.image.bits_per_pixel);
 		}
 	}
 	return (0);
 }
 
-int render_mlx(t_vars *vars)
+int	make_bmprender_bmp(t_vars *vars)
 {
-	clock_t t;
+	int fd;
 
-	t = clock();
-	if (is_moving(&vars->nav) || is_rotating(&vars->nav))
-	{
-		move_camera(vars);
-		vars->rendered = 0;
-		vars->af = AF;
-	}
-	else if (!vars->rendered)
-	{
-		vars->rendered = 1;
-		vars->af = 1;
-	}
-	else
-		return (0);
-	if (NUM_THREADS > 1)
-		render_multi(vars);
-	else
-		render_image(vars);
-	t = clock() - t;
-	usleep(max(40000 - t, 0));
-	mlx_put_image_to_window(vars->mlx.mlx, vars->mlx.win, vars->mlx.image.img, 0, 0);
+	if ((fd = open("./render.bmp", O_WRONLY)) < 0)
+		error(NULL, &vars->scene);
+	render_image_bmp(vars);
 	return (0);
 }
