@@ -18,11 +18,11 @@
 # include "bitmap.h"
 # define MAX_DIST		1000000000
 # define BG_COLOR		0
-# define NUM_THREADS 	1
-# define N_PASSES		2
+# define NUM_THREADS 	4
+# define N_PASSES		15
 # define EPS			0.00000000001
-# define AF				0.2
-# define STEP_SIZE		3
+# define AF				0.15
+# define STEP_SIZE		4
 # define WINDOW_HEIGHT 720
 # define WINDOW_WIDTH  1280
 

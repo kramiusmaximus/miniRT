@@ -24,7 +24,7 @@ static int render_image_bmp(t_vars *vars)
 	return (0);
 }
 
-int	make_bmprender_bmp(t_vars *vars)
+int	make_bmp(t_vars *vars)
 {
 	int fd;
 
