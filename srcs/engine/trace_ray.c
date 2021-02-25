@@ -46,14 +46,14 @@ t_intersect *trace_result(t_ray *ray, t_scene *scene, double min_d, double max_d
 	return (NULL);
 }
 
-int trace_ray(t_ray *ray, t_scene *scene, int n_passes, double d)  // add max_d
+int trace_ray(t_ray *ray, t_scene *scene, int n_passes, double d_min, double d_max)  // add max_d
 {
 	t_intersect *inter;
 	int 		c[3] = {0,0,0};
 	t_ray 		ref_ray;
 	double 		dist;
 
-	if ((inter = trace_result(ray, scene, d, MAX_DIST)))
+	if ((inter = trace_result(ray, scene, d_min, d_max)))
 	{
 		c[0] = inter->obj->color;
 		process_light(ray, scene, c);
@@ -62,7 +62,7 @@ int trace_ray(t_ray *ray, t_scene *scene, int n_passes, double d)  // add max_d
 		ref_ray = make_ray(inter->contact, v_normalize(inter->ref_dir));
 		dist = v_norm(v_subtract(ray->origin, inter->contact));
 		if (--n_passes && inter->obj->reflectivity)
-			c[0] = rgb_add_weighted(c[0], trace_ray(&ref_ray, scene, n_passes, EPS),1 - inter->obj->reflectivity);
+			c[0] = rgb_add_weighted(c[0], trace_ray(&ref_ray, scene, n_passes, d_min, d_max), 1 - inter->obj->reflectivity);
 		free(inter);
 	   	return (c[0]);
 	}

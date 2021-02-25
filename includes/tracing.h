@@ -23,7 +23,7 @@ int 					abs(int a);
 t_v 					surface_vector(t_ray *ray, t_intersect *inter, t_object *obj);
 void process_light(t_ray *ray, t_scene *scene, int *c);
 t_intersect *trace_result(t_ray *ray, t_scene *scene, double min_d, double max_d);
-int 					trace_ray(t_ray *ray, t_scene *scene, int n_passes, double d);
+int trace_ray(t_ray *ray, t_scene *scene, int n_passes, double d_min, double d_max);
 int 					swap(double *a, double *b);
 int 					selection_sort(double arr[], int size);
 t_v						screen_to_world(int h, int v, t_vars *vars);

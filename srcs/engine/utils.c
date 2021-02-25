@@ -11,6 +11,7 @@ int put_pixel(void *img, int x, int y, int color, int line_len, int bpp)
 	}
 	p = img + (y * line_len + x * (bpp / 8));
 	*(unsigned int *)p = color;
+
 	return (0);
 }
 

@@ -52,4 +52,6 @@ int 		parse_rt(char *rt, t_scene *scene)
 	process_line(line, scene);
 	if (n < 0)
 		error(NULL, scene);
+	if (close(fd) < 0)
+		error(NULL, scene);
 }

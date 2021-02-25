@@ -13,24 +13,6 @@ int error(char *msg, t_scene *scene)
 	exit(errno);
 }
 
-/*
-int make_bmp(char *rt)
-{
-	if (bmp)
-	{
-		bmpim->header.type = 0x4d42;
-		bmpim->header.offset = 54;
-		bmpim->header.dib_header_size = 40;
-		bmpim->header.bits_per_pixel = 32;
-		bmpim->header.width_px = vars->scene.res.width;
-		bmpim->header.height_px = vars->scene.res.height;
-		bmpim->header.image_size_bytes = bmpim->header.bits_per_pixel * bmpim->header.width_px * bmpim->header.height_px / 8;
-		bmpim->header.size = bmpim->header.dib_header_size + bmpim->header.image_size_bytes;
-		bmpim->header.num_colors = 3;
-	}
-}
-*/
-
 int start_mlx_process(t_vars *vars)
 {
 	mlx_loop_hook(vars->mlx.mlx, render_mlx, vars);
@@ -43,9 +25,6 @@ int start_mlx_process(t_vars *vars)
 
 int init_vars(char *rt, t_vars *vars, int bmp)
 {
-	t_BMPImage *bmpim;
-
-	bmpim = &vars->bmpim;
 	ft_bzero(vars, sizeof(t_vars));
 	parse_rt(rt, &vars->scene);
 	if (!bmp)
@@ -65,17 +44,15 @@ int init_vars(char *rt, t_vars *vars, int bmp)
 		vars->mlx.image.addr = mlx_get_data_addr(vars->mlx.image.img, &vars->mlx.image.bits_per_pixel,
 												 &vars->mlx.image.line_length, &vars->mlx.image.endian);
 	}
-	else
-		vars->bmpim.image = malloc(sizeof(unsigned int) * vars->scene.res.height * vars->scene.res.width);  /// will need to free
 }
 
 int launch_renderer(char *rt, int bmp)
 {
 	t_vars	vars;
 
-	init_vars(rt, &vars, 0);
+	init_vars(rt, &vars, bmp);
 	if (bmp)
-		make_bmp(&vars);
+		create_bmp_image(&vars, "bmp_image");
 	else
 		start_mlx_process(&vars);
 }
