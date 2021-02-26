@@ -2,7 +2,7 @@
 
 int put_pixel_bmp(void *img, int x, int y, int color, int line_len, int bpp)
 {
-	void	*p;
+	unsigned int	*p;
 	int 	i;
 
 	if (!img)
@@ -11,10 +11,11 @@ int put_pixel_bmp(void *img, int x, int y, int color, int line_len, int bpp)
 		exit(1);
 	}
 	i = 0;
-	p = img + (y * line_len + x * (bpp / 8));
-	*((unsigned char *)p + i++) = (unsigned char)get_b(color);
-	*((unsigned char *)p + i++) = (unsigned char)get_g(color);
-	*((unsigned char *)p + i++) = (unsigned char)get_r(color);
+	p = img + (y * line_len + x * bpp / 8);
+
+	((bmp_pix *)p)->r = (unsigned char)get_r(color);
+	((bmp_pix *)p)->g = (unsigned char)get_g(color);
+	((bmp_pix *)p)->b = (unsigned char)get_b(color);
 	return (0);
 }
 
@@ -32,20 +33,13 @@ static int render_image_bmp(t_vars *vars)
 			rvars.vec[1] = v_subtract(rvars.vec[0], ((t_camera *)vars->scene.camera->content)->coord);
 			rvars.ray = make_ray(((t_camera *)vars->scene.camera->content)->coord, rvars.vec[1]);
 			rvars.color = trace_ray(&rvars.ray, &vars->scene, N_PASSES, 1, MAX_DIST);
-			put_pixel_bmp(vars->bmpim.image + offset, h, v, rvars.color, vars->bmpim.header.width_px *  vars->bmpim.header.bits_per_pixel / 8, vars->mlx.image.bits_per_pixel);
+			put_pixel_bmp(vars->bmpim.image + offset, h, v, rvars.color, (vars->bmpim.header.width_px * vars->bmpim.header.bits_per_pixel / 8 + vars->bmpim.pad_size), vars->bmpim.header.bits_per_pixel);
 		}
 	}
 	return (0);
 }
 
-int	render_bmp(t_vars *vars)
-{
-
-	render_image_bmp(vars);
-	return (0);
-}
-
-int bitmap_header(t_vars *vars, int pad_size, int fd)
+int bitmap_header(t_vars *vars, int fd)
 {
 	t_BMPHeader *header;
 
@@ -61,41 +55,28 @@ int bitmap_header(t_vars *vars, int pad_size, int fd)
 	header->width_px = vars->scene.res.width;
 	header->height_px = vars->scene.res.height;
 	header->num_planes = 1;
-	header->bits_per_pixel = 32;
+	header->bits_per_pixel = 24;
+	header->image_size_bytes = header->height_px * (header->width_px * header->bits_per_pixel / 8 + vars->bmpim.pad_size);
+	header->x_resolution_ppm = 2835;
+	header->y_resolution_ppm = 2835;
 
 	// file size
 	header->size = header->offset + header->image_size_bytes;
-
 }
 
 int create_bmp_image(t_vars *vars, char *filename)
 {
-	t_BMPImage 			*bmpim;
 	int 				fd;
-	int 				pad_size;
-	unsigned char 		padding[3];
 
-	ft_bzero(padding, 3);
-	if ((fd = open("../render.bmp", O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) < 0)
+	if ((fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) < 0)
 		error(NULL, &vars->scene);
-	pad_size = (vars->scene.res.width * vars->bmpim.header.bits_per_pixel / 8) % 4;
-	bitmap_header(vars, pad_size, fd);
-	if (!(vars->bmpim.image = malloc(vars->bmpim.header.image_size_bytes))) /// will need to free
+	vars->bmpim.pad_size = (4 - (vars->scene.res.width * vars->bmpim.header.bits_per_pixel / 8) % 4) % 4;
+	bitmap_header(vars, fd);
+	if (!(vars->bmpim.image = malloc(vars->bmpim.header.size))) /// will need to free
 		error(NULL, &vars->scene);
+	ft_memcpy(vars->bmpim.image, &vars->bmpim.header, sizeof(t_BMPHeader));
 	render_image_bmp(vars);
-	/*
-	bmpim = &vars->bmpim;
-	bmpim->header.type = 0x4d42;
-	bmpim->header.offset = 54;
-	bmpim->header.dib_header_size = 40;
-	bmpim->header.bits_per_pixel = 32;
-	bmpim->header.num_planes = 1;
-	bmpim->header.width_px = vars->scene.res.width;
-	bmpim->header.height_px = vars->scene.res.height;
-	bmpim->header.image_size_bytes = bmpim->header.bits_per_pixel * bmpim->header.width_px * bmpim->header.height_px / 8;
-	bmpim->header.size = bmpim->header.dib_header_size + bmpim->header.image_size_bytes;
-	bmpim->header.num_colors = 3;
-	render_bmp(vars);
-	 */
+	write(fd, vars->bmpim.image, vars->bmpim.header.size);
+	free(vars->bmpim.image);
 	ft_printf("BMP image successfully created.\n");
 }

@@ -26,12 +26,14 @@ t_intersect	*process_t(t_ray *ray, t_object *obj, t_t *t)
 		ft_printf("Error at function \'process_t()\'\n");
 		exit(1);
 	}
+	inter->inside = (inter->inside ^ 0b1);
 	inter->t = t->closest;
 	inter->contact = v_add(ray->origin, v_scalar_mult(ray->dir, inter->t));
 	inter->obj = obj;
 	inter->surface_v = surface_vector(ray, inter, obj);
 	inter->surface_v = v_dot(inter->surface_v , ray->dir) > 0 ? v_scalar_mult(inter->surface_v,-1) : inter->surface_v;
 	inter->ref_dir = v_subtract(ray->dir,v_scalar_mult(inter->surface_v , 2 * v_dot(inter->surface_v, ray->dir)));
+	inter->tra_dir =
 	//inter->next;
 	/// inter->inside = is_indside(inter);  inside function needs to be created
 	return (inter);

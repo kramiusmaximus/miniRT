@@ -2,6 +2,15 @@
 # define MAIN_STRUCTS_H
 # include "../libft/includes/libft.h"
 
+typedef struct
+{
+	unsigned char 	b;
+	unsigned char 	g;
+	unsigned char 	r;
+}					bmp_pix;
+
+# pragma pack(push)  // save the original data alignment
+# pragma pack(1)     // Set data alignment to 1 byte boundary
 typedef struct	s_BMPHeader
 {             				    // Total: 54 bytes
 	uint16_t	type;             // Magic identifier: 0x4d42
@@ -15,18 +24,19 @@ typedef struct	s_BMPHeader
 	uint16_t  	num_planes;       // Number of color planes
 	uint16_t  	bits_per_pixel;   // Bits per pixel
 	uint32_t  	compression;      // Compression type
-	uint32_t  	image_size_bytes; // Image size in bytes including padding
+	uint32_t  	image_size_bytes; // Image size in bytes including pad_size
 	int32_t   	x_resolution_ppm; // Pixels per meter
 	int32_t   	y_resolution_ppm; // Pixels per meter
 	uint32_t  	num_colors;       // Number of colors
 	uint32_t  	important_colors; // Important colors
 } 				t_BMPHeader;
+# pragma pack(pop)
 
 typedef struct
 {
-	t_BMPHeader header;
-	int 		padding;
-	unsigned int *image;
+	t_BMPHeader 	header;
+	int 			pad_size;
+	unsigned char 	*image;
 } 				t_BMPImage;
 
 typedef struct			s_intersect
@@ -35,6 +45,7 @@ typedef struct			s_intersect
 	t_object			*obj;
 	t_v 				contact;
 	t_v					ref_dir;
+	t_v					tra_dir;
 	t_v					surface_v;
 	int 				inside;
 }						t_intersect;
@@ -106,7 +117,6 @@ typedef struct 		s_nav
 typedef struct 		s_vars
 {
 	t_BMPImage 		bmpim;
-	unsigned int 	*image;
 	t_mlx			mlx;
 	t_scene			scene;
 	int 			rendered;

@@ -2,6 +2,10 @@
 
 int error(char *msg, t_scene *scene)
 {
+	t_object *obj;
+	t_camera *cam;
+	ft_lstclear(&scene->object, ft_lstdelone);
+	// ft_lstclear(&scene->camera, ft_lstdelone) ///need to clear cams
 	if (msg)
 	{
 		ft_putstr_fd("Error: ", 2);
@@ -27,6 +31,7 @@ int init_vars(char *rt, t_vars *vars, int bmp)
 {
 	ft_bzero(vars, sizeof(t_vars));
 	parse_rt(rt, &vars->scene);
+	vars->af = 1;
 	if (!bmp)
 	{
 		vars->mlx.mlx = mlx_init();
@@ -52,13 +57,14 @@ int launch_renderer(char *rt, int bmp)
 
 	init_vars(rt, &vars, bmp);
 	if (bmp)
-		create_bmp_image(&vars, "bmp_image");
+		create_bmp_image(&vars, "../bmp_image");
 	else
 		start_mlx_process(&vars);
 }
 
 int main(int n_args, char **args)
 {
+	// need to free split in parser
 	if (n_args == 3)
 	{
 		if (!ft_strcmp(args[2], "--save"))
