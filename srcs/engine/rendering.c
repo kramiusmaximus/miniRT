@@ -12,7 +12,7 @@ static int render_image(t_vars *vars)
 		{
 			rvars.vec[0] = screen_to_world(h, v, vars);
 			rvars.vec[1] = v_subtract(rvars.vec[0], ((t_camera *)vars->scene.camera->content)->coord);
-			rvars.ray = make_ray(((t_camera *)vars->scene.camera->content)->coord, rvars.vec[1]);
+			rvars.ray = make_ray(((t_camera *) vars->scene.camera->content)->coord, rvars.vec[1], 0);
 			rvars.color = trace_ray(&rvars.ray, &vars->scene, N_PASSES, 1, MAX_DIST);
 			for (int y_pixel = (int)(v * rvars.mult[0]); y_pixel < (int)((double)(v + 1) * rvars.mult[0]); y_pixel++)
 				for (int x_pixel = (int)(h * rvars.mult[1]); x_pixel < (int)((double)(h + 1) * rvars.mult[1]); x_pixel++)

@@ -44,16 +44,18 @@ typedef struct			s_intersect
 	double 				t;
 	t_object			*obj;
 	t_v 				contact;
+	double 				incidence_ang0;
+	double 				incidence_ang1;
 	t_v					ref_dir;
 	t_v					tra_dir;
 	t_v					surface_v;
-	int 				inside;
 }						t_intersect;
 
 typedef struct 			s_ray
 {
 	t_v 				origin;
 	t_v					dir;
+	int 				inside;
 	t_intersect			*intersect;
 }						t_ray;
 

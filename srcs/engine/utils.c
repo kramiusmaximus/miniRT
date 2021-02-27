@@ -20,30 +20,56 @@ int put_pixel(void *img, int x, int y, int color, int line_len, int bpp)
 t_intersect	*process_t(t_ray *ray, t_object *obj, t_t *t)
 {
 	t_intersect *inter;
+	double 		c;
+	double 		r;
 
 	if (!ray || !obj || !t || !(inter = malloc(sizeof(t_intersect))))
 	{
 		ft_printf("Error at function \'process_t()\'\n");
 		exit(1);
 	}
-	inter->inside = (inter->inside ^ 0b1);
+
 	inter->t = t->closest;
 	inter->contact = v_add(ray->origin, v_scalar_mult(ray->dir, inter->t));
 	inter->obj = obj;
+
 	inter->surface_v = surface_vector(ray, inter, obj);
-	inter->surface_v = v_dot(inter->surface_v , ray->dir) > 0 ? v_scalar_mult(inter->surface_v,-1) : inter->surface_v;
+	inter->surface_v = v_dot(inter->surface_v , v_normalize(ray->dir)) > 0 ? v_scalar_mult(inter->surface_v,-1) :
+			inter->surface_v;
+
+	inter->incidence_ang0 = acos(v_dot(v_normalize(ray->dir), v_normalize(inter->surface_v)));
+
 	inter->ref_dir = v_subtract(ray->dir,v_scalar_mult(inter->surface_v , 2 * v_dot(inter->surface_v, ray->dir)));
-	inter->tra_dir =
-	//inter->next;
-	/// inter->inside = is_indside(inter);  inside function needs to be created
+	// tra_dir calculation
+	c = -v_dot(inter->surface_v, v_normalize(ray->dir));
+	if (ray->inside) // if inside
+	{
+		r = inter->obj->refraction;
+		inter->incidence_ang1 = asin(sin(inter->incidence_ang0) * inter->obj->refraction);
+		inter->tra_dir = v_add(v_scalar_mult(v_normalize(ray->dir), r) ,v_scalar_mult(inter->surface_v,r*c - sqrt(1-pow(r,2)*(1-pow
+				(c,2)))));
+	}
+	else                // if outside
+	{
+		r = 1 / inter->obj->refraction;
+		inter->incidence_ang1 = asin(sin(inter->incidence_ang0) / inter->obj->refraction);  // why doesnt ang1 == ang0
+		// when refraction index
+		// is 1
+		inter->tra_dir = v_add(v_scalar_mult(v_normalize(ray->dir), r) ,v_scalar_mult(inter->surface_v,r*c - sqrt(1-pow(r,2)*(1-pow
+		(c,2)))));
+	}
+	/*V_refraction = r*V_incedence + (rc - sqrt(1-Math.pow(r,2)(1-Math.pow(c,2))))n
+    where r = n1/n2 and c = -n dot V_incedence.*/
+	//inter->tra_dir = ray->dir;
 	return (inter);
 }
 
-t_ray		make_ray(t_v origin, t_v dir)
+t_ray make_ray(t_v origin, t_v dir, int inside)
 {
 	t_ray ray;
 	ray.origin = origin;
 	ray.dir = dir;
+	ray.inside = inside;
 	ray.intersect = NULL;
 	return (ray);
 }
