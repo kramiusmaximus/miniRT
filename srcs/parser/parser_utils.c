@@ -66,9 +66,12 @@ int 		is_coord(char **arg)
 	coord = ft_split(*arg, ',');
 	while (coord[i])
 	{
-		if (i > 2 || !is_float(&coord[i++]))
+		if (!is_float(&coord[i]))
 			return (0);
+		i++;
 	}
+	if (i != 3)
+		return (0);
 	return (1);
 }
 

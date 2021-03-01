@@ -125,7 +125,7 @@ void process_sp(char **args, t_scene *scene)
 	if (!(sp_obj = malloc(sizeof(t_object))))
 		error(NULL, scene);
 	sp_obj->type = SP;
-	if (is_coord(args) && is_coord(args + 1))
+	if (is_coord(args))
 	{
 		coord = ft_split(*args++, ',');
 		sp_obj->item.sp.coord = v_create(ft_atof(coord[0]), ft_atof(coord[1]), ft_atof(coord[2]));
