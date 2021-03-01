@@ -8,8 +8,10 @@ void process_r(char **args, t_scene *scene)
 		scene->res.width = ft_atoi(*args++);
 		scene->res.height = ft_atoi(*args++);
 	}
+	else
+		error("Provide necessary arguments for resolution", scene);
 	if (*args)
-		error("Too many arguments specified for resolution.", scene);
+		error("Error parsing resolution.", scene);
 }
 
 void process_a(char **args, t_scene *scene)
@@ -23,9 +25,10 @@ void process_a(char **args, t_scene *scene)
 	{
 		rgb = ft_split(*args++, ',');
 		scene->ambient.color = rgb_create(0, ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
+		// scene->ambient.color = extract_color(char **args);
 	}
 	if (*args)
-		error("Too many arguments specified for ambient light.", scene);
+		error("Error parsing ambient.", scene);
 }
 
 void process_c(char **args, t_scene *scene)
@@ -41,13 +44,15 @@ void process_c(char **args, t_scene *scene)
 	{
 		coord = ft_split(*args++, ',');
 		camera->coord = v_create(ft_atof(coord[0]), ft_atof(coord[1]), ft_atof(coord[2]));
+		// camera->coord = extract_coord(char **args);
 		dir = ft_split(*args++, ',');
 		camera->dir = v_normalize(v_create(ft_atof(dir[0]), ft_atof(dir[1]), ft_atof(dir[2])));
+		// camera->dir = extract_dir(char **args);
 	}
 	if (is_float(args))
 		camera->fov = bound(ft_atof(*args++), 0, 180);
 	if (*args || !(node = ft_lstcnew(camera)))
-		error("Too many arguments specified for camera or failed malloc", scene);
+		error("Error parsing camera.", scene);
 	camera->basis = m_i(3);
 	camera->basis = obj_dir_transform(camera->basis, camera->dir);
 	ft_lstcadd_front(&scene->camera, node);
@@ -75,7 +80,7 @@ void process_l(char **args, t_scene *scene)
 		light->color = rgb_create(0, ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
 	}
 	if (*args || !(node = ft_lstnew(light)))
-		error("Too many arguments specified for light or failed malloc", scene);
+		error("Object parsing error", scene);
 	ft_lstadd_front(&scene->light, node);
 }
 
@@ -111,7 +116,7 @@ void process_pl(char **args, t_scene *scene)
 		// need to make sure refraction index is within bound (what are the bound?)
 	}
 	if (*args || !(node = ft_lstnew(pl_obj)))
-		error("Too many arguments specified for plane object or failed malloc", scene);
+		error("Object parsing error", scene);
 	ft_lstadd_front(&scene->object, node);
 }
 
@@ -125,22 +130,16 @@ void process_sp(char **args, t_scene *scene)
 	if (!(sp_obj = malloc(sizeof(t_object))))
 		error(NULL, scene);
 	sp_obj->type = SP;
-	if (is_coord(args))
+	if (is_coord(args) && is_float(args + 1) && is_color(args + 2))
 	{
 		coord = ft_split(*args++, ',');
 		sp_obj->item.sp.coord = v_create(ft_atof(coord[0]), ft_atof(coord[1]), ft_atof(coord[2]));
-	}
-	if (is_float(args))
-	{
 		sp_obj->item.sp.diameter = ft_atof(*args++);
 		if (sp_obj->item.sp.diameter <= 0)
 		{
 			free(sp_obj);
 			return ;
 		}
-	}
-	if (is_color(args))
-	{
 		rgb = ft_split(*args++, ',');
 		sp_obj->color = rgb_create(0, ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
 	}
@@ -149,11 +148,10 @@ void process_sp(char **args, t_scene *scene)
 	if (is_float(args) && is_float(args + 1))
 	{
 		sp_obj->transperancy = bound(ft_atof(*args++), 0, 1);
-		sp_obj->refraction = ft_atof(*args++);
-		// need to make sure refraction index is within bound (what are the bound?)
+		sp_obj->refraction = max_f(ft_atof(*args++), 0);
 	}
 	if (*args || !(node = ft_lstnew(sp_obj)))
-		error("Too many arguments specified for sphere object or failed malloc", scene);
+		error("Object parsing error", scene);
 	ft_lstadd_front(&scene->object, node);
 }
 
@@ -200,7 +198,7 @@ void process_sq(char **args, t_scene *scene)
 	sq_obj->item.sq.basis = m_i(3);
 	sq_obj->item.sq.basis = obj_norm_transform(sq_obj->item.sq.basis, sq_obj->item.sq.norm);
 	if (*args || !(node = ft_lstnew(sq_obj)))
-		error("Too many arguments specified for square object or failed malloc", scene);
+		error("Object parsing error", scene);
 	ft_lstadd_front(&scene->object, node);
 }
 
@@ -246,7 +244,7 @@ void process_cy(char **args, t_scene *scene)
 		// need to make sure refraction index is within bound (what are the bound?)
 	}
 	if (*args || !(node = ft_lstnew(cy_obj)))
-		error("Too many arguments specified for cylinder object or failed malloc", scene);
+		error("Object parsing error", scene);
 	ft_lstadd_front(&scene->object, node);
 }
 
@@ -284,6 +282,6 @@ int 		process_tr(char **args, t_scene *scene)
 		// need to make sure refraction index is within bound (what are the bound?)
 	}
 	if (*args || !(node = ft_lstnew(tr_obj)))
-		error("Too many arguments specified for triangle object or failed malloc", scene);
+		error("Object parsing error", scene);
 	ft_lstadd_front(&scene->object, node);
 }

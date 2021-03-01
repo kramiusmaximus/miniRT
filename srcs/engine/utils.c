@@ -15,8 +15,6 @@ int put_pixel(void *img, int x, int y, int color, int line_len, int bpp)
 	return (0);
 }
 
-
-
 t_intersect	*process_t(t_ray *ray, t_object *obj, t_t *t)
 {
 	t_intersect *inter;
@@ -34,7 +32,7 @@ t_intersect	*process_t(t_ray *ray, t_object *obj, t_t *t)
 	inter->surface_v = surface_vector(ray, inter, obj);
 	inter->surface_v = v_dot(inter->surface_v , v_normalize(ray->dir)) > 0 ? v_scalar_mult(inter->surface_v,-1) :
 			inter->surface_v;
-	inter->incidence_ang0 = -acos(v_dot(v_normalize(ray->dir), inter->surface_v));
+	inter->incidence_ang0 = M_PI- acos(v_dot(v_normalize(ray->dir), inter->surface_v));
 	inter->ref_dir = v_subtract(ray->dir,v_scalar_mult(inter->surface_v , 2 * v_dot(inter->surface_v, ray->dir)));
 	// tra_dir calculation
 	c = -v_dot(inter->surface_v, v_normalize(ray->dir));
@@ -263,4 +261,23 @@ t_m 	obj_norm_transform(t_m basis, t_v norm)
 	basis = rotate_xyz(0, rot[1], 0, basis);
 
 	return (basis);
+}
+
+void	ft_lstcclear(t_listc **lst)
+{
+	t_listc *current;
+	t_listc *next;
+
+	if (lst && *lst)
+	{
+		current = *lst;
+		while (current != *lst)
+		{
+			next = current->next;
+			free(current->content);
+			free(current);
+			current = next;
+		}
+		*lst = NULL;
+	}
 }

@@ -64,6 +64,46 @@ int bitmap_header(t_vars *vars, int fd)
 	header->size = header->offset + header->image_size_bytes;
 }
 
+int mlx_image_to_bmp(t_vars *vars)
+{
+	int v;
+	int h;
+	int offset;
+	int color;
+
+	offset = vars->bmpim.header.offset;
+	v = 0;
+	while (v < vars->bmpim.header.height_px)
+	{
+		h = 0;
+		while (h < vars->bmpim.header.width_px)
+		{
+			color = *((int *)vars->mlx.image.addr + v*vars->bmpim.header.width_px + h);
+			put_pixel_bmp(vars->bmpim.image + offset, h, v, color, (vars->bmpim.header.width_px * vars->bmpim.header.bits_per_pixel / 8 + vars->bmpim.pad_size), vars->bmpim.header.bits_per_pixel);
+			h++;
+		}
+		v++;
+	}
+}
+
+int screen_shot(t_vars *vars)
+{
+	int 				fd;
+
+	if ((fd = open("../miniRT_snapshot.bmp", O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) < 0)
+		error(NULL, &vars->scene);
+	vars->bmpim.pad_size = (4 - (vars->scene.res.width * vars->bmpim.header.bits_per_pixel / 8) % 4) % 4;
+	bitmap_header(vars, fd);
+	if (!(vars->bmpim.image = malloc(vars->bmpim.header.size))) /// will need to free
+		error(NULL, &vars->scene);
+	ft_memcpy(vars->bmpim.image, &vars->bmpim.header, sizeof(t_BMPHeader));
+	//render_image_bmp(vars);
+	mlx_image_to_bmp(vars);
+	write(fd, vars->bmpim.image, vars->bmpim.header.size);
+	free(vars->bmpim.image);
+	ft_printf("BMP image successfully created.\n");
+}
+
 int create_bmp_image(t_vars *vars, char *filename)
 {
 	int 				fd;
@@ -78,5 +118,8 @@ int create_bmp_image(t_vars *vars, char *filename)
 	render_image_bmp(vars);
 	write(fd, vars->bmpim.image, vars->bmpim.header.size);
 	free(vars->bmpim.image);
+	free_mem(&vars->scene);
 	ft_printf("BMP image successfully created.\n");
 }
+
+

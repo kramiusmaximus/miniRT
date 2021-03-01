@@ -23,20 +23,21 @@ void light_effects(t_ray *ray, t_scene *scene, int *c, t_intersect *inter)
 		dist = v_norm(v_subtract(light->coordinates, ray->intersect->contact));
 		ray_l = make_ray(ray->intersect->contact, l, 0);
 		// calculating diffuse lighting
-		if (!(inter_l = trace_result(&ray_l, scene, EPS, dist - EPS)))
+		if ((inter_l = trace_result(&ray_l, scene, EPS, dist - EPS)))
 		{
-			/*transp = bound(inter_l->obj->transperancy, 0, 0.9);
-			free(inter_l);*/
-			dot = v_dot(ray->intersect->surface_v, l);
-			dot = dot < 0 ? 0 : dot;
-			a[0] = rgb_add(rgb_multiply_scalar(light->color, dot * light->intensity * transp), a[0]); // diffuse
-			a[1] = rgb_add(rgb_multiply_scalar(light->color, (pow(200, -(200 / dot - 200))) * light->intensity * transp),
-						   a[1]); // specular
+			transp = bound(inter_l->obj->transperancy, 0, 0.95);
+			free(inter_l);
 		}
+
+		dot = v_dot(ray->intersect->surface_v, l);
+		dot = dot < 0 ? 0 : dot;
+		a[0] = rgb_add(rgb_multiply_scalar(light->color, dot * light->intensity * transp), a[0]); // diffuse
+		a[1] = rgb_add(rgb_multiply_scalar(light->color, (pow(200, -(200 / dot - 200))) * light->intensity * transp),
+					   a[1]); // specular
 
 		p = p->next;
 	}
-	*c = rgb_multiply(*c, a[0]);
-	if (inter->obj->reflectivity)
+	*c = rgb_add_weighted(*c, rgb_multiply(*c, a[0]), inter->obj->transperancy);
+	if (!(inter->obj->type & (SQ | PL)) && inter->obj->reflectivity)
 		*c = rgb_add(*c, a[1]);
 }

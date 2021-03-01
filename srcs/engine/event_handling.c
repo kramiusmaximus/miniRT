@@ -28,6 +28,8 @@ int key_press_hook(int key, t_vars *vars)
 		switch_camera(-1,vars);
 	else if (key == 53)
 		exit_hook(vars);
+	else if (key == 11)
+		screen_shot(vars);
 }
 
 int key_release_hook(int key, t_vars *vars)
@@ -57,6 +59,7 @@ int key_release_hook(int key, t_vars *vars)
 int exit_hook(t_vars *vars)
 {
 	ft_printf("Quitting application...\n");
+	free_mem(&vars->scene);
 	exit(0);
 }
 

@@ -1,11 +1,18 @@
 #include "miniRT.h"
 
+int free_mem(t_scene *scene)
+{
+	ft_lstclear(&scene->light, NULL);
+	ft_lstclear(&scene->object, NULL);
+	ft_lstcclear(&scene->camera);
+}
+
 int error(char *msg, t_scene *scene)
 {
 	t_object *obj;
 	t_camera *cam;
-	ft_lstclear(&scene->object, ft_lstdelone);
-	// ft_lstclear(&scene->camera, ft_lstdelone) ///need to clear cams
+
+	free_mem(scene);
 	if (msg)
 	{
 		ft_putstr_fd("Error: ", 2);

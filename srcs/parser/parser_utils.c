@@ -48,10 +48,12 @@ int 		is_color(char **arg)
 	rgb = ft_split(*arg, ',');
 	while (rgb[i])
 	{
-		if (i > 2 || !is_int(&rgb[i]))
+		if (!is_int(&rgb[i]))
 			return (0);
 		i++;
 	}
+	if (i != 3)
+		return (0);
 	return (1);
 }
 
@@ -104,3 +106,4 @@ void		ft_lstcadd_front(t_listc **head, t_listc *node)
 		*head = node;
 	}
 }
+

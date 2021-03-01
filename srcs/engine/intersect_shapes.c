@@ -98,7 +98,7 @@ static int ray_intersect_sausage(t_ray *ray, t_object *cy_obj, t_t *t)
 		{
 			t->arr[i - 1] = MAX_DIST;
 		}
-		i--;							// need to decrease t array size indrementally
+		i--;
 	}
 	selection_sort(t->arr, t->size);
 
@@ -126,7 +126,7 @@ static int ray_intersect_caps(t_ray *ray, t_object *cy_obj, t_t *t)
 		if (v_norm(v_contact) <= cy->diameter / 2)
 			t->arr[t->size++] = res;
 	}
-	nominator = v_dot(cy->norm, v_subtract(v_add(cy->coord, v_scalar_mult(cy->norm, cy->height)),\
+	nominator = v_dot(cy->norm, v_subtract(v_add(cy->coord, v_scalar_mult(cy->norm, cy->height-0.01)),\
 	ray->origin));
 	denominator = v_dot(cy->norm, ray->dir);
 	if (!isinf(res = nominator / denominator))

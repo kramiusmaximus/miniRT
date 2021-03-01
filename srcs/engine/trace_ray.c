@@ -59,30 +59,25 @@ int trace_ray(t_ray *ray, t_scene *scene, int n_passes, double d_min, double d_m
 	{
 		c = inter->obj->color;
 
-		tra_ray = make_ray(inter->contact, v_normalize(inter->tra_dir), ray->inside);
-		/*
-		if (ray->inside)
-			return (rgb_multiply(c, trace_ray(&tra_ray, scene, n_passes, d_min, d_max)));
-		*/
-		//light_effects(ray, scene, &c, inter);
-
 		// adding transparency
-		/*
-		if (--n_passes && inter->obj->transperancy)
+		if (inter->obj->type & (SP | CY))
+			tra_ray = make_ray(inter->contact, v_normalize(inter->tra_dir), ray->inside ^ 0b1);
+		else
+			tra_ray = make_ray(inter->contact, v_normalize(inter->tra_dir), ray->inside);
+
+		if (n_passes > 1 && ray->inside)
+			return (trace_ray(&tra_ray, scene, n_passes - 1, EPS, MAX_DIST));
+		if (n_passes > 1 && inter->obj->transperancy)
 				c = rgb_add_weighted(c, rgb_multiply(c, trace_ray(&tra_ray, scene, n_passes, d_min, d_max)), 1 -
 																											 inter->obj->transperancy);
-		*/
-		/*
-		if (n_passes > 1 && inter->obj->transperancy)
-			c = rgb_add_weighted(c, trace_ray(&tra_ray, scene, n_passes - 1, d_min, d_max), 1 -
-																										 inter->obj->transperancy);
-		*/
-		 // adding reflections
+
+		 // adding lighting + reflections
+		light_effects(ray, scene, &c, inter);
 		ref_ray = make_ray(inter->contact, v_normalize(inter->ref_dir), ray->inside);
-		ref_coeff = inter->obj->reflectivity * pow(10,sin(inter->incidence_ang0));
+		ref_coeff = bound(inter->obj->reflectivity / cos(inter->incidence_ang0) / 2, inter->obj->reflectivity, 1);
 		if (n_passes > 1 && ref_coeff)
 			c = rgb_add_weighted(c, trace_ray(&ref_ray, scene, n_passes - 1, EPS, MAX_DIST),
-									1 - ref_coeff);
+						1 - ref_coeff);
 		free(inter);
 	   	return (c);
 	}
