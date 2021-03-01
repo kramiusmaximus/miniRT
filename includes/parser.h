@@ -17,5 +17,8 @@ int 		is_color(char **arg);
 int 		is_coord(char **arg);
 t_listc		*ft_lstcnew(t_camera *data);
 void		ft_lstcadd_front(t_listc **head, t_listc *node);
+int 		extract_color(char *arg);
+t_v 		extract_coord(char *arg);
+t_v 		extract_dir(char *arg);
 
 #endif

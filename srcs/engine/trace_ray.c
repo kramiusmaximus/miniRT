@@ -74,7 +74,7 @@ int trace_ray(t_ray *ray, t_scene *scene, int n_passes, double d_min, double d_m
 		 // adding lighting + reflections
 		light_effects(ray, scene, &c, inter);
 		ref_ray = make_ray(inter->contact, v_normalize(inter->ref_dir), ray->inside);
-		ref_coeff = bound(inter->obj->reflectivity / cos(inter->incidence_ang0) / 2, inter->obj->reflectivity, 1);
+		ref_coeff = bound(inter->obj->reflectivity / cos(inter->incidence_ang0) / 1, inter->obj->reflectivity, 1);
 		if (n_passes > 1 && ref_coeff)
 			c = rgb_add_weighted(c, trace_ray(&ref_ray, scene, n_passes - 1, EPS, MAX_DIST),
 						1 - ref_coeff);

@@ -88,22 +88,3 @@ t_listc		*ft_lstcnew(t_camera *data)
 	node->prev = node;
 	return (node);
 }
-
-void		ft_lstcadd_front(t_listc **head, t_listc *node)
-{
-	t_listc	*p;
-
-	if (!head || !node)
-		return ;
-	if (!*head)
-		*head = node;
-	else
-	{
-		((*head)->prev)->next = node;
-		node->prev = (*head)->prev;
-		node->next = *head;
-		(*head)->prev = node;
-		*head = node;
-	}
-}
-

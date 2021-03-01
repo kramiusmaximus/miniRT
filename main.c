@@ -9,9 +9,6 @@ int free_mem(t_scene *scene)
 
 int error(char *msg, t_scene *scene)
 {
-	t_object *obj;
-	t_camera *cam;
-
 	free_mem(scene);
 	if (msg)
 	{
@@ -71,15 +68,14 @@ int launch_renderer(char *rt, int bmp)
 
 int main(int n_args, char **args)
 {
-	// need to free split in parser
 	if (n_args == 3)
 	{
 		if (!ft_strcmp(args[2], "--save"))
 			launch_renderer(args[1], 1);
 		else
 			ft_printf("Incorrect argument (%s) specified. Use '--save' as second argument to save scene as .bmp file.\n", args[2]);
-	}  // access given rt file, render_mlx it into a bmp file format, save it in 'rendered files' folder
+	}
 	if (n_args == 2)
-		launch_renderer(args[1], 0); // open window, access given rt file, and render_mlx it, and upload it to the opened window
+		launch_renderer(args[1], 0);
 	return (0);
 }

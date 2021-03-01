@@ -6,18 +6,10 @@ static int 	process_line(char *line, t_scene *scene)
 
 	if ((split = ft_split(line, ' ')) && *split)      /// if line is empty or there is error, return value is the same - NULL
 	{
-		if (!ft_strcmp(*split, "R"))
-		{
-			if (scene->s & 0b00000001)
-				error("Can only declare resolution dimensions once.", scene);
+		if (!ft_strcmp(*split, "R") && !(scene->s & 0b00000001))
 			process_r(++split, scene);
-		}
-		else if (!ft_strcmp(*split, "A"))
-		{
-			if (scene->s & 0b00000010)
-				error("Can only declare ambient light once.", scene);
+		else if (!ft_strcmp(*split, "A") && !(scene->s & 0b00000010))
 			process_a(++split, scene);
-		}
 		else if (!ft_strcmp(*split, "c"))
 			process_c(++split, scene);
 		else if (!ft_strcmp(*split, "l"))
@@ -33,7 +25,7 @@ static int 	process_line(char *line, t_scene *scene)
 		else if (!ft_strcmp(*split, "tr"))
 			process_tr(++split, scene);
 		else
-			error("Unknown characters found in rt file", scene);
+			error("Incorrect RT specification. Please refer to the bible.", scene);
 	}
 	return (0);
 }

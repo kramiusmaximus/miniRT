@@ -20,7 +20,7 @@ int						solve_quadratic(double a, double b, double c, t_t *t);
 int 					min(int a, int b);
 int 					max(int a, int b);
 int 					abs(int a);
-t_v 					surface_vector(t_ray *ray, t_intersect *inter, t_object *obj);
+t_v surface_vector(t_intersect *inter, t_object *obj);
 void light_effects(t_ray *ray, t_scene *scene, int *c, t_intersect *inter);
 t_intersect *trace_result(t_ray *ray, t_scene *scene, double min_d, double max_d);
 int trace_ray(t_ray *ray, t_scene *scene, int n_passes, double d_min, double d_max);
