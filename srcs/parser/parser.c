@@ -36,7 +36,7 @@ int 		parse_rt(char *rt, t_scene *scene)
 	int 	n;
 	char 	*line;
 
-	ft_bzero(scene, sizeof(t_scene)); // initializing structure values to zero
+	ft_bzero(scene, sizeof(t_scene));
 	if ((fd = open(rt, O_RDONLY)) < 0)
 		error(NULL, scene);
 	while ((n = get_next_line(fd, &line)) > 0)

@@ -13,16 +13,16 @@ file(GLOB LIBRARIES
 file(GLOB SOURCES
         srcs/*.c
         srcs/*/*.c
-        mlx/libmlx.a
         includes/*.h
         libft/includes/*.h
+
         )
 add_executable(miniRT ${SOURCES} main.c)
 target_link_libraries(miniRT ${LIBRARIES})
 
 #shkola : /Users/pfelipa/Desktop/pfelipa/miniRT
 #home : /Users/markartyukh/Desktop/code/pfelipa/miniRT
-target_link_libraries(miniRT /Users/markartyukh/Desktop/code/pfelipa/miniRT)
+target_link_libraries(miniRT /Users/pfelipa/Desktop/pfelipa/miniRT)
 target_link_libraries(miniRT "-framework OpenGL" "-framework AppKit")
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)

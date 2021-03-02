@@ -54,7 +54,7 @@ void process_sq(char **args, t_scene *scene)
 		sq_obj->transperancy = bound(ft_atof(*args++), 0, 1);
 		sq_obj->refraction = max_f(ft_atof(*args++), 0);
 	}
-	sq_obj->item.sq.basis = obj_norm_transform(m_i(3), sq_obj->item.sq.norm);
+	sq_obj->item.sq.basis = norm_to_rot_mat(m_i(3), sq_obj->item.sq.norm);
 	if (*args || !(node = ft_lstnew(sq_obj)))
 		error("Object parsing error", scene);
 	ft_lstadd_front(&scene->object, node);
@@ -99,7 +99,7 @@ int 		process_tr(char **args, t_scene *scene)
 	if (!(tr_obj = malloc(sizeof(t_object))))
 		error(NULL, scene);
 	tr_obj->type = TR;
-	if (is_coord(args) && is_coord(args + 1) && is_coord(args + 2) && is_color(args + 4))
+	if (is_coord(args) && is_coord(args + 1) && is_coord(args + 2) && is_color(args + 3))
 	{
 		tr_obj->item.tr.p[0] = extract_coord(*args++);
 		tr_obj->item.tr.p[1] = extract_coord(*args++);

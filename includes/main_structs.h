@@ -63,7 +63,7 @@ typedef struct		s_camera
 {
 	t_v				coord;
 	t_v 			dir;
-	t_m				basis;
+	t_m				rot_mat;
 	double 			fov;
 }					t_camera;
 

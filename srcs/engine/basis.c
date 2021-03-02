@@ -11,7 +11,7 @@ t_v			screen_to_world(int h, int v, t_vars *vars)
 	c.v[0] = (h - (vars->scene.res.width * vars->af / 2)) * square_width;
 	c.v[1] = -(v - (vars->scene.res.height * vars->af / 2)) * square_width;
 	c.v[2] = vars->af;
-	c = v_mat_mul_vec(m_transpose(cam->basis), c);
+	c = v_mat_mul_vec(m_transpose(cam->rot_mat), c);
 	c = v_add(c, cam->coord);
 	return (c);
 }

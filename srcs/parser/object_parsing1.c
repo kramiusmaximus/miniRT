@@ -47,7 +47,7 @@ void process_c(char **args, t_scene *scene)
 		error("Provide necessary arguments for Ambient.", scene);
 	if (*args || !(node = ft_lstcnew(camera)))
 		error("Error parsing camera.", scene);
-	camera->basis = obj_dir_transform(m_i(3), camera->dir);
+	camera->rot_mat = dir_to_rot_mat(camera->dir);
 	ft_lstcadd_front(&scene->camera, node);
 }
 

@@ -1,26 +1,5 @@
 #include "miniRT.h"
 
-int free_mem(t_scene *scene)
-{
-	ft_lstclear(&scene->light, NULL);
-	ft_lstclear(&scene->object, NULL);
-	ft_lstcclear(&scene->camera);
-}
-
-int error(char *msg, t_scene *scene)
-{
-	free_mem(scene);
-	if (msg)
-	{
-		ft_putstr_fd("Error: ", 2);
-		ft_putstr_fd(msg, 2);
-		ft_putchar_fd('\n', 2);
-		exit(228);
-	}
-	perror(NULL);
-	exit(errno);
-}
-
 int start_mlx_process(t_vars *vars)
 {
 	mlx_loop_hook(vars->mlx.mlx, render_mlx, vars);
@@ -30,15 +9,17 @@ int start_mlx_process(t_vars *vars)
 	mlx_loop(vars->mlx.mlx);
 }
 
-
 int init_vars(char *rt, t_vars *vars, int bmp)
 {
+	int xy[2];
+
 	ft_bzero(vars, sizeof(t_vars));
 	parse_rt(rt, &vars->scene);
 	vars->af = 1;
 	if (!bmp)
 	{
 		vars->mlx.mlx = mlx_init();
+		//lx_get_screen_size(vars->mlx.mlx, &xy[0], &xy[1]);
 		vars->mlx.window_dims.height = WINDOW_HEIGHT;
 		vars->mlx.window_dims.width = WINDOW_WIDTH;
 		if (vars->mlx.window_dims.height < vars->scene.res.height ||
@@ -61,7 +42,7 @@ int launch_renderer(char *rt, int bmp)
 
 	init_vars(rt, &vars, bmp);
 	if (bmp)
-		create_bmp_image(&vars, "../bmp_image");
+		create_bmp_image(&vars, "../bmp_image.bmp");
 	else
 		start_mlx_process(&vars);
 }
