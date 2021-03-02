@@ -1,13 +1,13 @@
 #include "miniRT.h"
 
-int free_mem(t_scene *scene)
+void free_mem(t_scene *scene)
 {
 	ft_lstclear(&scene->light, NULL);
 	ft_lstclear(&scene->object, NULL);
 	ft_lstcclear(&scene->camera);
 }
 
-int error(char *msg, t_scene *scene)
+void error(char *msg, t_scene *scene)
 {
 	free_mem(scene);
 	if (msg)

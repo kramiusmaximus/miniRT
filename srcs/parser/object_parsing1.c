@@ -16,8 +16,6 @@ void process_r(char **args, t_scene *scene)
 
 void process_a(char **args, t_scene *scene)
 {
-	char **rgb;
-
 	scene->s = scene->s | 0b00000010;
 	if (is_float(args) && is_color(args + 1))
 	{
@@ -35,6 +33,7 @@ void process_c(char **args, t_scene *scene)
 	t_camera 	*camera;
 	t_listc		*node;
 
+	node = NULL;
 	if (!(camera = malloc(sizeof(t_camera))))
 		error(NULL, scene);
 	if (is_coord(args) && is_coord(args + 1) && is_float(args + 2))
@@ -56,6 +55,7 @@ void process_l(char **args, t_scene *scene)
 	t_light *light;
 	t_list *node;
 
+	node = NULL;
 	if (!(light = malloc(sizeof(t_light))))
 		error(NULL, scene);
 	if (is_coord(args) && is_float(args + 1) && is_color(args + 2))
@@ -76,6 +76,7 @@ void process_pl(char **args, t_scene *scene)
 	t_object 	*pl_obj;
 	t_list		*node;
 
+	node = NULL;
 	if (!(pl_obj = malloc(sizeof(t_object))))
 		error(NULL, scene);
 	pl_obj->type = PL;

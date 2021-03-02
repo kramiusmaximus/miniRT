@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-t_v surface_vector_cy(t_intersect *inter, t_object *cy_obj)
+static t_v surface_vector_cy(t_intersect *inter, t_object *cy_obj)
 {
 	t_cy			*cy;
 	double 			x;

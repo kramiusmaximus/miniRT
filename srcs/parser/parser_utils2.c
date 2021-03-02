@@ -2,8 +2,6 @@
 
 void		ft_lstcadd_front(t_listc **head, t_listc *node)
 {
-	t_listc	*p;
-
 	if (!head || !node)
 		return ;
 	if (!*head)

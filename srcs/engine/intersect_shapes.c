@@ -141,9 +141,6 @@ static int ray_intersect_caps(t_ray *ray, t_object *cy_obj, t_t *t)
 
 int			ray_intersect_cy(t_ray *ray, t_object *cy_obj, t_t *t)
 {
-	int 	sausage_hit;
-	int 	caps_hit;
-
 	if (!ray || ray_intersect_sausage(ray, cy_obj, t) ||
 		ray_intersect_caps(ray, cy_obj, t))
 		return (1);

@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-int key_press_hook(int key, t_vars *vars)
+void key_press_hook(int key, t_vars *vars)
 {
 	if (key == 13)
 		vars->nav.fwd_back = 1;
@@ -32,7 +32,7 @@ int key_press_hook(int key, t_vars *vars)
 		screen_shot(vars);
 }
 
-int key_release_hook(int key, t_vars *vars)
+void key_release_hook(int key, t_vars *vars)
 {
 	if (key == 13 && vars->nav.fwd_back == 1)
 		vars->nav.fwd_back = 0;
@@ -63,7 +63,7 @@ int exit_hook(t_vars *vars)
 	exit(0);
 }
 
-int switch_camera(int i, t_vars *vars)
+void switch_camera(int i, t_vars *vars)
 {
 	if (i || vars->scene.camera != vars->scene.camera->next)
 	{
@@ -81,7 +81,6 @@ int move_camera(t_vars *vars)
 	t_camera 	*camera;
 	double 		d;
 	int 		dirs;
-	t_m 		b;
 	t_v 		disp;
 
 	nav = vars->nav;

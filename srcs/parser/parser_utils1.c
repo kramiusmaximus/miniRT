@@ -39,7 +39,6 @@ int 		is_float(char **arg)
 int 		is_color(char **arg)
 {
 	char 	**rgb;
-	int 	k;
 	int		i;
 
 	if (!*arg)

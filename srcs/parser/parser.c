@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-static int 	process_line(char *line, t_scene *scene)
+static void process_line(char *line, t_scene *scene)
 {
 	char **split;
 
@@ -27,10 +27,9 @@ static int 	process_line(char *line, t_scene *scene)
 		else
 			error("Incorrect RT specification. Please refer to the bible.", scene);
 	}
-	return (0);
 }
 
-int 		parse_rt(char *rt, t_scene *scene)
+void parse_rt(char *rt, t_scene *scene)
 {
 	int 	fd;
 	int 	n;

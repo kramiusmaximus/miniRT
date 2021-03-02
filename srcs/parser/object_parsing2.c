@@ -5,6 +5,7 @@ void process_sp(char **args, t_scene *scene)
 	t_object 	*sp_obj;
 	t_list		*node;
 
+	node = NULL;
 	if (!(sp_obj = malloc(sizeof(t_object))))
 		error(NULL, scene);
 	sp_obj->type = SP;
@@ -34,6 +35,7 @@ void process_sq(char **args, t_scene *scene)
 	t_object 	*sq_obj;
 	t_list		*node;
 
+	node = NULL;
 	if (!(sq_obj = malloc(sizeof(t_object))))
 		error(NULL, scene);
 	sq_obj->type = SQ;
@@ -65,6 +67,7 @@ void process_cy(char **args, t_scene *scene)
 	t_object 	*cy_obj;
 	t_list		*node;
 
+	node = NULL;
 	if (!(cy_obj = malloc(sizeof(t_object))))
 		error(NULL, scene);
 	cy_obj->type = CY;
@@ -91,11 +94,12 @@ void process_cy(char **args, t_scene *scene)
 	ft_lstadd_front(&scene->object, node);
 }
 
-int 		process_tr(char **args, t_scene *scene)
+void process_tr(char **args, t_scene *scene)
 {
 	t_object *tr_obj;
 	t_list *node;
 
+	node = NULL;
 	if (!(tr_obj = malloc(sizeof(t_object))))
 		error(NULL, scene);
 	tr_obj->type = TR;
