@@ -7,7 +7,13 @@ include_directories(includes libft/includes mlx)
 
 file(GLOB LIBRARIES
         libft/libft.a
+        minilibx_opengl_20191021/libmlx.a
         )
+find_library(
+        MLX
+        libmlx.dylib
+        PATHS
+        /Users/pfelipa/Desktop/pfelipa/miniRT)
 
 file(GLOB SOURCES
         srcs/*.c
@@ -17,7 +23,7 @@ file(GLOB SOURCES
         mlx/*.h
         )
 add_executable(miniRT ${SOURCES} )
-target_link_libraries(miniRT ${LIBRARIES} )
+target_link_libraries(miniRT ${LIBRARIES})
 
 #shkola : /Users/pfelipa/Desktop/pfelipa/miniRT
 #home : /Users/markartyukh/Desktop/code/pfelipa/miniRT

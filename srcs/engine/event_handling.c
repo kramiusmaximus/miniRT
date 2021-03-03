@@ -10,10 +10,10 @@ void key_press_hook(int key, t_vars *vars)
 		vars->nav.lft_rght = -1;
 	else if (key == 2)
 		vars->nav.lft_rght = 1;
-	else if (key == 49)
+	/*else if (key == 49)
 		vars->nav.up_dwn = 1;
 	else if (key == 14)
-		vars->nav.up_dwn = -1;
+		vars->nav.up_dwn = -1;*/
 	else if (key == 123)
 		vars->nav.rot_lft_rght = -1;
 	else if (key == 124)
@@ -42,10 +42,10 @@ void key_release_hook(int key, t_vars *vars)
 		vars->nav.lft_rght = 0;
 	if (key == 2 && vars->nav.lft_rght == 1)
 		vars->nav.lft_rght = 0;
-	if (key == 49 && vars->nav.up_dwn == 1)
+	/*if (key == 49 && vars->nav.up_dwn == 1)
 		vars->nav.up_dwn = 0;
 	if (key == 14 && vars->nav.up_dwn == -1)
-		vars->nav.up_dwn = 0;
+		vars->nav.up_dwn = 0;*/
 	if (key == 123 && vars->nav.rot_lft_rght == -1)
 		vars->nav.rot_lft_rght = 0;
 	if (key == 124 && vars->nav.rot_lft_rght == 1)
@@ -85,16 +85,8 @@ int move_camera(t_vars *vars)
 
 	nav = vars->nav;
 	camera = vars->scene.camera->content;
-
-	/// change rot_mat of camera to initial rot_mat (remove rotation and displacement effects (wb canvaas centering
-	/// and protrusion?))
-
-	/// rotate camera
 	if (is_rotating(&vars->nav))
 		camera->rot_mat = rotate_xyz(nav.rot_up_dwn * 0.1, -nav.rot_lft_rght * 0.1, 0, camera->rot_mat);
-
-	/// move camera
-
 	if (is_moving(&vars->nav))
 	{
 		dirs = abs(nav.fwd_back) + abs(nav.lft_rght) + abs(nav.up_dwn);
@@ -107,7 +99,7 @@ int move_camera(t_vars *vars)
 
 int is_moving(t_nav *nav)
 {
-	if (nav->fwd_back || nav->lft_rght || nav->up_dwn)
+	if (nav->fwd_back || nav->lft_rght/* || nav->up_dwn*/)
 		return (1);
 	return (0);
 }

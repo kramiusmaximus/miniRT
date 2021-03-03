@@ -3,39 +3,29 @@
 static void 		*render_section(void *arg)
 {
 	t_render 	rvars;
-	int			k[4];
+	int 		h;
+	int 		v;
 	int			section_h;
 
 	rvars.vars = ((t_tvars *)arg)->vars;
 	rvars.tid = ((t_tvars *)arg)->tid;
-	rvars.mult[0] = ((double)rvars.vars->mlx.window_dims.height / (double)rvars.vars->scene.res.height) / rvars.vars->af;
-	rvars.mult[1] = ((double)rvars.vars->mlx.window_dims.width / (double)rvars.vars->scene.res.width) / rvars.vars->af;
+	rvars.mult[0] = 1 / rvars.vars->af;
+	rvars.mult[1] = 1 / rvars.vars->af;
 	section_h = (int)((double)rvars.vars->scene.res.height * rvars.vars->af / NUM_THREADS);
-	k[0] = rvars.tid * section_h;
-	while (k[0] < (rvars.tid + 1) * section_h)
+	v = rvars.tid * section_h;
+	while (v < (rvars.tid + 1) * section_h)
 	{
-		k[1] = 0;
-		while (k[1] < rvars.vars->scene.res.width * rvars.vars->af)
+		h = 0;
+		while (h < rvars.vars->scene.res.width * rvars.vars->af)
 		{
-			rvars.vec[0] = screen_to_world(k[1], k[0], rvars.vars);
+			rvars.vec[0] = screen_to_world(h, v, rvars.vars);
 			rvars.vec[1] = v_subtract(rvars.vec[0], ((t_camera *)rvars.vars->scene.camera->content)->coord);
-			rvars.ray = make_ray(((t_camera *) rvars.vars->scene.camera->content)->coord, rvars.vec[1], 0);
+			rvars.ray = make_ray(((t_camera *)rvars.vars->scene.camera->content)->coord, rvars.vec[1], 0);
 			rvars.color = trace_color(&rvars.ray, &rvars.vars->scene, N_PASSES, 1, MAX_DIST);
-			k[2] = (int)(((double)k[0]) * rvars.mult[0]);
-			while (k[2] < ((double)(k[0] + 1)) * rvars.mult[0])
-			{
-				k[3] = (int)((double)k[1] * rvars.mult[1]);
-				while (k[3] < ((double)(k[1] + 1)) * rvars.mult[1])
-				{
-					put_pixel(rvars.vars->mlx.image.addr, k[3], k[2], rvars.color, rvars.vars->mlx.image.line_length,
-							  32);
-					k[3]++;
-				}
-				k[2]++;
-			}
-			k[1]++;
+			fill_square(&rvars, v, h);
+			h++;
 		}
-		k[0]++;
+		v++;
 	}
 	pthread_exit(NULL);
 }

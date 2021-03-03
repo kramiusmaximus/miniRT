@@ -39,3 +39,22 @@ int put_pixel_bmp(void *img, int x, int y, int color, int line_len, int bpp)
 	((bmp_pix *)p)->b = (unsigned char)get_b(color);
 	return (0);
 }
+
+void				fill_square(t_render *rvars, int v, int h)
+{
+	int x;
+	int y;
+
+	y = (int)(v * rvars->mult[0]);
+	while (y < (int)((double)(v + 1) * rvars->mult[0]))
+	{
+		x = (int) (h * rvars->mult[1]);
+		while (x < (int) ((double) (h + 1) * rvars->mult[1]))
+		{
+			put_pixel(rvars->vars->mlx.image.addr, x, y, rvars->color, rvars->vars->mlx.image.line_length,
+					  32);
+			x++;
+		}
+		y++;
+	}
+}

@@ -1,49 +1,51 @@
 #include <tcl.h>
 #include "miniRT.h"
 
+static void 		initiate_trvars(t_trvars *trvars, t_scene *scene, double max_d)
+{
+	ft_bzero(trvars, sizeof(t_trvars));
+	trvars->t.closest = max_d;
+	trvars->p = scene->object;
+	trvars->obj_closest = NULL;
+}
+
+static void 		ray_intersect_wrapper(t_ray *ray, t_trvars *trvars)
+{
+	if (trvars->obj->type & SP)
+		ray_intersect_sphere(ray, trvars->obj, &trvars->t);
+	else if (trvars->obj->type & PL)
+		ray_intersect_plane(ray, trvars->obj, &trvars->t);
+	else if (trvars->obj->type & SQ)
+		ray_intersect_sq(ray, trvars->obj, &trvars->t);
+	else if (trvars->obj->type & CY)
+		ray_intersect_cy(ray, trvars->obj, &trvars->t);
+	else if (trvars->obj->type & TR)
+		ray_intersect_tr(ray, trvars->obj, &trvars->t);
+}
 
 t_intersect *trace_ray(t_ray *ray, t_scene *scene, double min_d, double max_d)
 {
-	t_list 		*p;
-	t_object	*obj;
-	t_object	*obj_closest;
-	t_t 		t;
-	int 		i;
+	t_trvars	trvars;
 
-	t.closest = max_d;
-	if (!ray || !scene)
-		return (NULL);
-	p = scene->object;
-	obj_closest = NULL;
-	while (p)
+	initiate_trvars(&trvars, scene, max_d);
+	while (trvars.p)
 	{
-		obj = p->content;
-		t.size = 0;
-		if (obj->type & SP)
-			ray_intersect_sphere(ray, obj, &t);
-		else if (obj->type & PL)
-			ray_intersect_plane(ray, obj, &t);
-		else if (obj->type & SQ)
-			ray_intersect_sq(ray, obj, &t);
-		else if (obj->type & CY)
-			ray_intersect_cy(ray, obj, &t);
-		else if (obj->type & TR)
-			ray_intersect_tr(ray, obj, &t);
-		i = 0;
-		while (i < t.size)
+		trvars.obj = trvars.p->content;
+		trvars.t.size = 0;
+		ray_intersect_wrapper(ray, &trvars);
+		trvars.i = 0;
+		while (trvars.i < trvars.t.size)
 		{
-			if (t.arr[i] > min_d && t.arr[i] < t.closest)
+			if (trvars.t.arr[trvars.i] > min_d && trvars.t.arr[trvars.i] < trvars.t.closest)
 			{
-				t.closest = t.arr[i];
-				obj_closest = obj;
+				trvars.t.closest = trvars.t.arr[trvars.i];
+				trvars.obj_closest = trvars.obj;
 			}
-			i++;
+			trvars.i++;
 		}
-		p = p->next;
+		trvars.p = trvars.p->next;
 	}
-	if (obj_closest)
-		return (ray->intersect = process_t(ray, obj_closest, &t));
-	return (NULL);
+	return (trvars.obj_closest ? (ray->intersect = process_t(ray, trvars.obj_closest, &trvars.t)) : NULL);
 }
 
 int trace_color(t_ray *ray, t_scene *scene, int n_passes, double d_min, double d_max)
@@ -56,19 +58,16 @@ int trace_color(t_ray *ray, t_scene *scene, int n_passes, double d_min, double d
 	if ((inter = trace_ray(ray, scene, d_min, d_max)))
 	{
 		c = inter->obj->color;
-		if (inter->obj->type & (SP | CY))
-			r[0] = make_ray(inter->contact, v_normalize(inter->tra_dir), ray->inside ^ 0b1);
-		else
-			r[0] = make_ray(inter->contact, v_normalize(inter->tra_dir), ray->inside);
+		r[0] = make_ray(inter->contact, v_normalize(inter->tra_dir), (inter->obj->type & (SP | CY)) ? ray->inside ^ 0b1 : ray->inside);
 		if (n_passes > 1 && ray->inside && inter->obj->transperancy)
 			return (trace_color(&r[0], scene, n_passes - 1, EPS, MAX_DIST));
 		if (n_passes > 1 && inter->obj->transperancy)
-				c = rgb_add_weighted(c, rgb_multiply(c, trace_color(&r[0], scene, n_passes, d_min, d_max)), 1 -
+				c = rgb_add_weighted(c, rgb_multiply(c, trace_color(&r[0], scene, n_passes - 1, d_min, d_max)), 1 -
 																											   inter->obj->transperancy);
 		light_effects(ray, scene, &c, inter);
 		r[1] = make_ray(inter->contact, v_normalize(inter->ref_dir), ray->inside);
-		ref_coeff = bound(inter->obj->reflectivity / cos(inter->incidence_ang0) / 3, inter->obj->reflectivity, 1);
-		if (n_passes > 1 && ref_coeff)
+		ref_coeff = bound(inter->obj->reflectivity / cos(inter->incidence_ang0) / 1.5, inter->obj->reflectivity, 1);
+		if (n_passes > 1)
 			c = rgb_add_weighted(c, trace_color(&r[1], scene, n_passes - 1, EPS, MAX_DIST),
 						1 - ref_coeff);
 		free(inter);

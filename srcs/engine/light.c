@@ -1,42 +1,45 @@
 #include "miniRT.h"
 
+
+static void initiate_lvars(t_lvars *lvars, t_scene *scene)
+{
+	lvars->diff = 0;
+	lvars->spec = 0;
+	lvars->p = scene->light;
+}
+
+static void light_calculations(t_lvars *lvars, t_ray *ray, t_scene *scene)
+{
+	lvars->light = lvars->p->content;
+	lvars->l = v_normalize(v_subtract(lvars->light->coordinates, ray->intersect->contact));
+	lvars->dist = v_norm(v_subtract(lvars->light->coordinates, ray->intersect->contact));
+	lvars->ray_l = make_ray(ray->intersect->contact, lvars->l, 0);
+	lvars->transp = 1;
+	if ((lvars->inter_l = trace_ray(&lvars->ray_l, scene, EPS, lvars->dist - EPS)))
+	{
+		lvars->transp = bound(lvars->inter_l->obj->transperancy, 0, 0.95);
+		free(lvars->inter_l);
+	}
+	lvars->dot = v_dot(ray->intersect->surface_v, lvars->l);
+	lvars->dot = lvars->dot < 0 ? 0 : lvars->dot;
+}
+
 void light_effects(t_ray *ray, t_scene *scene, int *c, t_intersect *inter)
 {
-	t_v 		l;
-	t_list 		*p;
-	t_light 	*light;
-	t_intersect *inter_l;
-	t_ray 		ray_l;
-	double 		dot;
-	double 		dist;
-	double		transp;
-	int 		a[2];
+	t_lvars		lvars;
 
-	a[0] = rgb_multiply_scalar(scene->ambient.color, scene->ambient.intensity);
-	a[1] = 0;
-	p = scene->light;
-	while (p)
+	initiate_lvars(&lvars, scene);
+	lvars.amb = rgb_multiply_scalar(scene->ambient.color, scene->ambient.intensity);
+	while (lvars.p)
 	{
-		light = p->content;
-		l = v_normalize(v_subtract(light->coordinates, ray->intersect->contact));
-		dist = v_norm(v_subtract(light->coordinates, ray->intersect->contact));
-		ray_l = make_ray(ray->intersect->contact, l, 0);
-		// calculating diffuse lighting
-		transp = 1;
-		if ((inter_l = trace_ray(&ray_l, scene, EPS, dist - EPS)))
-		{
-			transp = bound(inter_l->obj->transperancy, 0, 0.95);
-			free(inter_l);
-		}
-		dot = v_dot(ray->intersect->surface_v, l);
-		dot = dot < 0 ? 0 : dot;
-		a[0] = rgb_add(rgb_multiply_scalar(light->color, dot * light->intensity * transp), a[0]); // diffuse
-		a[1] = rgb_add(rgb_multiply_scalar(light->color, (pow(200, -(200 / dot - 200))) * light->intensity * transp),
-					   a[1]); // specular
-
-		p = p->next;
+		light_calculations(&lvars, ray, scene);
+		lvars.diff = rgb_add(rgb_multiply_scalar(lvars.light->color, lvars.dot * lvars.light->intensity * lvars.transp), lvars.diff);
+		lvars.spec = rgb_add(rgb_multiply_scalar(lvars.light->color, (pow(200, -(200 / lvars.dot - 200))) * lvars.light->intensity * lvars.transp),
+							 lvars.spec);
+		lvars.p = lvars.p->next;
 	}
-	*c = rgb_add_weighted(*c, rgb_multiply(*c, a[0]), inter->obj->transperancy);
+	lvars.diff = rgb_add(lvars.diff, lvars.amb);
+	*c = rgb_add_weighted(*c, rgb_multiply(*c, lvars.diff), inter->obj->transperancy);
 	if (!(inter->obj->type & (SQ | PL)) && inter->obj->reflectivity)
-		*c = rgb_add(*c, a[1]);
+		*c = rgb_add(*c, lvars.spec);
 }

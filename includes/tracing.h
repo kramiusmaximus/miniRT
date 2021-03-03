@@ -9,6 +9,15 @@ typedef struct			s_t
 	double 				arr[10];
 }						t_t;
 
+typedef struct
+{
+	t_list		*p;
+	t_object	*obj;
+	t_object	*obj_closest;
+	t_t 		t;
+	int 		i;
+}				t_trvars;
+
 int						ray_intersect_sphere(t_ray *ray, t_object *sp_obj, t_t *t);
 int 					ray_intersect_plane(t_ray	*ray, t_object *pl_obj, t_t *t);
 int 					ray_intersect_sq(t_ray *ray, t_object *sq_obj, t_t *t);

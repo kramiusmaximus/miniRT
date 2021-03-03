@@ -59,6 +59,21 @@ typedef struct 			s_ray
 	t_intersect			*intersect;
 }						t_ray;
 
+typedef struct
+{
+	t_v 		l;
+	t_list 		*p;
+	t_light		*light;
+	t_intersect	*inter_l;
+	t_ray		ray_l;
+	double 		dot;
+	double 		dist;
+	double 		transp;
+	int 		amb;
+	int 		diff;
+	int 		spec;
+}				t_lvars;
+
 typedef struct		s_camera
 {
 	t_v				coord;
@@ -142,7 +157,5 @@ typedef struct 		s_render
 	int 			color;
 	t_ray			ray;
 }					t_render;
-
-
 
 #endif

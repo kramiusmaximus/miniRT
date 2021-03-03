@@ -120,8 +120,7 @@ int			solve_quadratic(double a, double b, double c, t_t *t)
 	return (0);
 }
 
-t_v v_mat_mul_vec(t_m m, t_v v)  /// would be interesting to see the difference in performance when using this func and
-/// one with pointers
+t_v v_mat_mul_vec(t_m m, t_v v)
 {
 	int i;
 	int j;
@@ -144,30 +143,28 @@ t_v v_mat_mul_vec(t_m m, t_v v)  /// would be interesting to see the difference 
 t_m v_mat_mul(t_m a1, t_m a2)
 {
 	t_m res;
-	int i;
-	int j;
-	int k;
+	int ijk[3];
 
 	res.size[0] = a1.size[0];
 	res.size[1] = a2.size[1];
 	if (a1.size[1] != a2.size[0])
 		ft_printf("Matrix size mismatch!\n");
-	i = 0;
-	while (i < a1.size[0])
+	ijk[0] = 0;
+	while (ijk[0] < a1.size[0])
 	{
-		j = 0;
-		while (j < a2.size[1])
+		ijk[1] = 0;
+		while (ijk[1] < a2.size[1])
 		{
-			res.m[i][j] = 0;
-			k = 0;
-			while (k < a1.size[1])
+			res.m[ijk[0]][ijk[1]] = 0;
+			ijk[2] = 0;
+			while (ijk[2] < a1.size[1])
 			{
-				res.m[i][j] += a1.m[i][k] * a2.m[k][j];
-				k++;
+				res.m[ijk[0]][ijk[1]] += a1.m[ijk[0]][ijk[2]] * a2.m[ijk[2]][ijk[1]];
+				ijk[2]++;
 			}
-			j++;
+			ijk[1]++;
 		}
-		i++;
+		ijk[0]++;
 	}
 	return (res);
 }
