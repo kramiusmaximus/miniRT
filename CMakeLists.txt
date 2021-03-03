@@ -7,7 +7,7 @@ include_directories(includes libft/includes mlx)
 
 file(GLOB LIBRARIES
         libft/libft.a
-        minilibx_opengl_20191021/libmlx.a
+        mlx/libmlx.a
         )
 find_library(
         MLX

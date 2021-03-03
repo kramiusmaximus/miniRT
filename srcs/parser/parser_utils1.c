@@ -40,7 +40,9 @@ int 		is_color(char **arg)
 {
 	char 	**rgb;
 	int		i;
+	int 	k;
 
+	k = 1;
 	if (!*arg)
 		return (0);
 	i = 0;
@@ -48,19 +50,25 @@ int 		is_color(char **arg)
 	while (rgb[i])
 	{
 		if (!is_int(&rgb[i]))
-			return (0);
+		{
+			k = 0;
+			break;
+		}
 		i++;
 	}
 	if (i != 3)
-		return (0);
-	return (1);
+		k = 0;
+	free(rgb);
+	return (k);
 }
 
 int 		is_coord(char **arg)
 {
-	char **coord;
-	int i;
+	char 	**coord;
+	int 	i;
+	int 	k;
 
+	k = 1;
 	if (!*arg)
 		return (0);
 	i = 0;
@@ -68,12 +76,16 @@ int 		is_coord(char **arg)
 	while (coord[i])
 	{
 		if (!is_float(&coord[i]))
-			return (0);
+		{
+			k = 0;
+			break;
+		}
 		i++;
 	}
 	if (i != 3)
-		return (0);
-	return (1);
+		k = 0;
+	free(coord);
+	return (k);
 }
 
 t_listc		*ft_lstcnew(t_camera *data)

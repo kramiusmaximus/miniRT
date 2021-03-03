@@ -10,10 +10,10 @@ void key_press_hook(int key, t_vars *vars)
 		vars->nav.lft_rght = -1;
 	else if (key == 2)
 		vars->nav.lft_rght = 1;
-	/*else if (key == 49)
+	else if (key == 49)
 		vars->nav.up_dwn = 1;
 	else if (key == 14)
-		vars->nav.up_dwn = -1;*/
+		vars->nav.up_dwn = -1;
 	else if (key == 123)
 		vars->nav.rot_lft_rght = -1;
 	else if (key == 124)

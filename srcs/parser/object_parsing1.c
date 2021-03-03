@@ -89,11 +89,7 @@ void process_pl(char **args, t_scene *scene)
 	else
 		error("Provide necessary arguments for Plane object.", scene);
 	if (is_float(args) && is_float(args + 1) && is_float(args + 2))
-	{
-		pl_obj->reflectivity = bound(ft_atof(*args++), 0, 1);
-		pl_obj->transperancy = bound(ft_atof(*args++), 0, 1);
-		pl_obj->refraction = max_f(ft_atof(*args++), 0);
-	}
+		args = norminette_can_eat_my_ass(pl_obj, args);
 	if (*args || !(node = ft_lstnew(pl_obj)))
 		error("Object parsing error", scene);
 	ft_lstadd_front(&scene->object, node);

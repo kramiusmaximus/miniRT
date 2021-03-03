@@ -78,7 +78,7 @@ void mlx_image_to_bmp(t_vars *vars)
 							  vars->mlx.image.bits_per_pixel);
 							  */
 					rvars.color = *((int *)vars->mlx.image.addr + v*vars->bmpim.header.width_px + h);
-					put_pixel_bmp(vars->bmpim.image + offset, h, v, rvars.color, (vars->bmpim.header.width_px * vars->bmpim.header.bits_per_pixel / 8 + vars->bmpim.pad_size), vars->bmpim.header.bits_per_pixel);
+					put_pixel_bmp(vars->bmpim.image + offset, h,vars->mlx.window_dims.height - v, rvars.color, (vars->bmpim.header.width_px * vars->bmpim.header.bits_per_pixel / 8 + vars->bmpim.pad_size), vars->bmpim.header.bits_per_pixel);
 				}
 		}
 	}
@@ -88,7 +88,7 @@ void screen_shot(t_vars *vars)
 {
 	int	fd;
 
-	if ((fd = open("../miniRT_snapshot.bmp", O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) < 0)
+	if ((fd = open("../miniRT_snapshot3.bmp", O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) < 0)
 		error(NULL, &vars->scene);
 	vars->bmpim.pad_size = (4 - (vars->scene.res.width * vars->bmpim.header.bits_per_pixel / 8) % 4) % 4;
 	bitmap_header(vars);

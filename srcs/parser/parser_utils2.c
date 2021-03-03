@@ -51,3 +51,11 @@ t_v 	extract_dir(char *arg)
 	v = v_normalize(v);
 	return (v);
 }
+
+char **norminette_can_eat_my_ass(t_object *obj, char **args)
+{
+	obj->reflectivity = bound(ft_atof(*args++), 0, 1);
+	obj->transperancy = bound(ft_atof(*args++), 0, 1);
+	obj->refraction = max_f(ft_atof(*args++), 0);
+	return (args);
+}

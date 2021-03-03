@@ -5,6 +5,7 @@ static int render_image(t_vars *vars)
 	t_render	rvars;
 	int			h;
 	int 		v;
+	int			c[AA_SAMPLE_NUM];
 
 	rvars.vars = vars;
 	rvars.mult[0] = 1 / vars->af;
@@ -15,10 +16,14 @@ static int render_image(t_vars *vars)
 		h = 0;
 		while (h < (int)(((double)vars->scene.res.width) * vars->af))
 		{
-			rvars.vec[0] = screen_to_world(h, v, vars);
-			rvars.vec[1] = v_subtract(rvars.vec[0], ((t_camera *)vars->scene.camera->content)->coord);
-			rvars.ray = make_ray(((t_camera *) vars->scene.camera->content)->coord, rvars.vec[1], 0);
-			rvars.color = trace_color(&rvars.ray, &vars->scene, N_PASSES, 1, MAX_DIST);
+			for (int i = 0; i < AA_SAMPLE_NUM; i++)
+			{
+				rvars.vec[0] = screen_to_world(h, v, rvars.vars);
+				rvars.vec[1] = v_subtract(rvars.vec[0], ((t_camera *)rvars.vars->scene.camera->content)->coord);
+				rvars.ray = make_ray(((t_camera *)rvars.vars->scene.camera->content)->coord, rvars.vec[1], 0);
+				c[i] = trace_color(&rvars.ray, &rvars.vars->scene, N_PASSES, 1, MAX_DIST);
+			}
+			rvars.color = rgb_avg(c, AA_SAMPLE_NUM);
 			fill_square(&rvars, v, h);
 			h++;
 		}

@@ -17,14 +17,15 @@
 # include "mlx.h"
 # include "bitmap.h"
 # define MAX_DIST		1000000000
-# define BG_COLOR		0xDAFFFC
+# define BG_COLOR		0
 # define NUM_THREADS 	4
-# define N_PASSES		5
-# define EPS			0.0000001
+# define N_PASSES		4
+# define EPS			0.000000001
 # define AF				0.15
 # define STEP_SIZE		5
 # define WINDOW_HEIGHT  720
 # define WINDOW_WIDTH   1280
+# define AA_SAMPLE_NUM  8
 
 void				fill_square(t_render *rvars, int v, int h);
 int 				put_pixel(void *img, int x, int y, int color, int line_len, int bpp);

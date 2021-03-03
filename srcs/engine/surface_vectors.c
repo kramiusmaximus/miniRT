@@ -32,7 +32,6 @@ t_v surface_vector(t_intersect *inter, t_object *obj)
 	else if (obj->type & CY)
 		n = surface_vector_cy(inter, obj);
 	else if (obj->type & TR)
-		n = v_normalize(v_cross(v_subtract(obj->item.tr.p[0],obj->item.tr.p[1]), v_subtract(obj->item.tr.p[2],obj->item
-		.tr.p[1])));
+		n = v_normalize(v_cross(v_subtract(obj->item.tr.p[0],obj->item.tr.p[1]), v_subtract(obj->item.tr.p[1],obj->item.tr.p[2])));
 	return (n);
 }

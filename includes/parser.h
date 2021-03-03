@@ -20,5 +20,6 @@ void		ft_lstcadd_front(t_listc **head, t_listc *node);
 int 		extract_color(char *arg);
 t_v 		extract_coord(char *arg);
 t_v 		extract_dir(char *arg);
+char 		**norminette_can_eat_my_ass(t_object *obj, char **args);
 
 #endif

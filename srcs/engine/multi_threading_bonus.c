@@ -6,6 +6,7 @@ static void 		*render_section(void *arg)
 	int 		h;
 	int 		v;
 	int			section_h;
+	int 		c[AA_SAMPLE_NUM];
 
 	rvars.vars = ((t_tvars *)arg)->vars;
 	rvars.tid = ((t_tvars *)arg)->tid;
@@ -18,10 +19,14 @@ static void 		*render_section(void *arg)
 		h = 0;
 		while (h < rvars.vars->scene.res.width * rvars.vars->af)
 		{
-			rvars.vec[0] = screen_to_world(h, v, rvars.vars);
-			rvars.vec[1] = v_subtract(rvars.vec[0], ((t_camera *)rvars.vars->scene.camera->content)->coord);
-			rvars.ray = make_ray(((t_camera *)rvars.vars->scene.camera->content)->coord, rvars.vec[1], 0);
-			rvars.color = trace_color(&rvars.ray, &rvars.vars->scene, N_PASSES, 1, MAX_DIST);
+			for (int i = 0; i < AA_SAMPLE_NUM; i++)
+			{
+				rvars.vec[0] = screen_to_world(h, v, rvars.vars);
+				rvars.vec[1] = v_subtract(rvars.vec[0], ((t_camera *)rvars.vars->scene.camera->content)->coord);
+				rvars.ray = make_ray(((t_camera *)rvars.vars->scene.camera->content)->coord, rvars.vec[1], 0);
+				c[i] = trace_color(&rvars.ray, &rvars.vars->scene, N_PASSES, 1, MAX_DIST);
+			}
+			rvars.color = rgb_avg(c, AA_SAMPLE_NUM);
 			fill_square(&rvars, v, h);
 			h++;
 		}

@@ -14,17 +14,14 @@ int put_pixel(void *img, int x, int y, int color, int line_len, int bpp)
 	return (0);
 }
 
-t_intersect	*process_t(t_ray *ray, t_object *obj, t_t *t)
+t_intersect *process_t(t_object *obj, t_ray *ray, t_t *t, t_scene *scene)
 {
 	t_intersect *inter;
 	double 		c;
 	double 		r;
 
 	if (!ray || !obj || !t || !(inter = malloc(sizeof(t_intersect))))
-	{
-		ft_printf("Error at function \'process_t()\'\n");
-		exit(1);
-	}
+		error("Failed malloc allocatoin.", scene);
 	inter->t = t->closest;
 	inter->contact = v_add(ray->origin, v_scalar_mult(ray->dir, inter->t));
 	inter->obj = obj;
@@ -36,13 +33,9 @@ t_intersect	*process_t(t_ray *ray, t_object *obj, t_t *t)
 	c = -v_dot(inter->surface_v, v_normalize(ray->dir));
 	if (obj->type & (SP | CY))
 	{
-		if (ray->inside)
-			r = inter->obj->refraction;
-		else
-			r = 1 / inter->obj->refraction;
+		r = ray->inside ? inter->obj->refraction : 1 / inter->obj->refraction;
 		inter->tra_dir = v_add(v_scalar_mult(v_normalize(ray->dir), r),
-							   v_scalar_mult(inter->surface_v, r * c - sqrt(1 - pow(r, 2) * (1 - pow
-									   (c, 2)))));
+							   v_scalar_mult(inter->surface_v, r * c - sqrt(1 - pow(r, 2) * (1 - pow(c, 2)))));
 	}
 	else
 		inter->tra_dir = ray->dir;

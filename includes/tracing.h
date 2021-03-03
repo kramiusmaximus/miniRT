@@ -24,7 +24,7 @@ int 					ray_intersect_sq(t_ray *ray, t_object *sq_obj, t_t *t);
 int 					ray_intersect_cy(t_ray	*ray, t_object *cy_obj, t_t *t);
 int 					ray_intersect_tr(t_ray *ray, t_object *tr_obj, t_t *t);
 t_ray make_ray(t_v origin, t_v dir, int inside);
-t_intersect				*process_t(t_ray *ray, t_object *obj, t_t *t);
+t_intersect *process_t(t_object *obj, t_ray *ray, t_t *t, t_scene *scene);
 int						solve_quadratic(double a, double b, double c, t_t *t);
 int 					min(int a, int b);
 int 					max(int a, int b);
