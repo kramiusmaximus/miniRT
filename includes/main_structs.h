@@ -48,6 +48,7 @@ typedef struct			s_intersect
 	double 				incidence_ang1;
 	t_v					ref_dir;
 	t_v					tra_dir;
+	double 				ref_coeff;
 	t_v					surface_v;
 }						t_intersect;
 
@@ -68,7 +69,7 @@ typedef struct
 	t_ray		ray_l;
 	double 		dot;
 	double 		dist;
-	double 		transp;
+	double 		pass;
 	int 		amb;
 	int 		diff;
 	int 		spec;
@@ -136,7 +137,7 @@ typedef struct 		s_vars
 	t_BMPImage 		bmpim;
 	t_mlx			mlx;
 	t_scene			scene;
-	int 			rendered;
+	int 			full_res_rendered;
 	double 			af;
 	t_nav			nav;
 }					t_vars;

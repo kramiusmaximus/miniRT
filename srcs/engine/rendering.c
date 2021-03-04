@@ -18,7 +18,7 @@ static int render_image(t_vars *vars)
 		{
 			for (int i = 0; i < AA_SAMPLE_NUM; i++)
 			{
-				rvars.vec[0] = screen_to_world(h, v, rvars.vars);
+				rvars.vec[0] = screen_to_world(h, v, rvars.vars, 0);
 				rvars.vec[1] = v_subtract(rvars.vec[0], ((t_camera *)rvars.vars->scene.camera->content)->coord);
 				rvars.ray = make_ray(((t_camera *)rvars.vars->scene.camera->content)->coord, rvars.vec[1], 0);
 				c[i] = trace_color(&rvars.ray, &rvars.vars->scene, N_PASSES, 1, MAX_DIST);
@@ -39,12 +39,12 @@ int render_mlx(t_vars *vars)
 	if (is_moving(&vars->nav) || is_rotating(&vars->nav))
 	{
 		move_camera(vars);
-		vars->rendered = 0;
+		vars->full_res_rendered = 0;
 		vars->af = AF;
 	}
-	else if (!vars->rendered)
+	else if (!vars->full_res_rendered)
 	{
-		vars->rendered = 1;
+		vars->full_res_rendered = 1;
 		vars->af = 1;
 	}
 	else

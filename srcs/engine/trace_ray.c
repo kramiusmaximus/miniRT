@@ -53,23 +53,23 @@ int trace_color(t_ray *ray, t_scene *scene, int n_passes, double d_min, double d
 	t_intersect *inter;
 	int 		c;
 	t_ray 		r[2];
-	double 		ref_coeff;
 
 	if ((inter = trace_ray(ray, scene, d_min, d_max)))
 	{
 		c = inter->obj->color;
 		r[0] = make_ray(inter->contact, v_normalize(inter->tra_dir), (inter->obj->type & (SP | CY)) ? ray->inside ^ 0b1 : ray->inside);
-		if (n_passes > 1 && ray->inside && inter->obj->transperancy)
-			return (trace_color(&r[0], scene, n_passes - 1, EPS, MAX_DIST));
-		if (n_passes > 1 && inter->obj->transperancy)
-				c = rgb_add_weighted(c, rgb_multiply(c, trace_color(&r[0], scene, n_passes - 1, EPS, MAX_DIST)), 1 -
+		//if (n_passes > 1 && ray->inside && inter->obj->transperancy)
+		//	return (trace_color(&r[0], scene, n_passes - 1, EPS, MAX_DIST));
+
+		if (n_passes > 1 && inter->obj->transperancy && inter->ref_coeff < 1)
+			c = rgb_add_weighted(c, rgb_multiply(c, trace_color(&r[0], scene, n_passes - 1, EPS, MAX_DIST)), 1 -
 																											   inter->obj->transperancy);
 		light_effects(ray, scene, &c, inter);
 		r[1] = make_ray(inter->contact, v_normalize(inter->ref_dir), ray->inside);
-		ref_coeff = bound(inter->obj->reflectivity / cos(inter->incidence_ang0) / 1.5, inter->obj->reflectivity, 1);
-		if (n_passes > 1 && ref_coeff)
+		if (n_passes > 1 && inter->ref_coeff)
 			c = rgb_add_weighted(c, trace_color(&r[1], scene, n_passes - 1, EPS, MAX_DIST),
-						1 - ref_coeff);
+						1 - inter->ref_coeff);
+
 		free(inter);
 	   	return (c);
 	}

@@ -19,9 +19,12 @@ t_intersect *process_t(t_object *obj, t_ray *ray, t_t *t, t_scene *scene)
 	t_intersect *inter;
 	double 		c;
 	double 		r;
+	double r0;
 
 	if (!ray || !obj || !t || !(inter = malloc(sizeof(t_intersect))))
 		error("Failed malloc allocatoin.", scene);
+	/*if (t->size == 2 && (t->arr[0] < -EPS || t->arr[1] < -EPS))
+		ray->inside = 1;*/
 	inter->t = t->closest;
 	inter->contact = v_add(ray->origin, v_scalar_mult(ray->dir, inter->t));
 	inter->obj = obj;
@@ -30,15 +33,30 @@ t_intersect *process_t(t_object *obj, t_ray *ray, t_t *t, t_scene *scene)
 			inter->surface_v;
 	inter->incidence_ang0 = M_PI - acos(v_dot(v_normalize(ray->dir), inter->surface_v));
 	inter->ref_dir = v_subtract(ray->dir,v_scalar_mult(inter->surface_v , 2 * v_dot(inter->surface_v, ray->dir)));
+
+
+
 	c = -v_dot(inter->surface_v, v_normalize(ray->dir));
-	if (obj->type & (SP | CY))
+	if (obj->type & (SP | CY) && obj->transperancy)
 	{
 		r = ray->inside ? inter->obj->refraction : 1 / inter->obj->refraction;
-		inter->tra_dir = v_add(v_scalar_mult(v_normalize(ray->dir), r),
-							   v_scalar_mult(inter->surface_v, r * c - sqrt(1 - pow(r, 2) * (1 - pow(c, 2)))));
+		if (1 - r * r * (1 - c * c) >= 0)
+		{
+			inter->tra_dir = v_add(v_scalar_mult(v_normalize(ray->dir), r),v_scalar_mult(inter->surface_v, r * c - sqrt(1 - r * r * (1 - c * c))));
+			r0 = obj->reflectivity / 4;
+		}
+		else
+			r0 = 1;
 	}
 	else
+	{
 		inter->tra_dir = ray->dir;
+		r0 = obj->reflectivity;
+	}
+	if (r0 == 1 || r0 == 0)
+		inter->ref_coeff = r0;
+	else
+		inter->ref_coeff = r0 + (1 - r0) * pow(1 - cos(inter->incidence_ang0), 5);
 	return (inter);
 }
 

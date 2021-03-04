@@ -10,7 +10,7 @@ static int render_image_bmp(t_vars *vars)
 	{
 		for (int h = 0; h < vars->scene.res.width; h++)
 		{
-			rvars.vec[0] = screen_to_world(h, v, vars);
+			rvars.vec[0] = screen_to_world(h, v, vars, 0);
 			rvars.vec[1] = v_subtract(rvars.vec[0], ((t_camera *)vars->scene.camera->content)->coord);
 			rvars.ray = make_ray(((t_camera *) vars->scene.camera->content)->coord, rvars.vec[1], 0);
 			rvars.color = trace_color(&rvars.ray, &vars->scene, N_PASSES, 1, MAX_DIST);

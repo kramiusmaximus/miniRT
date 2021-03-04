@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-t_v 				screen_to_world(int h, int v, t_vars *vars)
+t_v screen_to_world(int h, int v, t_vars *vars, int aa)
 {
 	t_camera 	*cam;
 	t_v 		c;
@@ -11,8 +11,8 @@ t_v 				screen_to_world(int h, int v, t_vars *vars)
 
 	cam = vars->scene.camera->content;
 	square_width = 2 * tan(cam->fov / 2 * M_PI / 180) / vars->scene.res.width;
-	rand_x = AA_SAMPLE_NUM > 1 ? (double)rand() / 5000000 * (square_width) : 0;
-	rand_y = AA_SAMPLE_NUM > 1 ? (double)rand() / 5000000 * (square_width) : 0;
+	rand_x = aa ? (double)rand() / 5000000 * (square_width) : 0;
+	rand_y = aa ? (double)rand() / 5000000 * (square_width) : 0;
 	c.v[0] = (h - (vars->scene.res.width * vars->af / 2) + rand_x) * square_width;
 	c.v[1] = -(v - (vars->scene.res.height * vars->af / 2) + rand_y) * square_width;
 	c.v[2] = vars->af;

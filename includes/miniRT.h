@@ -17,10 +17,10 @@
 # include "mlx.h"
 # include "bitmap.h"
 # define MAX_DIST		1000000000
-# define BG_COLOR		0
+# define BG_COLOR		0xB5FFF7
 # define NUM_THREADS 	4
-# define N_PASSES		4
-# define EPS			0.000000001
+# define N_PASSES		5
+# define EPS			0.00000001
 # define AF				0.15
 # define STEP_SIZE		5
 # define WINDOW_HEIGHT  720
