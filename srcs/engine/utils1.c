@@ -1,19 +1,5 @@
 #include "miniRT.h"
 
-int put_pixel(void *img, int x, int y, int color, int line_len, int bpp)
-{
-	void	*p;
-
-	if (!img)
-	{
-		ft_printf("Error at function \'put_pixel()\'\n");
-		exit(1);
-	}
-	p = img + (y * line_len + x * (bpp / 8));
-	*(unsigned int *)p = color;
-	return (0);
-}
-
 t_intersect *process_t(t_object *obj, t_ray *ray, t_t *t, t_scene *scene)
 {
 	t_intersect *inter;
@@ -23,8 +9,8 @@ t_intersect *process_t(t_object *obj, t_ray *ray, t_t *t, t_scene *scene)
 
 	if (!ray || !obj || !t || !(inter = malloc(sizeof(t_intersect))))
 		error("Failed malloc allocatoin.", scene);
-	/*if (t->size == 2 && (t->arr[0] < -EPS || t->arr[1] < -EPS))
-		ray->inside = 1;*/
+	if (t->size == 2 && (t->arr[0] < -EPS || t->arr[1] < -EPS))
+		ray->inside = 1;
 	inter->t = t->closest;
 	inter->contact = v_add(ray->origin, v_scalar_mult(ray->dir, inter->t));
 	inter->obj = obj;
@@ -33,9 +19,6 @@ t_intersect *process_t(t_object *obj, t_ray *ray, t_t *t, t_scene *scene)
 			inter->surface_v;
 	inter->incidence_ang0 = M_PI - acos(v_dot(v_normalize(ray->dir), inter->surface_v));
 	inter->ref_dir = v_subtract(ray->dir,v_scalar_mult(inter->surface_v , 2 * v_dot(inter->surface_v, ray->dir)));
-
-
-
 	c = -v_dot(inter->surface_v, v_normalize(ray->dir));
 	if (obj->type & (SP | CY) && obj->transperancy)
 	{

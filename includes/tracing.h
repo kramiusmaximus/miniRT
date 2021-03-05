@@ -14,11 +14,13 @@ typedef struct
 	t_list		*p;
 	t_object	*obj;
 	t_object	*obj_closest;
+	t_scene		*scene;
 	t_t 		t;
 	int 		i;
+	int 		err;
 }				t_trvars;
 
-int						ray_intersect_sphere(t_ray *ray, t_object *sp_obj, t_t *t);
+int ray_intersect_sphere(t_ray *ray, t_object *sp_obj, t_t *t);
 int 					ray_intersect_plane(t_ray	*ray, t_object *pl_obj, t_t *t);
 int 					ray_intersect_sq(t_ray *ray, t_object *sq_obj, t_t *t);
 int 					ray_intersect_cy(t_ray	*ray, t_object *cy_obj, t_t *t);
@@ -36,5 +38,6 @@ int trace_color(t_ray *ray, t_scene *scene, int n_passes, double d_min, double d
 int 					swap(double *a, double *b);
 int 					selection_sort(double arr[], int size);
 t_v screen_to_world(int h, int v, t_vars *vars, int aa);
+int 				fetch_pixel_color(int v, int h, t_vars *vars);
 
 #endif

@@ -9,18 +9,22 @@ static void 		initiate_trvars(t_trvars *trvars, t_scene *scene, double max_d)
 	trvars->obj_closest = NULL;
 }
 
-static void 		ray_intersect_wrapper(t_ray *ray, t_trvars *trvars)
+static int ray_intersect_wrapper(t_ray *ray, t_trvars *trvars)
 {
+	int i;
+
+	i = 0;
 	if (trvars->obj->type & SP)
-		ray_intersect_sphere(ray, trvars->obj, &trvars->t);
+		i = ray_intersect_sphere(ray, trvars->obj, &trvars->t);
 	else if (trvars->obj->type & PL)
-		ray_intersect_plane(ray, trvars->obj, &trvars->t);
+		i = ray_intersect_plane(ray, trvars->obj, &trvars->t);
 	else if (trvars->obj->type & SQ)
-		ray_intersect_sq(ray, trvars->obj, &trvars->t);
+		i = ray_intersect_sq(ray, trvars->obj, &trvars->t);
 	else if (trvars->obj->type & CY)
-		ray_intersect_cy(ray, trvars->obj, &trvars->t);
+		i = ray_intersect_cy(ray, trvars->obj, &trvars->t);
 	else if (trvars->obj->type & TR)
-		ray_intersect_tr(ray, trvars->obj, &trvars->t);
+		i = ray_intersect_tr(ray, trvars->obj, &trvars->t);
+	return (i);
 }
 
 t_intersect *trace_ray(t_ray *ray, t_scene *scene, double min_d, double max_d)
@@ -32,7 +36,8 @@ t_intersect *trace_ray(t_ray *ray, t_scene *scene, double min_d, double max_d)
 	{
 		trvars.obj = trvars.p->content;
 		trvars.t.size = 0;
-		ray_intersect_wrapper(ray, &trvars);
+		if (ray_intersect_wrapper(ray, &trvars))
+			error("Error in calculating intersection or ray and shapes.", scene);
 		trvars.i = 0;
 		while (trvars.i < trvars.t.size)
 		{
@@ -58,9 +63,6 @@ int trace_color(t_ray *ray, t_scene *scene, int n_passes, double d_min, double d
 	{
 		c = inter->obj->color;
 		r[0] = make_ray(inter->contact, v_normalize(inter->tra_dir), (inter->obj->type & (SP | CY)) ? ray->inside ^ 0b1 : ray->inside);
-		//if (n_passes > 1 && ray->inside && inter->obj->transperancy)
-		//	return (trace_color(&r[0], scene, n_passes - 1, EPS, MAX_DIST));
-
 		if (n_passes > 1 && inter->obj->transperancy && inter->ref_coeff < 1)
 			c = rgb_add_weighted(c, rgb_multiply(c, trace_color(&r[0], scene, n_passes - 1, EPS, MAX_DIST)), 1 -
 																											   inter->obj->transperancy);
@@ -69,7 +71,6 @@ int trace_color(t_ray *ray, t_scene *scene, int n_passes, double d_min, double d
 		if (n_passes > 1 && inter->ref_coeff)
 			c = rgb_add_weighted(c, trace_color(&r[1], scene, n_passes - 1, EPS, MAX_DIST),
 						1 - inter->ref_coeff);
-
 		free(inter);
 	   	return (c);
 	}

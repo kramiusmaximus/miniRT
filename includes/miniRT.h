@@ -19,16 +19,16 @@
 # define MAX_DIST		1000000000
 # define BG_COLOR		0xB5FFF7
 # define NUM_THREADS 	4
-# define N_PASSES		5
+# define N_PASSES		4
 # define EPS			0.00000001
 # define AF				0.15
 # define STEP_SIZE		5
 # define WINDOW_HEIGHT  720
 # define WINDOW_WIDTH   1280
-# define AA_SAMPLE_NUM  8
+# define AA_SAMPLE_NUM  1
 
-void				fill_square(t_render *rvars, int v, int h);
-int 				put_pixel(void *img, int x, int y, int color, int line_len, int bpp);
+void fill_square(t_render *rvars, int v, int h);
+void put_pixel(void *img, int x, int y, int color, int line_len, int bpp);
 int 				render_mlx(t_vars *vars);
 int 				render_multi(t_vars *vars);
 void 				error(char *msg, t_scene *scene);

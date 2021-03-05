@@ -41,45 +41,16 @@ void bitmap_header(t_vars *vars)
 
 void mlx_image_to_bmp(t_vars *vars)
 {
-	/*
-	int v;
-	int h;
-	int offset;
-	int color;
-
-	offset = vars->bmpim.header.offset;
-	v = 0;
-	while (v < vars->bmpim.header.height_px)
-	{
-		h = 0;
-		while (h < vars->bmpim.header.width_px)
-		{
-			color = *((int *)vars->mlx.image.addr + v*vars->bmpim.header.width_px + h);
-			put_pixel_bmp(vars->bmpim.image + offset, h, v, color, (vars->bmpim.header.width_px * vars->bmpim.header.bits_per_pixel / 8 + vars->bmpim.pad_size), vars->bmpim.header.bits_per_pixel);
-			h++;
-		}
-		v++;
-	}
-	 */
-	int offset;
 	t_render rvars;
+	int line_len;
 
-	offset = vars->bmpim.header.offset;
-	rvars.mult[0] = ((double)vars->mlx.window_dims.height / (double)vars->scene.res.height) / vars->af;
-	rvars.mult[1] = ((double)vars->mlx.window_dims.width / (double)vars->scene.res.width) / vars->af;
-	for (int v = 0; v < vars->mlx.window_dims.height; v++) //
+	line_len = vars->bmpim.header.width_px * vars->bmpim.header.bits_per_pixel / 8 + vars->bmpim.pad_size;
+	for (int v = 0; v < (int)(((double)vars->scene.res.height)); v++) //
 	{
-		for (int h = 0; h < vars->mlx.window_dims.width; h++)
+		for (int h = 0; h < (int)(((double)vars->scene.res.width)); h++)
 		{
-			for (int y_pixel = (int)(v * rvars.mult[0]); y_pixel < (int)((double)(v + 1) * rvars.mult[0]); y_pixel++)
-				for (int x_pixel = (int)(h * rvars.mult[1]); x_pixel < (int)((double)(h + 1) * rvars.mult[1]); x_pixel++)
-				{
-					/*put_pixel(vars->mlx.image.addr, x_pixel, y_pixel, rvars.color, vars->mlx.image.line_length,
-							  vars->mlx.image.bits_per_pixel);
-							  */
-					rvars.color = *((int *)vars->mlx.image.addr + v*vars->bmpim.header.width_px + h);
-					put_pixel_bmp(vars->bmpim.image + offset, h,vars->mlx.window_dims.height - v, rvars.color, (vars->bmpim.header.width_px * vars->bmpim.header.bits_per_pixel / 8 + vars->bmpim.pad_size), vars->bmpim.header.bits_per_pixel);
-				}
+			rvars.color = *((int *)vars->mlx.image.addr + v * vars->bmpim.header.width_px + h);
+			put_pixel_bmp(vars->bmpim.image + vars->bmpim.header.offset, h, vars->mlx.window_dims.height - v, rvars.color, line_len, vars->bmpim.header.bits_per_pixel);
 		}
 	}
 }

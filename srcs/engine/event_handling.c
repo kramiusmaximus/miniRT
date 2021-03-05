@@ -1,6 +1,8 @@
 #include "miniRT.h"
 
-void key_press_hook(int key, t_vars *vars)
+static void norminette_cancer1(int key, t_vars *vars);
+
+void key_press_hook1(int key, t_vars *vars)
 {
 	if (key == 13)
 		vars->nav.fwd_back = 1;
@@ -26,7 +28,12 @@ void key_press_hook(int key, t_vars *vars)
 		switch_camera(1, vars);
 	else if (key == 46)
 		switch_camera(-1,vars);
-	else if (key == 53)
+	norminette_cancer1(key, vars);
+}
+
+static void norminette_cancer1(int key, t_vars *vars)
+{
+	if (key == 53)
 		exit_hook(vars);
 	else if (key == 11)
 		screen_shot(vars);

@@ -1,6 +1,12 @@
 #include "miniRT.h"
 
-int			ray_intersect_sphere(t_ray *ray, t_object *sp_obj, t_t *t)
+typedef struct
+{
+	double 		d[10];
+	t_v 		v[5];
+}				t_ray_inter;
+
+int ray_intersect_sphere(t_ray *ray, t_object *sp_obj, t_t *t)
 {
 	double		coeff[3];
 	t_sp		*sp;
@@ -17,17 +23,17 @@ int			ray_intersect_sphere(t_ray *ray, t_object *sp_obj, t_t *t)
 
 int 	ray_intersect_plane(t_ray	*ray, t_object *pl_obj, t_t *t)
 {
-	double 	nominator;
-	double 	denominator;
+	double 	nom;
+	double 	denom;
 	double 	res;
 	t_pl	*pl;
 
 	if (!ray || !pl_obj || !t)
 		return (1);
 	pl = &pl_obj->item.pl;
-	nominator = v_dot(pl->norm, v_subtract(pl->coord, ray->origin));
-	denominator = v_dot(pl->norm, ray->dir);
-	if (!isinf(res = nominator / denominator))
+	nom = v_dot(pl->norm, v_subtract(pl->coord, ray->origin));
+	denom = v_dot(pl->norm, ray->dir);
+	if (!isinf(res = nom / denom))
 	{
 		t->size = 1;
 		t->arr[0] = res;
@@ -37,6 +43,7 @@ int 	ray_intersect_plane(t_ray	*ray, t_object *pl_obj, t_t *t)
 
 int ray_intersect_sq(t_ray *ray, t_object *sq_obj, t_t *t)
 {
+
 	double 	nominator;
 	double 	denominator;
 	double 	res;
