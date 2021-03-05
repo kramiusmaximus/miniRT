@@ -72,7 +72,7 @@ int exit_hook(t_vars *vars)
 
 void switch_camera(int i, t_vars *vars)
 {
-	if (i || vars->scene.camera != vars->scene.camera->next)
+	if (i && vars->scene.camera != vars->scene.camera->next)
 	{
 		if (i == 1)
 			vars->scene.camera = vars->scene.camera->next;

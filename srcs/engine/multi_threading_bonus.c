@@ -35,14 +35,18 @@ int render_multi(t_vars *vars)
 {
 	t_tvars		tvars[NUM_THREADS];
 	pthread_t 	threads[NUM_THREADS];
+	int 		tid;
 
-	for (int tid = 0; tid < NUM_THREADS; tid++)
+	tid = 0;
+	while (tid < NUM_THREADS)
 	{
 		tvars[tid].tid = tid;
 		tvars[tid].vars = vars;
 		pthread_create(&threads[tid], NULL, render_section, (void *)&tvars[tid]);
+		tid++;
 	}
-	for (int tid = 0; tid < NUM_THREADS; tid++)
-		pthread_join(threads[tid], NULL);
+	tid = 0;
+	while (tid < NUM_THREADS)
+		pthread_join(threads[tid++], NULL);
 	return (0);
 }

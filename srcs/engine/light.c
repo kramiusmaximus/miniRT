@@ -1,6 +1,5 @@
 #include "miniRT.h"
 
-
 static void initiate_lvars(t_lvars *lvars, t_scene *scene)
 {
 	lvars->diff = 0;

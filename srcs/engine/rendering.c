@@ -54,8 +54,6 @@ static int 	render_image(t_vars *vars)
 
 int 		render_mlx(t_vars *vars)
 {
-	mlx_hook(vars->mlx.win, 2, 1L << 2, (int (*)()) key_press_hook1, vars);
-	mlx_hook(vars->mlx.win, 3, 1L << 3, (int (*)())key_release_hook, vars);
 	if (is_moving(&vars->nav) || is_rotating(&vars->nav))
 	{
 		move_camera(vars);

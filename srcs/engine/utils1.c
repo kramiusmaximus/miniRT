@@ -1,24 +1,11 @@
 #include "miniRT.h"
 
-t_intersect *process_t(t_object *obj, t_ray *ray, t_t *t, t_scene *scene)
+static void process_t_trans(t_object *obj, t_intersect *inter, t_ray *ray)
 {
-	t_intersect *inter;
 	double 		c;
 	double 		r;
-	double r0;
+	double 		r0;
 
-	if (!ray || !obj || !t || !(inter = malloc(sizeof(t_intersect))))
-		error("Failed malloc allocatoin.", scene);
-	if (t->size == 2 && (t->arr[0] < -EPS || t->arr[1] < -EPS))
-		ray->inside = 1;
-	inter->t = t->closest;
-	inter->contact = v_add(ray->origin, v_scalar_mult(ray->dir, inter->t));
-	inter->obj = obj;
-	inter->surface_v = surface_vector(inter, obj);
-	inter->surface_v = v_dot(inter->surface_v , v_normalize(ray->dir)) > 0 ? v_scalar_mult(inter->surface_v,-1) :
-			inter->surface_v;
-	inter->incidence_ang0 = M_PI - acos(v_dot(v_normalize(ray->dir), inter->surface_v));
-	inter->ref_dir = v_subtract(ray->dir,v_scalar_mult(inter->surface_v , 2 * v_dot(inter->surface_v, ray->dir)));
 	c = -v_dot(inter->surface_v, v_normalize(ray->dir));
 	if (obj->type & (SP | CY) && obj->transperancy)
 	{
@@ -40,6 +27,29 @@ t_intersect *process_t(t_object *obj, t_ray *ray, t_t *t, t_scene *scene)
 		inter->ref_coeff = r0;
 	else
 		inter->ref_coeff = r0 + (1 - r0) * pow(1 - cos(inter->incidence_ang0), 5);
+}
+
+t_intersect *process_t(t_object *obj, t_ray *ray, t_t *t, t_scene *scene)
+{
+	t_intersect *inter;
+
+
+	inter = NULL;
+	if (!ray || !obj || !t || !(inter = malloc(sizeof(t_intersect))))
+		error("Failed malloc allocatoin.", scene);
+
+	if (t->size == 2 && (t->arr[0] < -EPS || t->arr[1] < -EPS))
+		ray->inside = 1;
+
+	inter->t = t->closest;
+	inter->contact = v_add(ray->origin, v_scalar_mult(ray->dir, inter->t));
+	inter->obj = obj;
+	inter->surface_v = surface_vector(inter, obj);
+	inter->surface_v = v_dot(inter->surface_v , v_normalize(ray->dir)) > 0 ? v_scalar_mult(inter->surface_v,-1) :
+			inter->surface_v;
+	inter->incidence_ang0 = M_PI - acos(v_dot(v_normalize(ray->dir), inter->surface_v));
+	inter->ref_dir = v_subtract(ray->dir,v_scalar_mult(inter->surface_v , 2 * v_dot(inter->surface_v, ray->dir)));
+	process_t_trans(obj, inter, ray);
 	return (inter);
 }
 

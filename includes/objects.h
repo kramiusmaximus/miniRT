@@ -1,6 +1,6 @@
 #ifndef OBJECTS_H
 # define OBJECTS_H
-# include "maths.h"
+# include "maths1.h"
 # define SP			0b00000001
 # define PL			0b00000010
 # define SQ			0b00000100

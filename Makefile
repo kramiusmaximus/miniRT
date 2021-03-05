@@ -18,7 +18,7 @@ $(NAME):					${OBJECTS}
 							$(CC) -Llibft -lft -Lmlx -lmlx -framework OpenGL -framework AppKit $(OBJECTS) -o $(NAME) libmlx.dylib
 
 test:						all
-							./miniRT scenes/vistovka1.rt
+							./miniRT scenes/test.rt
 
 %.o: 						%.c ${HEADERS} ${HEADERS_BONUS}
 							$(CC) $(CFLAGS) $(addprefix -I, $(INCLUDES_DIRECTORY)) -c -o $@ $<
