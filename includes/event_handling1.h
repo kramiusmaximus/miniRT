@@ -1,37 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   maths6.c                                           :+:      :+:    :+:   */
+/*   event_handling.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pfelipa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/08 17:53:32 by pfelipa           #+#    #+#             */
-/*   Updated: 2021/03/08 17:53:35 by pfelipa          ###   ########.fr       */
+/*   Created: 2021/03/08 14:50:00 by pfelipa           #+#    #+#             */
+/*   Updated: 2021/03/08 14:51:31 by pfelipa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#ifndef EVENT_HANDLING_H
+# define EVENT_HANDLING_H
+# include "main_structs.h"
 
-t_v	get_component(t_m mat, int col)
-{
-	t_v v;
-	int i;
+int					move_camera(t_vars *vars);
+void				key_press_hook1(int key, t_vars *vars);
+void				key_release_hook(int key, t_vars *vars);
+int					is_moving(t_nav *nav);
+int					is_rotating(t_nav *nav);
+int					exit_hook(t_vars *vars);
+void				switch_camera(int i, t_vars *vars);
 
-	i = 0;
-	while (i < mat.size[0])
-	{
-		v.v[i] = mat.m[i][col];
-		i++;
-	}
-	return (v);
-}
-
-t_v	v_mid(t_v v1, t_v v2)
-{
-	t_v mid;
-	t_v dir;
-
-	dir = v_sub(v2, v1);
-	mid = v_add(v1, v_smult(dir, 0.5));
-	return (mid);
-}
+#endif

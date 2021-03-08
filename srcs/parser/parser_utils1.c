@@ -1,4 +1,4 @@
-#include "miniRT.h"
+#include "minirt.h"
 
 int 		is_int(char **arg)
 {
@@ -58,7 +58,7 @@ int 		is_color(char **arg)
 	}
 	if (i != 3)
 		k = 0;
-	free(rgb);
+	free_split(rgb);
 	return (k);
 }
 
@@ -84,7 +84,7 @@ int 		is_coord(char **arg)
 	}
 	if (i != 3)
 		k = 0;
-	free(coord);
+	free_split(coord);
 	return (k);
 }
 

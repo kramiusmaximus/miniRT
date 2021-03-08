@@ -1,8 +1,26 @@
-#include "miniRT.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   event_handling.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pfelipa <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/08 17:13:13 by pfelipa           #+#    #+#             */
+/*   Updated: 2021/03/08 17:13:14 by pfelipa          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-static void norminette_cancer1(int key, t_vars *vars);
+#include "minirt.h"
 
-void key_press_hook1(int key, t_vars *vars)
+static void	norminette_cancer1(int key, t_vars *vars)
+{
+	if (key == 53)
+		exit_hook(vars);
+	else if (key == 11)
+		screen_shot(vars);
+}
+
+void		key_press_hook1(int key, t_vars *vars)
 {
 	if (key == 13)
 		vars->nav.fwd_back = 1;
@@ -27,19 +45,11 @@ void key_press_hook1(int key, t_vars *vars)
 	else if (key == 45)
 		switch_camera(1, vars);
 	else if (key == 46)
-		switch_camera(-1,vars);
+		switch_camera(-1, vars);
 	norminette_cancer1(key, vars);
 }
 
-static void norminette_cancer1(int key, t_vars *vars)
-{
-	if (key == 53)
-		exit_hook(vars);
-	else if (key == 11)
-		screen_shot(vars);
-}
-
-void key_release_hook(int key, t_vars *vars)
+void		key_release_hook(int key, t_vars *vars)
 {
 	if (key == 13 && vars->nav.fwd_back == 1)
 		vars->nav.fwd_back = 0;
@@ -63,14 +73,14 @@ void key_release_hook(int key, t_vars *vars)
 		vars->nav.rot_up_dwn = 0;
 }
 
-int exit_hook(t_vars *vars)
+int			exit_hook(t_vars *vars)
 {
 	ft_printf("Quitting application...\n");
 	free_mem(&vars->scene);
 	exit(0);
 }
 
-void switch_camera(int i, t_vars *vars)
+void		switch_camera(int i, t_vars *vars)
 {
 	if (i && vars->scene.camera != vars->scene.camera->next)
 	{
@@ -80,40 +90,4 @@ void switch_camera(int i, t_vars *vars)
 			vars->scene.camera = vars->scene.camera->prev;
 		vars->full_res_rendered = 0;
 	}
-}
-
-int move_camera(t_vars *vars)
-{
-	t_nav 		nav;
-	t_camera 	*camera;
-	double 		d;
-	int 		dirs;
-	t_v 		disp;
-
-	nav = vars->nav;
-	camera = vars->scene.camera->content;
-	if (is_rotating(&vars->nav))
-		camera->rot_mat = rotate_xyz(nav.rot_up_dwn * 0.1, -nav.rot_lft_rght * 0.1, 0, camera->rot_mat);
-	if (is_moving(&vars->nav))
-	{
-		dirs = abs(nav.fwd_back) + abs(nav.lft_rght) + abs(nav.up_dwn);
-		d = pow(STEP_SIZE, (double)1 / dirs);
-		disp = v_make(d * nav.lft_rght, d * nav.up_dwn, d * nav.fwd_back);
-		camera->coord = v_add(camera->coord, v_mat_mul_vec(m_transpose(camera->rot_mat), disp));
-	}
-	return (0);
-}
-
-int is_moving(t_nav *nav)
-{
-	if (nav->fwd_back || nav->lft_rght || nav->up_dwn)
-		return (1);
-	return (0);
-}
-
-int is_rotating(t_nav *nav)
-{
-	if (nav->rot_lft_rght || nav->rot_up_dwn)
-		return (1);
-	return (0);
 }

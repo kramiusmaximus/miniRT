@@ -1,4 +1,4 @@
-#include "miniRT.h"
+#include "minirt.h"
 
 void process_sp(char **args, t_scene *scene)
 {
@@ -68,8 +68,8 @@ void process_cy(char **args, t_scene *scene)
 		cy_obj->item.cy.coord = extract_coord(*args++);
 		cy_obj->item.cy.norm = extract_dir(*args++);
 		cy_obj->item.cy.diameter = ft_atof(*args++);
-		cy_obj->item.cy.height = ft_atof(*args++);
-		if (!(cy_obj->item.cy.diameter && cy_obj->item.cy.height))
+		cy_obj->item.cy.h = ft_atof(*args++);
+		if (!(cy_obj->item.cy.diameter && cy_obj->item.cy.h))
 			error("Cylinder diameter and height have to be > 0", scene);
 		cy_obj->color = extract_color(*args++);
 	}

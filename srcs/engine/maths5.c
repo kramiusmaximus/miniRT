@@ -1,12 +1,24 @@
-#include "miniRT.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   maths5.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pfelipa <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/08 17:53:24 by pfelipa           #+#    #+#             */
+/*   Updated: 2021/03/08 17:53:26 by pfelipa          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-t_m m_transpose(t_m m)
+#include "minirt.h"
+
+t_m			m_transpose(t_m m)
 {
-	t_m trans;
-	int i;
-	int j;
+	t_m	trans;
+	int	i;
+	int	j;
 
-	if (m.size[0]!= m.size[1])
+	if (m.size[0] != m.size[1])
 		ft_printf("dims sizes are not equal\n");
 	i = 0;
 	m.size[0] = 3;
@@ -24,22 +36,22 @@ t_m m_transpose(t_m m)
 	return (trans);
 }
 
-double	max_f(double a, double b)
+double		max_f(double a, double b)
 {
 	return (a > b ? a : b);
 }
 
-double min_f(double a, double b)
+double		min_f(double a, double b)
 {
 	return (a < b ? a : b);
 }
 
-double abs_f(double a)
+double		abs_f(double a)
 {
 	return (a > 0 ? -a : a);
 }
 
-double bound(double num, double lower_b, double upper_b)
+double		bound(double num, double lower_b, double upper_b)
 {
 	if (num > upper_b)
 		return (upper_b);

@@ -1,4 +1,4 @@
-#include "miniRT.h"
+#include "minirt.h"
 
 static void 		*render_section(void *arg)
 {

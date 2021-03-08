@@ -1,4 +1,4 @@
-#include "miniRT.h"
+#include "minirt.h"
 
 void process_r(char **args, t_scene *scene)
 {
@@ -60,7 +60,7 @@ void process_l(char **args, t_scene *scene)
 		error(NULL, scene);
 	if (is_coord(args) && is_float(args + 1) && is_color(args + 2))
 	{
-		light->coordinates = extract_coord(*args++);
+		light->coords = extract_coord(*args++);
 		light->intensity = bound(ft_atof(*args++), 0, 1);
 		light->color = extract_color(*args++);
 	}

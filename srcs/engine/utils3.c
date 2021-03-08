@@ -1,4 +1,4 @@
-#include "miniRT.h"
+#include "minirt.h"
 
 void free_mem(t_scene *scene)
 {
@@ -45,9 +45,9 @@ void put_pixel_bmp(void *img, int x, int y, int color, int line_len, int bpp)
 	}
 	p = img + (y * line_len + x * bpp / 8);
 
-	((bmp_pix *)p)->r = (unsigned char)get_r(color);
-	((bmp_pix *)p)->g = (unsigned char)get_g(color);
-	((bmp_pix *)p)->b = (unsigned char)get_b(color);
+	((t_bmp_pix *)p)->r = (unsigned char)get_r(color);
+	((t_bmp_pix *)p)->g = (unsigned char)get_g(color);
+	((t_bmp_pix *)p)->b = (unsigned char)get_b(color);
 }
 
 void fill_square(t_render *rvars, int v, int h)

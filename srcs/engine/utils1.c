@@ -1,4 +1,4 @@
-#include "miniRT.h"
+#include "minirt.h"
 
 static void process_t_trans(t_object *obj, t_intersect *inter, t_ray *ray)
 {
@@ -6,13 +6,14 @@ static void process_t_trans(t_object *obj, t_intersect *inter, t_ray *ray)
 	double 		r;
 	double 		r0;
 
-	c = -v_dot(inter->surface_v, v_normalize(ray->dir));
+	c = -v_dot(inter->surface_v, v_normlz(ray->dir));
 	if (obj->type & (SP | CY) && obj->transperancy)
 	{
 		r = ray->inside ? inter->obj->refraction : 1 / inter->obj->refraction;
 		if (1 - r * r * (1 - c * c) >= 0)
 		{
-			inter->tra_dir = v_add(v_scalar_mult(v_normalize(ray->dir), r),v_scalar_mult(inter->surface_v, r * c - sqrt(1 - r * r * (1 - c * c))));
+			inter->tra_dir = v_add(v_smult(v_normlz(ray->dir), r),
+								   v_smult(inter->surface_v, r * c - sqrt(1 - r * r * (1 - c * c))));
 			r0 = obj->reflectivity / 4;
 		}
 		else
@@ -42,13 +43,13 @@ t_intersect *process_t(t_object *obj, t_ray *ray, t_t *t, t_scene *scene)
 		ray->inside = 1;
 
 	inter->t = t->closest;
-	inter->contact = v_add(ray->origin, v_scalar_mult(ray->dir, inter->t));
+	inter->contact = v_add(ray->orgn, v_smult(ray->dir, inter->t));
 	inter->obj = obj;
 	inter->surface_v = surface_vector(inter, obj);
-	inter->surface_v = v_dot(inter->surface_v , v_normalize(ray->dir)) > 0 ? v_scalar_mult(inter->surface_v,-1) :
-			inter->surface_v;
-	inter->incidence_ang0 = M_PI - acos(v_dot(v_normalize(ray->dir), inter->surface_v));
-	inter->ref_dir = v_subtract(ray->dir,v_scalar_mult(inter->surface_v , 2 * v_dot(inter->surface_v, ray->dir)));
+	inter->surface_v = v_dot(inter->surface_v , v_normlz(ray->dir)) > 0 ? v_smult(inter->surface_v, -1) :
+					   inter->surface_v;
+	inter->incidence_ang0 = M_PI - acos(v_dot(v_normlz(ray->dir), inter->surface_v));
+	inter->ref_dir = v_sub(ray->dir, v_smult(inter->surface_v, 2 * v_dot(inter->surface_v, ray->dir)));
 	process_t_trans(obj, inter, ray);
 	return (inter);
 }
@@ -57,7 +58,7 @@ t_ray make_ray(t_v origin, t_v dir, int inside)
 {
 	t_ray ray;
 
-	ray.origin = origin;
+	ray.orgn = origin;
 	ray.dir = dir;
 	ray.inside = inside;
 	ray.intersect = NULL;

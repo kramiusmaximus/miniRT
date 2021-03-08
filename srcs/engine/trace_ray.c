@@ -1,5 +1,5 @@
 #include <tcl.h>
-#include "miniRT.h"
+#include "minirt.h"
 
 static void 		initiate_trvars(t_trvars *trvars, t_scene *scene, double max_d)
 {
@@ -62,12 +62,12 @@ int trace_color(t_ray *ray, t_scene *scene, int n_passes, double d_min, double d
 	if ((inter = trace_ray(ray, scene, d_min, d_max)))
 	{
 		c = inter->obj->color;
-		r[0] = make_ray(inter->contact, v_normalize(inter->tra_dir), (inter->obj->type & (SP | CY)) ? ray->inside ^ 0b1 : ray->inside);
+		r[0] = make_ray(inter->contact, v_normlz(inter->tra_dir), (inter->obj->type & (SP | CY)) ? ray->inside ^ 0b1 : ray->inside);
 		if (n_passes > 1 && inter->obj->transperancy && inter->ref_coeff < 1)
 			c = rgb_add_weighted(c, rgb_multiply(c, trace_color(&r[0], scene, n_passes - 1, EPS, MAX_DIST)), 1 -
 																											   inter->obj->transperancy);
 		light_effects(ray, scene, &c, inter);
-		r[1] = make_ray(inter->contact, v_normalize(inter->ref_dir), ray->inside);
+		r[1] = make_ray(inter->contact, v_normlz(inter->ref_dir), ray->inside);
 		if (n_passes > 1 && inter->ref_coeff)
 			c = rgb_add_weighted(c, trace_color(&r[1], scene, n_passes - 1, EPS, MAX_DIST),
 						1 - inter->ref_coeff);

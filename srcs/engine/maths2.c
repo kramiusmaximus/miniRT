@@ -1,7 +1,18 @@
-#include "miniRT.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   maths2.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pfelipa <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/08 17:53:07 by pfelipa           #+#    #+#             */
+/*   Updated: 2021/03/08 17:53:09 by pfelipa          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "minirt.h"
 
-t_v 	v_scalar_mult(t_v v, double s)
+t_v		v_smult(t_v v, double s)
 {
 	v.v[0] *= s;
 	v.v[1] *= s;
@@ -9,12 +20,12 @@ t_v 	v_scalar_mult(t_v v, double s)
 	return (v);
 }
 
-t_v 	v_normalize(t_v v)
+t_v		v_normlz(t_v v)
 {
-	return (v_scalar_mult(v, 1 / v_norm(v)));
+	return (v_smult(v, 1 / v_norm(v)));
 }
 
-t_v v_cross(t_v v1, t_v v2)
+t_v		v_x(t_v v1, t_v v2)
 {
 	t_v	res;
 
@@ -24,25 +35,12 @@ t_v v_cross(t_v v1, t_v v2)
 	return (res);
 }
 
-t_v v_random(t_v v, double amount)
-{
-	double sign = rand() / 10000000;
-
-	sign = sign > 100 ? 1 : -1;
-	v.v[0] += sign*random() / amount;
-	v.v[1] += sign*random() / amount;
-	v.v[2] += sign*random() / amount;
-
-	return (v);
-}
-
-double point_line_dist(t_v x0, t_v x1, t_v p)
+double	point_line_dist(t_v x0, t_v x1, t_v p)
 {
 	double nom;
 	double denom;
 
-	nom = v_norm(v_cross(v_subtract(p, x0), v_subtract(p, x1)));
-	denom = v_norm(v_subtract(x1, x0));
-
+	nom = v_norm(v_x(v_sub(p, x0), v_sub(p, x1)));
+	denom = v_norm(v_sub(x1, x0));
 	return (nom / denom);
 }

@@ -1,4 +1,4 @@
-#include "miniRT.h"
+#include "minirt.h"
 
 int 		selection_sort(double arr[], int size)
 {

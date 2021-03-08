@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   objects.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pfelipa <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/08 16:01:45 by pfelipa           #+#    #+#             */
+/*   Updated: 2021/03/08 16:01:47 by pfelipa          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef OBJECTS_H
 # define OBJECTS_H
 # include "maths1.h"
@@ -10,32 +22,32 @@
 typedef struct		s_sp
 {
 	t_v				coord;
-	double 			diameter;
+	double			diameter;
 }					t_sp;
 
 typedef struct		s_pl
 {
 	t_v				coord;
-	t_v 			norm;
+	t_v				norm;
 }					t_pl;
 
 typedef struct		s_sq
 {
 	t_v				coord;
 	t_m				basis;
-	t_v 			norm;
-	double 			side_len;
+	t_v				norm;
+	double			side_len;
 }					t_sq;
 
 typedef	struct		s_cy
 {
 	t_v				coord;
-	t_v 			norm;
-	double 			diameter;
-	double 			height;
+	t_v				norm;
+	double			diameter;
+	double			h;
 }					t_cy;
 
-typedef struct 		s_tr
+typedef struct		s_tr
 {
 	t_v				p[3];
 }					t_tr;
@@ -51,25 +63,25 @@ typedef union		u_shape
 
 typedef struct		s_object
 {
-	int 			type;
+	int				type;
 	t_shape			item;
-	double 			reflectivity;
-	double 			transperancy;
-	double 			refraction;
-	int 			color;
+	double			reflectivity;
+	double			transperancy;
+	double			refraction;
+	int				color;
 }					t_object;
 
 typedef struct		s_ambient
 {
-	double 			intensity;
-	int 			color;
+	double			intensity;
+	int				color;
 }					t_ambient;
 
 typedef struct		s_light
 {
 	double			intensity;
-	t_v				coordinates;
-	int 			color;
+	t_v				coords;
+	int				color;
 }					t_light;
 
 #endif

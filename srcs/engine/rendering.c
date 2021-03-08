@@ -1,4 +1,4 @@
-#include "miniRT.h"
+#include "minirt.h"
 
 int 			fetch_pixel_color(int v, int h, t_vars *vars)
 {
@@ -10,7 +10,7 @@ int 			fetch_pixel_color(int v, int h, t_vars *vars)
 	if (!vars->full_res_rendered || AA_SAMPLE_NUM < 2)
 	{
 		o = screen_to_world(h, v, vars, 0);
-		dir = v_subtract(o, ((t_camera *)vars->scene.camera->content)->coord);
+		dir = v_sub(o, ((t_camera *) vars->scene.camera->content)->coord);
 		ray = make_ray(((t_camera *)vars->scene.camera->content)->coord, dir, 0);
 		c[0] = trace_color(&ray, &vars->scene, N_PASSES, 1, MAX_DIST);
 		return (c[0]);
@@ -20,7 +20,7 @@ int 			fetch_pixel_color(int v, int h, t_vars *vars)
 		for (int i = 0; i < AA_SAMPLE_NUM; i++)
 		{
 			o = screen_to_world(h, v, vars, 1);
-			dir = v_subtract(o, ((t_camera *)vars->scene.camera->content)->coord);
+			dir = v_sub(o, ((t_camera *) vars->scene.camera->content)->coord);
 			ray = make_ray(((t_camera *)vars->scene.camera->content)->coord, dir, 0);
 			c[i] = trace_color(&ray, &vars->scene, N_PASSES, 1, MAX_DIST);
 		}
