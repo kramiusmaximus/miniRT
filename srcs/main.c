@@ -17,17 +17,17 @@ void init_vars(char *rt, t_vars *vars, int bmp)
 	if (!bmp)
 	{
 		vars->mlx.mlx = mlx_init();
-		vars->mlx.window_dims.height = WINDOW_HEIGHT;
+		vars->mlx.window_dims.ht = WINDOW_HEIGHT;
 		vars->mlx.window_dims.width = WINDOW_WIDTH;
-		if (vars->mlx.window_dims.height < vars->scene.res.height ||
+		if (vars->mlx.window_dims.ht < vars->scene.res.ht ||
 			vars->mlx.window_dims.width < vars->scene.res.width)
 		{
-			vars->scene.res.height = vars->mlx.window_dims.height;
+			vars->scene.res.ht = vars->mlx.window_dims.ht;
 			vars->scene.res.width = vars->mlx.window_dims.width;
 		}
-		vars->mlx.win = mlx_new_window(vars->mlx.mlx, vars->scene.res.width, vars->scene.res.height,
+		vars->mlx.win = mlx_new_window(vars->mlx.mlx, vars->scene.res.width, vars->scene.res.ht,
 									   "Is this god?");
-		vars->mlx.image.img = mlx_new_image(vars->mlx.mlx, vars->scene.res.width, vars->scene.res.height);
+		vars->mlx.image.img = mlx_new_image(vars->mlx.mlx, vars->scene.res.width, vars->scene.res.ht);
 		vars->mlx.image.addr = mlx_get_data_addr(vars->mlx.image.img, &vars->mlx.image.bits_per_pixel,
 												 &vars->mlx.image.line_length, &vars->mlx.image.endian);
 	}

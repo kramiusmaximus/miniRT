@@ -6,7 +6,7 @@ void process_r(char **args, t_scene *scene)
 	if (is_int(args) && is_int(args + 1))
 	{
 		scene->res.width = ft_atoi(*args++);
-		scene->res.height = ft_atoi(*args++);
+		scene->res.ht = ft_atoi(*args++);
 	}
 	else
 		error("Provide necessary arguments for Resolution.", scene);
@@ -30,11 +30,11 @@ void process_a(char **args, t_scene *scene)
 
 void process_c(char **args, t_scene *scene)
 {
-	t_camera 	*camera;
+	t_cam 	*camera;
 	t_listc		*node;
 
 	node = NULL;
-	if (!(camera = malloc(sizeof(t_camera))))
+	if (!(camera = malloc(sizeof(t_cam))))
 		error(NULL, scene);
 	if (is_coord(args) && is_coord(args + 1) && is_float(args + 2))
 	{
@@ -88,8 +88,7 @@ void process_pl(char **args, t_scene *scene)
 	}
 	else
 		error("Provide necessary arguments for Plane object.", scene);
-	if (is_float(args) && is_float(args + 1) && is_float(args + 2))
-		args = norminette_can_eat_my_ass(pl_obj, args);
+	args = norminette_can_eat_my_ass(pl_obj, args);
 	if (*args || !(node = ft_lstnew(pl_obj)))
 		error("Object parsing error", scene);
 	ft_lstadd_front(&scene->object, node);

@@ -15,13 +15,13 @@
 int			move_camera(t_vars *vars)
 {
 	t_nav		nav;
-	t_camera	*camera;
+	t_cam	*camera;
 	double		d;
 	int			dirs;
 	t_v			disp;
 
 	nav = vars->nav;
-	camera = vars->scene.camera->content;
+	camera = vars->scene.camera->cntnt;
 	if (is_rotating(&vars->nav))
 		camera->rot_mat = rotate_xyz(nav.rot_up_dwn * 0.1,\
 		-nav.rot_lft_rght * 0.1, 0, camera->rot_mat);

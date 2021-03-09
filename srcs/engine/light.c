@@ -26,8 +26,11 @@ static void	light_calculations(t_lvars *lvars, t_ray *ray, t_scene *scene)
 	lvars->dist = v_norm(v_sub(lvars->light->coords, ray->intersect->contact));
 	lvars->ray_l = make_ray(ray->intersect->contact, lvars->l, 0);
 	lvars->pass = 1;
-	if ((lvars->inter_l = trace_ray(&lvars->ray_l,\
-	scene, EPS, lvars->dist - EPS)))
+	lvars->d[0] = EPS;
+	lvars->d[1] = lvars->dist - EPS;
+	if ((lvars->inter_l = trace_ray(&lvars->ray_l, \
+
+									scene, lvars->d)))
 	{
 		lvars->pass = lvars->inter_l->obj->transperancy *\
 		max_f(pow(1 - lvars->inter_l->ref_coeff, 0.1), 0.7);

@@ -27,7 +27,7 @@ int			is_int(char **arg);
 int			is_float(char **arg);
 int			is_color(char **arg);
 int			is_coord(char **arg);
-t_listc		*ft_lstcnew(t_camera *data);
+t_listc		*ft_lstcnew(t_cam *data);
 void		ft_lstcadd_front(t_listc **head, t_listc *node);
 int			extract_color(char *arg);
 t_v			extract_coord(char *arg);

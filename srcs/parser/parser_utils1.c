@@ -88,13 +88,13 @@ int 		is_coord(char **arg)
 	return (k);
 }
 
-t_listc		*ft_lstcnew(t_camera *data)
+t_listc		*ft_lstcnew(t_cam *data)
 {
 	t_listc	*node;
 
 	if (!(node = malloc(sizeof(t_listc))))
 		return (NULL);
-	node->content = data;
+	node->cntnt = data;
 	node->next = node;
 	node->prev = node;
 	return (node);

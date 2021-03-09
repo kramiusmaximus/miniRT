@@ -45,6 +45,8 @@ typedef struct
 }	t_bmpheader;
 # pragma pack(pop)
 
+
+
 typedef struct
 {
 	t_bmpheader			header;
@@ -86,6 +88,7 @@ typedef struct
 	int					amb;
 	int					diff;
 	int					spec;
+	double 				d[2];
 }	t_lvars;
 
 typedef struct
@@ -94,18 +97,18 @@ typedef struct
 	t_v					dir;
 	t_m					rot_mat;
 	double				fov;
-}	t_camera;
+}	t_cam;
 
 typedef struct			s_listc
 {
-	t_camera			*content;
+	t_cam			*cntnt;
 	struct s_listc		*prev;
 	struct s_listc		*next;
 }						t_listc;
 
 typedef struct			s_dims
 {
-	int					height;
+	int					ht;
 	int					width;
 }						t_dims;
 
@@ -170,6 +173,19 @@ typedef struct			s_ass
 	double				mult[2];
 	int					color;
 	t_ray				ray;
+	int					h;
+	int 				v;
+	int 				rem;
 }						t_render;
+
+typedef struct			s_bmpcrabs
+{
+	void 				*img_addr;
+	int 				x;
+	int 				y;
+	int 				c;
+	int 				line_len;
+	int 				bpp;
+}						t_bmpcrabs;
 
 #endif

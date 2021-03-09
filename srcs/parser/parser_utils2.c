@@ -54,8 +54,17 @@ t_v 	extract_dir(char *arg)
 
 char **norminette_can_eat_my_ass(t_object *obj, char **args)
 {
-	obj->reflectivity = bound(ft_atof(*args++), 0, 1);
-	obj->transperancy = bound(ft_atof(*args++), 0, 1);
-	obj->refraction = max_f(ft_atof(*args++), 0);
+	if (is_float(args) && is_float(args + 1) && is_float(args + 2))
+	{
+		obj->reflectivity = bound(ft_atof(*args++), 0, 1);
+		obj->transperancy = bound(ft_atof(*args++), 0, 1);
+		obj->refraction = max_f(ft_atof(*args++), 0);
+	}
+	else
+	{
+		obj->reflectivity = 0;
+		obj->transperancy = 0;
+		obj->refraction = 0;
+	}
 	return (args);
 }

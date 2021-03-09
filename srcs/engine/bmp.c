@@ -14,28 +14,25 @@
 
 static void		render_image_bmp(t_vars *vars)
 {
-	t_render	rvars;
-	int			offset;
 	int			v;
 	int			h;
+	t_bmpcrabs	crabs;
 
-	offset = vars->bmpim.header.offset;
 	v = 0;
-	while (v < vars->scene.res.height)
+	while (v < vars->scene.res.ht)
 	{
 		h = 0;
 		while (h < vars->scene.res.width)
 		{
-			rvars.vec[0] = screen_to_world(h, v, vars, 0);
-			rvars.vec[1] = v_sub(rvars.vec[0],
-								 ((t_camera *) vars->scene.camera->content)->coord);
-			rvars.ray = make_ray(((t_camera *)vars->scene.camera->content)->\
-			coord, rvars.vec[1], 0);
-			rvars.color = trace_color(&rvars.ray,\
-			&vars->scene, N_PASSES, 1, MAX_DIST);
-			put_pixel_bmp(vars->bmpim.image + offset, h++, v, rvars.color,\
-			(vars->bmpim.header.width_px * vars->bmpim.header.bits_per_pixel\
-			/ 8 + vars->bmpim.pad_size), vars->bmpim.header.bits_per_pixel);
+			crabs.img_addr = vars->bmpim.image + vars->bmpim.header.offset;
+			crabs.x = h;
+			crabs.y = v;
+			crabs.c = get_pixel_color(vars->scene.res.ht - v, h, vars);
+			crabs.line_len = (vars->bmpim.header.width_px * vars->bmpim.header.bits_per_pixel\
+			/ 8 + vars->bmpim.pad_size);
+			crabs.bpp = vars->bmpim.header.bits_per_pixel;
+			put_pixel_bmp(&crabs);
+			h++;
 		}
 		v++;
 	}
@@ -51,7 +48,7 @@ void			bitmap_header(t_vars *vars)
 	header->offset = 54;
 	header->dib_header_size = 40;
 	header->width_px = vars->scene.res.width;
-	header->height_px = vars->scene.res.height;
+	header->height_px = vars->scene.res.ht;
 	header->num_planes = 1;
 	header->bits_per_pixel = 24;
 	header->image_size_bytes = header->height_px * (header->width_px *\
@@ -63,24 +60,24 @@ void			bitmap_header(t_vars *vars)
 
 void			mlx_image_to_bmp(t_vars *vars)
 {
-	t_render	rvars;
-	int			line_len;
 	int			v;
 	int			h;
+	t_bmpcrabs	crabs;
 
-	line_len = vars->bmpim.header.width_px *\
+	crabs.line_len = vars->bmpim.header.width_px *\
 	vars->bmpim.header.bits_per_pixel / 8 + vars->bmpim.pad_size;
 	v = 0;
-	while (v < (int)(((double)vars->scene.res.height)))
+	while (v < (int)(((double)vars->scene.res.ht)))
 	{
 		h = 0;
 		while (h < (int)(((double)vars->scene.res.width)))
 		{
-			rvars.color = *((int *)vars->mlx.image.addr +\
-			v * vars->bmpim.header.width_px + h);
-			put_pixel_bmp(vars->bmpim.image + vars->bmpim.header.offset, h,\
-			vars->mlx.window_dims.height - v, rvars.color, line_len,\
-			vars->bmpim.header.bits_per_pixel);
+			crabs.img_addr = vars->bmpim.image + vars->bmpim.header.offset;
+			crabs.x = h;
+			crabs.y = vars->mlx.window_dims.ht - v;
+			crabs.c = *((int *)vars->mlx.image.addr + v * vars->bmpim.header.width_px + h);
+			crabs.bpp = vars->bmpim.header.bits_per_pixel;
+			put_pixel_bmp(&crabs);
 			h++;
 		}
 		v++;
