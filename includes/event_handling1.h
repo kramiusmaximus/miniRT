@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EVENT_HANDLING_H
-# define EVENT_HANDLING_H
+#ifndef EVENT_HANDLING1_H
+# define EVENT_HANDLING1_H
 # include "main_structs.h"
 
 int					move_camera(t_vars *vars);

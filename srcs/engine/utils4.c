@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-void free_split(char **split)
+void	free_split(char **split)
 {
 	char **p;
 

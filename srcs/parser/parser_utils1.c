@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_utils1.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pfelipa <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/10 15:08:07 by pfelipa           #+#    #+#             */
+/*   Updated: 2021/03/10 15:09:03 by pfelipa          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
-int 		is_int(char **arg)
+int			is_int(char **arg)
 {
-	char *p;
+	char	*p;
 
 	if (!*arg)
 		return (0);
@@ -16,9 +28,9 @@ int 		is_int(char **arg)
 	return (1);
 }
 
-int 		is_float(char **arg)
+int			is_float(char **arg)
 {
-	char *p;
+	char	*p;
 
 	if (!*arg)
 		return (0);
@@ -36,11 +48,11 @@ int 		is_float(char **arg)
 	return (1);
 }
 
-int 		is_color(char **arg)
+int			is_color(char **arg)
 {
-	char 	**rgb;
+	char	**rgb;
 	int		i;
-	int 	k;
+	int		k;
 
 	k = 1;
 	if (!*arg)
@@ -52,7 +64,7 @@ int 		is_color(char **arg)
 		if (!is_int(&rgb[i]))
 		{
 			k = 0;
-			break;
+			break ;
 		}
 		i++;
 	}
@@ -62,11 +74,11 @@ int 		is_color(char **arg)
 	return (k);
 }
 
-int 		is_coord(char **arg)
+int			is_coord(char **arg)
 {
-	char 	**coord;
-	int 	i;
-	int 	k;
+	char	**coord;
+	int		i;
+	int		k;
 
 	k = 1;
 	if (!*arg)
@@ -78,7 +90,7 @@ int 		is_coord(char **arg)
 		if (!is_float(&coord[i]))
 		{
 			k = 0;
-			break;
+			break ;
 		}
 		i++;
 	}

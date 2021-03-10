@@ -74,43 +74,44 @@ t_m			m_i(int n)
 t_m			dir_to_rot_mat(t_v dir)
 {
 	double	rot[3];
-	t_m 	m;
+	t_m		m;
 
 	m = m_i(3);
-	rot[0] = atan(dir.v[1] / dir.v[2]);
+	m.m[0][0] = -1;
+	m.m[2][2] = -1;
+	rot[0] = -atan(dir.v[1] / dir.v[2]);
 	if (dir.v[2] < EPS && dir.v[2] > -EPS)
 		rot[0] = atan(dir.v[1] / EPS);
-	m = rotate_xyz(rot[0], 0, 0, m);
-
 	rot[1] = atan(dir.v[0] / dir.v[2]);
 	if (dir.v[2] < EPS && dir.v[2] > -EPS)
 		rot[1] = atan(dir.v[0] / EPS);
-	if (dir.v[2] < 0)
+	if (dir.v[2] > 0)
 	{
 		rot[1] += M_PI;
-		//rot[0] *= -1;
+		rot[0] *= -1;
 	}
-	m = rotate_xyz(0, rot[1], 0, m);
+	m = rotate_xyz(rot[0], rot[1], 0, m);
 	return (m);
 }
 
-t_m			norm_to_rot_mat(t_m basis, t_v norm)
+t_m			norm_to_rot_mat(t_v norm)
 {
-	double rot[3];
+	double	rot[3];
+	t_m		m;
 
+	m = m_i(3);
+	m.m[0][0] = -1;
+	m.m[2][2] = -1;
 	rot[0] = atan(sqrt(pow(norm.v[2], 2) + pow(norm.v[0], 2)) / norm.v[1]);
 	if (norm.v[1] < EPS && norm.v[1] > -EPS)
 		rot[0] = atan(sqrt(pow(norm.v[2], 2) + pow(norm.v[0], 2)) / EPS);
 	if (norm.v[1] < 0)
 		rot[0] += M_PI;
-	basis = rotate_xyz(rot[0], 0, 0, basis);
-
-
 	rot[1] = atan(norm.v[0] / norm.v[2]);
 	if (norm.v[2] < EPS && norm.v[2] > -EPS)
 		rot[1] = atan(norm.v[0] / EPS);
 	if (norm.v[2] < 0)
 		rot[1] += M_PI;
-	basis = rotate_xyz(0, rot[1], 0, basis);
-	return (basis);
+	m = rotate_xyz(rot[0], rot[1], 0, m);
+	return (m);
 }

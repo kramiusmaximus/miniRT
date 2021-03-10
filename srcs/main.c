@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pfelipa <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/10 14:56:24 by pfelipa           #+#    #+#             */
+/*   Updated: 2021/03/10 14:56:25 by pfelipa          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
-void start_mlx_process(t_vars *vars)
+void	start_mlx_process(t_vars *vars)
 {
 	mlx_loop_hook(vars->mlx.mlx, render_mlx, vars);
 	mlx_hook(vars->mlx.win, 2, 1L << 2, (int (*)()) key_press_hook1, vars);
@@ -9,7 +21,7 @@ void start_mlx_process(t_vars *vars)
 	mlx_loop(vars->mlx.mlx);
 }
 
-void init_vars(char *rt, t_vars *vars, int bmp)
+void	init_vars(char *rt, t_vars *vars, int bmp)
 {
 	ft_bzero(vars, sizeof(t_vars));
 	parse_rt(rt, &vars->scene);
@@ -33,7 +45,7 @@ void init_vars(char *rt, t_vars *vars, int bmp)
 	}
 }
 
-void launch_renderer(char *rt, int bmp)
+void	launch_renderer(char *rt, int bmp)
 {
 	t_vars	vars;
 
@@ -44,14 +56,14 @@ void launch_renderer(char *rt, int bmp)
 		start_mlx_process(&vars);
 }
 
-int main(int n_args, char **args)
+int		main(int n_args, char **args)
 {
 	if (n_args == 3)
 	{
 		if (!ft_strcmp(args[2], "--save"))
 			launch_renderer(args[1], 1);
 		else
-			ft_printf("Incorrect argument (%s) specified. Use '--save' as second argument to save scene as .bmp file.\n", args[2]);
+			error("Incorrect argument specified. Use '--save' as second argument to save scene as .bmp file.\n", NULL);
 	}
 	if (n_args == 2)
 		launch_renderer(args[1], 0);

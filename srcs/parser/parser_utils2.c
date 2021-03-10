@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_utils2.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pfelipa <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/10 15:06:30 by pfelipa           #+#    #+#             */
+/*   Updated: 2021/03/10 15:06:31 by pfelipa          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 void		ft_lstcadd_front(t_listc **head, t_listc *node)
@@ -16,10 +28,10 @@ void		ft_lstcadd_front(t_listc **head, t_listc *node)
 	}
 }
 
-int 	extract_color(char *arg)
+int			extract_color(char *arg)
 {
-	int c;
-	char **rgb;
+	int		c;
+	char	**rgb;
 
 	rgb = ft_split(arg, ',');
 	c = rgb_create(0, ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
@@ -27,10 +39,10 @@ int 	extract_color(char *arg)
 	return (c);
 }
 
-t_v 	extract_coord(char *arg)
+t_v			extract_coord(char *arg)
 {
 	t_v		v;
-	char 	**coords;
+	char	**coords;
 
 	coords = ft_split(arg, ',');
 	v.v[0] = ft_atof(coords[0]);
@@ -40,19 +52,21 @@ t_v 	extract_coord(char *arg)
 	return (v);
 }
 
-t_v 	extract_dir(char *arg)
+t_v			extract_dir(char *arg)
 {
 	t_v		v;
-	char 	**dir;
+	char	**dir;
 
 	dir = ft_split(arg, ',');
 	v = v_create(ft_atof(dir[0]), ft_atof(dir[1]), ft_atof(dir[2]));
 	free_split(dir);
+	if (v.v[0] == 0 && v.v[1] == 0 && v.v[2] == 0)
+		v.v[1] = 1;
 	v = v_normlz(v);
 	return (v);
 }
 
-char **norminette_can_eat_my_ass(t_object *obj, char **args)
+char		**norminette_can_eat_my_ass(t_object *obj, char **args)
 {
 	if (is_float(args) && is_float(args + 1) && is_float(args + 2))
 	{

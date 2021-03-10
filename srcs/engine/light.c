@@ -29,7 +29,6 @@ static void	light_calculations(t_lvars *lvars, t_ray *ray, t_scene *scene)
 	lvars->d[0] = EPS;
 	lvars->d[1] = lvars->dist - EPS;
 	if ((lvars->inter_l = trace_ray(&lvars->ray_l, \
-
 									scene, lvars->d)))
 	{
 		lvars->pass = lvars->inter_l->obj->transperancy *\
@@ -60,6 +59,6 @@ void		light_effects(t_ray *ray, t_scene *scene,\
 	lvars.diff = rgb_add(lvars.diff, lvars.amb);
 	*c = rgb_add_weighted(*c, rgb_multiply(*c,\
 	lvars.diff), inter->obj->transperancy);
-	if (!(inter->obj->type & (SQ | PL)) && inter->ref_coeff)
+	if (inter->ref_coeff)
 		*c = rgb_add(*c, lvars.spec);
 }

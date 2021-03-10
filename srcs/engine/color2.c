@@ -63,11 +63,11 @@ int	rgb_add_weighted(int c1, int c2, double w)
 
 	t = get_t(c1);
 	r = rgb_smult(get_r(c1), w)\
- + rgb_smult(get_r(c2), 1 - w);
+	+ rgb_smult(get_r(c2), 1 - w);
 	g = rgb_smult(get_g(c1), w)\
- + rgb_smult(get_g(c2), 1 - w);
+	+ rgb_smult(get_g(c2), 1 - w);
 	b = rgb_smult(get_b(c1), w)\
- + rgb_smult(get_b(c2), 1 - w);
+	+ rgb_smult(get_b(c2), 1 - w);
 	return (rgb_create(t, r, g, b));
 }
 

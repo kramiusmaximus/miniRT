@@ -42,7 +42,7 @@ double				abs_f(double i);
 t_v					v_make(double x, double y, double z);
 t_m					m_i(int n);
 t_m					dir_to_rot_mat(t_v dir);
-t_m					norm_to_rot_mat(t_m basis, t_v norm);
+t_m					norm_to_rot_mat(t_v norm);
 t_m					m_transpose(t_m m);
 double				max_f(double a, double b);
 double				min_f(double a, double b);

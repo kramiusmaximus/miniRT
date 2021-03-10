@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   object_parsing1.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pfelipa <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/10 15:09:46 by pfelipa           #+#    #+#             */
+/*   Updated: 2021/03/10 15:09:47 by pfelipa          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
-void process_r(char **args, t_scene *scene)
+void	process_r(char **args, t_scene *scene)
 {
 	scene->s = scene->s | 0b00000001;
 	if (is_int(args) && is_int(args + 1))
@@ -14,7 +26,7 @@ void process_r(char **args, t_scene *scene)
 		error("Error parsing Resolution.", scene);
 }
 
-void process_a(char **args, t_scene *scene)
+void	process_a(char **args, t_scene *scene)
 {
 	scene->s = scene->s | 0b00000010;
 	if (is_float(args) && is_color(args + 1))
@@ -28,9 +40,9 @@ void process_a(char **args, t_scene *scene)
 		error("Error parsing Ambient.", scene);
 }
 
-void process_c(char **args, t_scene *scene)
+void	process_c(char **args, t_scene *scene)
 {
-	t_cam 	*camera;
+	t_cam		*camera;
 	t_listc		*node;
 
 	node = NULL;
@@ -46,14 +58,14 @@ void process_c(char **args, t_scene *scene)
 		error("Provide necessary arguments for Ambient.", scene);
 	if (*args || !(node = ft_lstcnew(camera)))
 		error("Error parsing camera.", scene);
-	camera->rot_mat = dir_to_rot_mat(camera->dir);
+	camera->basis = dir_to_rot_mat(camera->dir);
 	ft_lstcadd_front(&scene->camera, node);
 }
 
-void process_l(char **args, t_scene *scene)
+void	process_l(char **args, t_scene *scene)
 {
-	t_light *light;
-	t_list *node;
+	t_light	*light;
+	t_list	*node;
 
 	node = NULL;
 	if (!(light = malloc(sizeof(t_light))))
@@ -71,9 +83,9 @@ void process_l(char **args, t_scene *scene)
 	ft_lstadd_front(&scene->light, node);
 }
 
-void process_pl(char **args, t_scene *scene)
+void	process_pl(char **args, t_scene *scene)
 {
-	t_object 	*pl_obj;
+	t_object	*pl_obj;
 	t_list		*node;
 
 	node = NULL;

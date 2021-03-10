@@ -64,7 +64,7 @@ int		ray_intersect_sq(t_ray *ray, t_object *sq_obj, t_t *t)
 		stuff.v[1] = v_sub(stuff.v[0], sq->coord);
 		stuff.d[3] = v_dot(stuff.v[1], get_component(sq->basis, 2));
 		stuff.d[4] = v_dot(stuff.v[1], v_normlz(v_x(\
-        get_component(sq->basis, 2), sq->norm)));
+		get_component(sq->basis, 2), sq->norm)));
 		stuff.d[5] = sq->side_len / 2;
 		if (stuff.d[3] < stuff.d[5] && stuff.d[3] > -stuff.d[5]\
 		&& stuff.d[4] < stuff.d[5] && stuff.d[4] > -stuff.d[5])
@@ -83,8 +83,8 @@ int		ray_intersect_tr(t_ray *ray, t_object *tr_obj, t_t *t)
 	t_object	pl_obj;
 
 	tr = &tr_obj->item.tr;
-	pl_obj.item.pl.norm = v_x(v_sub(tr->p[2], tr->p[1]), \
-    v_sub(tr->p[1], tr->p[0]));
+	pl_obj.item.pl.norm = v_x(v_sub(tr->p[2], tr->p[1]),\
+	v_sub(tr->p[1], tr->p[0]));
 	pl_obj.item.pl.coord = tr->p[0];
 	ray_intersect_plane(ray, &pl_obj, t);
 	if (t->size)

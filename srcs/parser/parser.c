@@ -1,10 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pfelipa <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/10 15:04:04 by pfelipa           #+#    #+#             */
+/*   Updated: 2021/03/10 15:04:09 by pfelipa          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
-static void process_line(char *line, t_scene *scene)
+static void	anal_beads(char **split, t_scene *scene)
+{
+	if (!ft_strcmp(*split, "cy"))
+		process_cy(split + 1, scene);
+	else if (!ft_strcmp(*split, "tr"))
+		process_tr(split + 1, scene);
+	else
+		error("Incorrect RT specification. Please refer to the bible.", scene);
+}
+
+static void	process_line(char *line, t_scene *scene)
 {
 	char **split;
 
-	if ((split = ft_split(line, ' ')) && *split)      /// if line is empty or there is error, return value is the same - NULL
+	if ((split = ft_split(line, ' ')) && *split)
 	{
 		if (!ft_strcmp(*split, "R") && !(scene->s & 0b00000001))
 			process_r(split + 1, scene);
@@ -20,23 +42,18 @@ static void process_line(char *line, t_scene *scene)
 			process_sp(split + 1, scene);
 		else if (!ft_strcmp(*split, "sq"))
 			process_sq(split + 1, scene);
-		else if (!ft_strcmp(*split, "cy"))
-			process_cy(split + 1, scene);
-		else if (!ft_strcmp(*split, "tr"))
-			process_tr(split + 1, scene);
 		else
-			error("Incorrect RT specification. Please refer to the bible.", scene);
-
+			anal_beads(split, scene);
 	}
 	free_split(split);
 	free(line);
 }
 
-void parse_rt(char *rt, t_scene *scene)
+void		parse_rt(char *rt, t_scene *scene)
 {
-	int 	fd;
-	int 	n;
-	char 	*line;
+	int		fd;
+	int		n;
+	char	*line;
 
 	ft_bzero(scene, sizeof(t_scene));
 	if ((fd = open(rt, O_RDONLY)) < 0)

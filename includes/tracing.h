@@ -53,8 +53,9 @@ int						solve_quadratic(double a, double b, double c, t_t *t);
 t_v						surface_vector(t_intersect *inter, t_object *obj);
 void					light_effects(t_ray *ray, t_scene *scene,
 						int *c, t_intersect *inter);
-t_intersect *trace_ray(t_ray *ray, t_scene *scene, double *d);
-int trace_color(t_ray *ray, t_scene *scene, int n_passes, double *d);
+t_intersect				*trace_ray(t_ray *ray, t_scene *scene, double *d);
+int						trace_color(t_ray *ray,\
+						t_scene *scene, int n_passes, double *d);
 int						swap(double *a, double *b);
 int						selection_sort(double arr[], int size);
 t_v						screen_to_world(int h, int v, t_vars *vars, int aa);

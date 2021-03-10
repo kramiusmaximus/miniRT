@@ -28,7 +28,8 @@ static void		render_image_bmp(t_vars *vars)
 			crabs.x = h;
 			crabs.y = v;
 			crabs.c = get_pixel_color(vars->scene.res.ht - v, h, vars);
-			crabs.line_len = (vars->bmpim.header.width_px * vars->bmpim.header.bits_per_pixel\
+			crabs.line_len = (vars->bmpim.header.width_px\
+			* vars->bmpim.header.bits_per_pixel\
 			/ 8 + vars->bmpim.pad_size);
 			crabs.bpp = vars->bmpim.header.bits_per_pixel;
 			put_pixel_bmp(&crabs);
@@ -74,8 +75,10 @@ void			mlx_image_to_bmp(t_vars *vars)
 		{
 			crabs.img_addr = vars->bmpim.image + vars->bmpim.header.offset;
 			crabs.x = h;
-			crabs.y = vars->mlx.window_dims.ht - v;
-			crabs.c = *((int *)vars->mlx.image.addr + v * vars->bmpim.header.width_px + h);
+			crabs.y =\
+			vars->mlx.window_dims.ht - v;
+			crabs.c = *((int *)vars->mlx.image.addr\
+			+ v * vars->bmpim.header.width_px + h);
 			crabs.bpp = vars->bmpim.header.bits_per_pixel;
 			put_pixel_bmp(&crabs);
 			h++;

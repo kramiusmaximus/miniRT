@@ -18,7 +18,7 @@ int			get_pixel_color(int v, int h, t_vars *vars)
 	t_ray	ray;
 	int		c[AA_SAMPLE_NUM];
 	int		i[2];
-	double 	d[2];
+	double	d[2];
 
 	d[0] = 1;
 	d[1] = MAX_DIST;
