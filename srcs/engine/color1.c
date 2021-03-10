@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pfelipa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/08 17:04:07 by pfelipa           #+#    #+#             */
-/*   Updated: 2021/03/08 17:04:09 by pfelipa          ###   ########.fr       */
+/*   Created: 2021/03/08 16:40:34 by pfelipa           #+#    #+#             */
+/*   Updated: 2021/03/08 16:40:36 by pfelipa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "miniRT.h"
 
 int		get_t(int trgb)
 {

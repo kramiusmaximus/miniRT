@@ -37,11 +37,13 @@ void	init_vars(char *rt, t_vars *vars, int bmp)
 			vars->scene.res.ht = vars->mlx.window_dims.ht;
 			vars->scene.res.width = vars->mlx.window_dims.width;
 		}
-		vars->mlx.win = mlx_new_window(vars->mlx.mlx, vars->scene.res.width, vars->scene.res.ht,
-									   "Is this god?");
-		vars->mlx.image.img = mlx_new_image(vars->mlx.mlx, vars->scene.res.width, vars->scene.res.ht);
-		vars->mlx.image.addr = mlx_get_data_addr(vars->mlx.image.img, &vars->mlx.image.bits_per_pixel,
-												 &vars->mlx.image.line_length, &vars->mlx.image.endian);
+		vars->mlx.win = mlx_new_window(vars->mlx.mlx,\
+		vars->scene.res.width, vars->scene.res.ht, "miniRT");
+		vars->mlx.image.img = mlx_new_image(vars->mlx.mlx,\
+		vars->scene.res.width, vars->scene.res.ht);
+		vars->mlx.image.addr = mlx_get_data_addr(vars->mlx.image.img,\
+		&vars->mlx.image.bits_per_pixel, &vars->mlx.\
+		image.line_length, &vars->mlx.image.endian);
 	}
 }
 
@@ -63,7 +65,8 @@ int		main(int n_args, char **args)
 		if (!ft_strcmp(args[2], "--save"))
 			launch_renderer(args[1], 1);
 		else
-			error("Incorrect argument specified. Use '--save' as second argument to save scene as .bmp file.\n", NULL);
+			error("Incorrect argument specified. Use '--save' \\"
+			"as second argument to save scene as .bmp file.\n", NULL);
 	}
 	if (n_args == 2)
 		launch_renderer(args[1], 0);

@@ -15,10 +15,10 @@ all:						${NAME}
 $(NAME):					${OBJECTS}
 							make -C libft
 							make -C mlx
-							$(CC) -Llibft -lft -Lmlx -lmlx -framework OpenGL -framework AppKit $(OBJECTS) -o $(NAME) libmlx.dylib
+							$(CC) -Llibft -lft -Lmlx -lmlx -framework OpenGL -framework AppKit $(OBJECTS) -o $(NAME)
 
 test:						all
-							./miniRT scenes/test.rt
+							./miniRT scenes/sq.rt
 
 %.o: 						%.c ${HEADERS} ${HEADERS_BONUS}
 							$(CC) $(CFLAGS) $(addprefix -I, $(INCLUDES_DIRECTORY)) -c -o $@ $<
@@ -36,7 +36,7 @@ re:							fclean all
 bonus:						${OBJECTS} ${OBJECTS_BONUS}
 							make -C libft
 							make -C mlx
-							$(CC) -Llibft -lft -Lmlx -lmlx -framework OpenGL -framework AppKit $(OBJECTS) $(OBJECTS_BONUS) -o $(NAME) libmlx.dylib
+							$(CC) -Llibft -lft -Lmlx -lmlx -framework OpenGL -framework AppKit $(OBJECTS) $(OBJECTS_BONUS) -o $(NAME)
 
 test_bonus:					bonus
 							./miniRT scenes/vistovka1.rt

@@ -22,7 +22,7 @@ file(GLOB SOURCES
         libft/includes/*.h
         mlx/*.h
         )
-add_executable(miniRT ${SOURCES} )
+add_executable(miniRT ${SOURCES} srcs/engine/color1.c)
 target_link_libraries(miniRT ${LIBRARIES})
 target_link_libraries(miniRT "-framework OpenGL" "-framework AppKit")
 set(THREADS_PREFER_PTHREAD_FLAG ON)
