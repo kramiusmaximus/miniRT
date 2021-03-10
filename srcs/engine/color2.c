@@ -1,51 +1,85 @@
-#include "miniRT.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   color2.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pfelipa <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/08 17:04:19 by pfelipa           #+#    #+#             */
+/*   Updated: 2021/03/08 17:04:20 by pfelipa          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int rgb_multiply(int c1, int c2)
+#include "minirt.h"
+
+int	rgb_multiply(int c1, int c2)
 {
-	int t = get_t(c1);
-	int r = get_r(c1) * get_r(c2) / 255;
-	int g = get_g(c1) * get_g(c2) / 255;
-	int b= get_b(c1) * get_b(c2) / 255;
+	int t;
+	int r;
+	int g;
+	int b;
 
+	t = get_t(c1);
+	r = get_r(c1) * get_r(c2) / 255;
+	g = get_g(c1) * get_g(c2) / 255;
+	b = get_b(c1) * get_b(c2) / 255;
 	return (rgb_create(t, r, g, b));
 }
 
-int rgb_multiply_scalar(int c1, double s)
+int	rgb_smult(int c1, double s)
 {
-	int t = get_t(c1);
-	int r = (double)get_r(c1) * s;
-	int g = (double)get_g(c1) * s;
-	int b = (double)get_b(c1) * s;
+	int t;
+	int r;
+	int g;
+	int b;
 
+	t = get_t(c1);
+	r = (int)((double)get_r(c1) * s);
+	g = (int)((double)get_g(c1) * s);
+	b = (int)((double)get_b(c1) * s);
 	return (rgb_create(t, r, g, b));
 }
 
-int rgb_add(int c1, int c2)
+int	rgb_add(int c1, int c2)
 {
-	int t = get_t(c1);
-	int r = get_r(c1) + get_r(c2);
-	int g = get_g(c1) + get_g(c2);
-	int b= get_b(c1) + get_b(c2);
+	int t;
+	int r;
+	int g;
+	int b;
 
+	t = get_t(c1);
+	r = get_r(c1) + get_r(c2);
+	g = get_g(c1) + get_g(c2);
+	b = get_b(c1) + get_b(c2);
 	return (rgb_create(t, r, g, b));
 }
 
-int rgb_add_weighted(int c1, int c2, double w)
+int	rgb_add_weighted(int c1, int c2, double w)
 {
-	int t = get_t(c1);
-	int r = rgb_multiply_scalar(get_r(c1), w) + rgb_multiply_scalar(get_r(c2), 1 - w);
-	int g = rgb_multiply_scalar(get_g(c1), w) + rgb_multiply_scalar(get_g(c2), 1 - w);
-	int b = rgb_multiply_scalar(get_b(c1), w) + rgb_multiply_scalar(get_b(c2), 1 - w);
+	int t;
+	int r;
+	int g;
+	int b;
 
+	t = get_t(c1);
+	r = rgb_smult(get_r(c1), w)\
+	+ rgb_smult(get_r(c2), 1 - w);
+	g = rgb_smult(get_g(c1), w)\
+	+ rgb_smult(get_g(c2), 1 - w);
+	b = rgb_smult(get_b(c1), w)\
+	+ rgb_smult(get_b(c2), 1 - w);
 	return (rgb_create(t, r, g, b));
 }
 
-int rgb_avg(int arr[], int n)
+int	rgb_avg(int arr[], int n)
 {
-	int rgb[3] = {0,0,0};
+	int rgb[3];
 	int avg;
 	int i;
 
+	rgb[0] = 0;
+	rgb[1] = 0;
+	rgb[2] = 0;
 	i = 0;
 	while (i < n)
 	{

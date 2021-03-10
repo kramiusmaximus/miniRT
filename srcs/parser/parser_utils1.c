@@ -1,8 +1,20 @@
-#include "miniRT.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_utils1.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pfelipa <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/10 15:08:07 by pfelipa           #+#    #+#             */
+/*   Updated: 2021/03/10 15:09:03 by pfelipa          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int 		is_int(char **arg)
+#include "minirt.h"
+
+int			is_int(char **arg)
 {
-	char *p;
+	char	*p;
 
 	if (!*arg)
 		return (0);
@@ -16,9 +28,9 @@ int 		is_int(char **arg)
 	return (1);
 }
 
-int 		is_float(char **arg)
+int			is_float(char **arg)
 {
-	char *p;
+	char	*p;
 
 	if (!*arg)
 		return (0);
@@ -36,11 +48,11 @@ int 		is_float(char **arg)
 	return (1);
 }
 
-int 		is_color(char **arg)
+int			is_color(char **arg)
 {
-	char 	**rgb;
+	char	**rgb;
 	int		i;
-	int 	k;
+	int		k;
 
 	k = 1;
 	if (!*arg)
@@ -52,21 +64,21 @@ int 		is_color(char **arg)
 		if (!is_int(&rgb[i]))
 		{
 			k = 0;
-			break;
+			break ;
 		}
 		i++;
 	}
 	if (i != 3)
 		k = 0;
-	free(rgb);
+	free_split(rgb);
 	return (k);
 }
 
-int 		is_coord(char **arg)
+int			is_coord(char **arg)
 {
-	char 	**coord;
-	int 	i;
-	int 	k;
+	char	**coord;
+	int		i;
+	int		k;
 
 	k = 1;
 	if (!*arg)
@@ -78,23 +90,23 @@ int 		is_coord(char **arg)
 		if (!is_float(&coord[i]))
 		{
 			k = 0;
-			break;
+			break ;
 		}
 		i++;
 	}
 	if (i != 3)
 		k = 0;
-	free(coord);
+	free_split(coord);
 	return (k);
 }
 
-t_listc		*ft_lstcnew(t_camera *data)
+t_listc		*ft_lstcnew(t_cam *data)
 {
 	t_listc	*node;
 
 	if (!(node = malloc(sizeof(t_listc))))
 		return (NULL);
-	node->content = data;
+	node->cntnt = data;
 	node->next = node;
 	node->prev = node;
 	return (node);

@@ -1,13 +1,24 @@
-#include "miniRT.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   maths4.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pfelipa <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/08 17:53:18 by pfelipa           #+#    #+#             */
+/*   Updated: 2021/03/08 17:53:20 by pfelipa          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-t_m v_mat_mul(t_m a1, t_m a2)
+#include "minirt.h"
+
+t_m		v_mat_mul(t_m a1, t_m a2)
 {
 	t_m res;
 	int ijk[3];
 
-	res.size[0] = a1.size[0];
-	res.size[1] = a2.size[1];
-	if (a1.size[1] != a2.size[0])
+	res.size[0] = a2.size[0];
+	if ((res.size[1] = a1.size[1]) != a2.size[0])
 		ft_printf("Matrix size mismatch!\n");
 	ijk[0] = 0;
 	while (ijk[0] < a1.size[0])
@@ -19,7 +30,8 @@ t_m v_mat_mul(t_m a1, t_m a2)
 			ijk[2] = 0;
 			while (ijk[2] < a1.size[1])
 			{
-				res.m[ijk[0]][ijk[1]] += a1.m[ijk[0]][ijk[2]] * a2.m[ijk[2]][ijk[1]];
+				res.m[ijk[0]][ijk[1]] +=\
+				a1.m[ijk[0]][ijk[2]] * a2.m[ijk[2]][ijk[1]];
 				ijk[2]++;
 			}
 			ijk[1]++;
@@ -29,9 +41,9 @@ t_m v_mat_mul(t_m a1, t_m a2)
 	return (res);
 }
 
-t_m rotate_x(double alpha)
+t_m		rotate_x(double alpha)
 {
-	t_m 	m;
+	t_m	m;
 
 	m.size[0] = 3;
 	m.size[1] = 3;
@@ -47,9 +59,9 @@ t_m rotate_x(double alpha)
 	return (m);
 }
 
-t_m rotate_y(double beta)
+t_m		rotate_y(double beta)
 {
-	t_m 	m;
+	t_m	m;
 
 	m.size[0] = 3;
 	m.size[1] = 3;
@@ -65,9 +77,9 @@ t_m rotate_y(double beta)
 	return (m);
 }
 
-t_m rotate_z(double gamma)
+t_m		rotate_z(double gamma)
 {
-	t_m 	m;
+	t_m	m;
 
 	m.size[0] = 3;
 	m.size[1] = 3;
@@ -83,7 +95,7 @@ t_m rotate_z(double gamma)
 	return (m);
 }
 
-t_m rotate_xyz(double pitch, double yaw, double roll, t_m basis)
+t_m		rotate_xyz(double pitch, double yaw, double roll, t_m basis)
 {
 	basis = v_mat_mul(rotate_x(pitch), basis);
 	basis = v_mat_mul(rotate_y(yaw), basis);
