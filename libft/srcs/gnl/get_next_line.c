@@ -35,14 +35,14 @@ static char	*ft_strjoin_gnl(char const *s1, char const *s2)
 	return (res);
 }
 
-int		liberate_s(char **s, int out)
+int			liberate_s(char **s, int out)
 {
 	free(*s);
 	*s = NULL;
 	return (out);
 }
 
-int		process_output(int fd, int n_read, char **s, char **line)
+int			process_output(int fd, int n_read, char **s, char **line)
 {
 	char *ptrns;
 	char *ptrnl;
@@ -66,7 +66,7 @@ int		process_output(int fd, int n_read, char **s, char **line)
 	}
 }
 
-int		get_next_line(int fd, char **line)
+int			get_next_line(int fd, char **line)
 {
 	static char	*s[2048];
 	char		buff[(BUFFER_SIZE > 0) ? BUFFER_SIZE + 1 : 1];
