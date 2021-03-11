@@ -42,4 +42,3 @@ bonus:						${OBJECTS} ${OBJECTS_BONUS}
 
 test_bonus:					bonus
 							./miniRT scenes/vistovka1.rt
-

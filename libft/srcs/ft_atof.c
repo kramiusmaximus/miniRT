@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atof.c                                           :+:      :+:    :+:  */
+/*   ft_atof.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pfelipa <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static double pow(double a, int b)
+static double	pow(double a, int b)
 {
 	if (a == 0)
 		return (0);
@@ -21,11 +21,11 @@ static double pow(double a, int b)
 	return (a * pow(a, b - 1));
 }
 
-double ft_atof(const char *str)
+double			ft_atof(const char *str)
 {
-	double 		res;
-	double 		neg;
-	const char 	*p;
+	double		res;
+	double		neg;
+	const char	*p;
 
 	p = NULL;
 	res = 0;
@@ -34,9 +34,8 @@ double ft_atof(const char *str)
 		str++;
 	while (*str == '-' || *str == '+')
 	{
-		if (*str == '-')
+		if (*str++ == '-')
 			neg *= -1;
-		str++;
 	}
 	while (ft_isdigit(*str) || *str == '.')
 	{
@@ -45,9 +44,8 @@ double ft_atof(const char *str)
 			p = str++;
 			continue ;
 		}
-			res = res * 10 + (double)(*str++ - '0');
+		res = res * 10 + (double)(*str++ - '0');
 	}
-	if (p)
-		res /= pow(10, (str - p - 1));
+	res = p ? res / pow(10, (str - p - 1)) : res;
 	return (neg * res);
 }
