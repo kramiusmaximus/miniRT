@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <tcl.h>
 #include "minirt.h"
 
 static void		initiate_trvars(t_trvars *trvars,\
