@@ -41,4 +41,4 @@ bonus:						${OBJECTS} ${OBJECTS_BONUS}
 							$(CC) -Llibft -lft -Lmlx -lmlx -framework OpenGL -framework AppKit $(OBJECTS) $(OBJECTS_BONUS) -o $(NAME)
 
 test_bonus:					bonus
-							./miniRT scenes/vistovka1.rt
+							./miniRT scenes/transperancy.rt
