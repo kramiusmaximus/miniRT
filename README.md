@@ -3,7 +3,10 @@
 ## Introduction
 miniRT is a raytracer application which visualizes basic shapes and implements a number of basic RT features as well as other nifty features. 
 
-Shapes included:
+Objects included:
+- Ambient Light
+- Light
+- Camera
 - Triangle
 - Square
 - Sphere
@@ -28,16 +31,18 @@ Features included:
 
 ## Usage
 This app is launched through the command line with additional arguments in the following way: `./miniRT {Path to scene} {optional '--save' argument}` e.g. `./miniRT ./scenes/vistavka1.rt`
-This should launch a window displaying the rendered image of the scene provided. This repository already contains a few scenes that you can try out. Alternatively, you can make your own! See the 'Scene File Format' section for an overview of the scene file format.
+This should launch a window displaying the rendered image of the scene provided. This repository already contains a few scenes that you can try out. Alternatively, you can make your own! See the 'Scene File Format' section for an overview of the scene file format. Adding the optional '--save' argument will render and save the scene as seen by the camera (first one if theres more than one) as a bmp image.
 
 ### Scene File Format
 
 ### Controls
 #### Camera Controls:
 - WASD keys to move forward, left, back, and right.
-- E/SPACE to go up/ down.
+- E/ Space to go up/ down.
 - Arrow keys to rotate the camera.
-- M/N keys to switch to next/previous camera.
+- M/ N keys to switch to next/previous camera.
 - B key to take a screen shot from the currently selected camera's perspective.
 
 #### Other Feature Controls:
+
+
