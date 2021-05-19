@@ -30,13 +30,13 @@
 # include "bitmap.h"
 # define MAX_DIST		1000000000
 # define BG_COLOR		0xB5FFF7
-# define THRDS 			1
+# define THRDS 			4
 # define N_PASSES		3
 # define EPS			0.00000001
 # define AF				0.15
 # define STEP_SIZE		5
-# define WINDOW_HEIGHT  1080
-# define WINDOW_WIDTH   1920
+# define WINDOW_HEIGHT  720
+# define WINDOW_WIDTH   1280
 # define AA_SAMPLE_NUM  1
 
 void				fill_square(t_render *rvars, int v, int h);

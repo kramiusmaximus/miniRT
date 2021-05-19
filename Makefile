@@ -12,10 +12,10 @@ CFLAGS = -Wall -Wextra -Werror
 
 all:						${NAME}
 
-$(NAME):					${OBJECTS}
+$(NAME):					${OBJECTS} ${OBJECTS_BONUS}
 							make -C libft
 							make -C mlx
-							$(CC) -Llibft -lft -Lmlx -lmlx -framework OpenGL -framework AppKit $(OBJECTS) -o $(NAME)
+							$(CC) -Llibft -lft -Lmlx -lmlx -framework OpenGL -framework AppKit $(OBJECTS) $(OBJECTS_BONUS) -o $(NAME)
 
 test:						all
 							./miniRT scenes/sq.rt
