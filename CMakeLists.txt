@@ -9,11 +9,6 @@ file(GLOB LIBRARIES
         libft/libft.a
         mlx/libmlx.a
         )
-find_library(
-        MLX
-        libmlx.dylib
-        PATHS
-        /Users/pfelipa/Desktop/pfelipa/miniRT)
 
 file(GLOB SOURCES
         srcs/*.c
@@ -22,7 +17,7 @@ file(GLOB SOURCES
         libft/includes/*.h
         mlx/*.h
         )
-add_executable(miniRT ${SOURCES} srcs/engine/color1.c)
+add_executable(miniRT ${SOURCES})
 target_link_libraries(miniRT ${LIBRARIES})
 target_link_libraries(miniRT "-framework OpenGL" "-framework AppKit")
 set(THREADS_PREFER_PTHREAD_FLAG ON)

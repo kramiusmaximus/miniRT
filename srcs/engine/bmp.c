@@ -91,7 +91,7 @@ void			screen_shot(t_vars *vars)
 {
 	int	fd;
 
-	if ((fd = open("../miniRT_snapshot3.bmp", O_WRONLY | O_CREAT \
+	if ((fd = open("./miniRT_screenshot.bmp", O_WRONLY | O_CREAT \
 	| O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) < 0)
 		error(NULL, &vars->scene);
 	vars->bmpim.pad_size = (4 - (vars->scene.res.width *\

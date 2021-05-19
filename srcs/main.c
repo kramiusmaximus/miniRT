@@ -53,7 +53,7 @@ void	launch_renderer(char *rt, int bmp)
 
 	init_vars(rt, &vars, bmp);
 	if (bmp)
-		create_bmp_image(&vars, "../bmp_image.bmp");
+		create_bmp_image(&vars, "./image.bmp");
 	else
 		start_mlx_process(&vars);
 }
@@ -66,9 +66,11 @@ int		main(int n_args, char **args)
 			launch_renderer(args[1], 1);
 		else
 			error("Incorrect argument specified. Use '--save' \\"
-			"as second argument to save scene as .bmp file.\n", NULL);
+			"as second argument to save scene as .bmp file.", NULL);
 	}
-	if (n_args == 2)
+	else if (n_args == 2)
 		launch_renderer(args[1], 0);
+	else
+		error("Incorrect number of arguments specified", NULL);
 	return (0);
 }
