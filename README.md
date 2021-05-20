@@ -12,15 +12,16 @@ Objects included:
 - Square
 - Sphere
 - Plane
-- Cyllinder
+- Cylinder
 
 Features included:
 - Reflectivity
-- Transperancy
+- Specular
+- Transparency
 - Refraction
 - Multiple Cameras
 - Camera Movement
-- Multithreaded Rendering
+- Multi-threaded Rendering
 - Anti-aliasing
 - In-app Screenshots (BMP format)
 - Colored lights
@@ -61,4 +62,3 @@ Parameters:
 - WINDOW_HEIGHT height (in pixels) of display window
 - WINDOW_WIDTH width (in pixels) of display window
 - AA_SAMPLE_NUM anti-aliasing sample size
-
