@@ -1,7 +1,7 @@
 # miniRT
 
 ## Introduction
-![Photo 1](photos/miniRT_screenshot%20copy%202.bmp)
+![Photo 1](photos/1.bmp)
 miniRT is a minimalist raytracer application which visualizes basic shapes in 3d-space from a given scene and implements a number of basic raytracing features as well as other nifty additions. 
 
 Objects included:
@@ -26,13 +26,13 @@ Features included:
 - Colored lights
 
 ## Installation
-![Photo 2](photos/miniRT_screenshot.bmp)
+![Photo 2](photos/3.bmp)
 1. Clone this git repository.
 2. Execute the command `make` in the root directory to compile the application.
 3. Voila! You can now show off this mediocre raytracer application to your grandparents while they tell you about how easy you have it.
 
 ## Usage
-![Photo 3](photos/miniRT_screenshot%20copy.bmp)
+![Photo 3](photos/4.bmp)
 
 This app is launched through the command line with additional arguments in the following way: `./miniRT {Path to scene} {optional '--save' argument}` e.g. `./miniRT ./scenes/vistavka1.rt`.
 \

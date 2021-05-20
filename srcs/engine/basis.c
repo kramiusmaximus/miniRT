@@ -21,8 +21,8 @@ t_v	screen_to_world(int h, int v, t_vars *vars, int aa)
 
 	cam = vars->scene.camera->cntnt;
 	square_width = 2 * tan(cam->fov / 2 * M_PI / 180) / vars->scene.res.width;
-	r[0] = aa ? (double)rand() / 16000000 * (square_width) : 0;
-	r[1] = aa ? (double)rand() / 16000000 * (square_width) : 0;
+	r[0] = aa ? (double)rand() / 4500000 * (square_width) : 0;
+	r[1] = aa ? (double)rand() / 4500000 * (square_width) : 0;
 	c.v[0] = (-h + (vars->scene.res.width\
 	* vars->af / 2) + r[0]) * square_width;
 	c.v[1] = -(v - (vars->scene.res.ht * vars->af / 2)
