@@ -28,7 +28,7 @@ Features included:
 
 ## Installation
 ![Photo 2](photos/3.bmp)
-1. Clone this git repository.
+1. Clone this git repository with --recurse-submodules parameter.
 2. Execute the command `make` in the root directory to compile the application.
 3. Voila! You can now show off this mediocre raytracer application to your grandparents while they tell you about how easy you have it.
 
