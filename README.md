@@ -1,5 +1,5 @@
 # miniRT
-
+![alt text](https://github.com/kramiusmaximus/miniRT/blob/master/photos/cool.gif)
 ## Introduction
 ![Photo 1](photos/1.bmp)
 miniRT is a minimalist raytracer application which visualizes basic shapes in 3d-space from a given scene and implements a number of basic raytracing features as well as other nifty additions. 
